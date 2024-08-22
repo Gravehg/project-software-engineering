@@ -1,1 +1,53 @@
+name: Deploy frontend
 
+on:
+  push:
+    paths: 
+    - 'frontend/gamejam-tickets/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+    - 'frontend/gamejam-tickets/**'
+    branches: [ main ]
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Use node
+          uses: actions/setup-node@v4
+          with:
+              node-version: 20.16.0
+              cache: 'npm'
+              run: npm cache clean --force
+        - name: Delete node_modules
+          run: rm -rf node_modules
+          
+        - name: Install Angular on Github machine
+          run: npm install -g @angular/cli@^18.0.4
+          working-directory: ./frontend/gamejam-tickets
+
+        - name: Install Dependencies
+          run: npm install
+          working-directory: ./frontend/gamejam-tickets
+
+        - name: Build Angular Project
+          run: ng build --configuration production
+          working-directory: ./frontend/gamejam-tickets
+
+        - name: Deploy to OCI VM
+          uses: appleboy/scp-action@master
+          with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              port: ${{secrets.SSH_PORT}}
+              source: "./backend/**"
+              target: ${{secrets.WORKING_DIR}}
+          
+    
+    
+  
+      
