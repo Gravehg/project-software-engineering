@@ -27,15 +27,15 @@ jobs:
           
         - name: Install Angular on Github machine
           run: npm install -g @angular/cli@^18.0.4
-          working-directory: ./frontend/gamejam-tickets
+          working-directory: ./frontend/gamejam-tickets/
 
         - name: Install Dependencies
           run: npm install
-          working-directory: ./frontend/gamejam-tickets
+          working-directory: ./frontend/gamejam-tickets/
 
         - name: Build Angular Project
           run: ng build --configuration production
-          working-directory: ./frontend/gamejam-tickets
+          working-directory: ./frontend/gamejam-tickets/
 
         - name: Deploy to OCI VM
           uses: appleboy/scp-action@master
