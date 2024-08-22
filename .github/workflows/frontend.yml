@@ -48,8 +48,6 @@ jobs:
 
       - name: Restart service
         uses: appleboy/ssh-action@master
-        env: 
-            SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
