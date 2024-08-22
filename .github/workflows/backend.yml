@@ -19,9 +19,9 @@ jobs:
         - name: Use node
           uses: actions/setup-node@v4
           with:
-              node-version: 20.16.0
-              cache: 'npm'
-              run: npm cache clean --force
+            node-version: 20.16.0
+            cache: 'npm'
+            cache-dependency-path: "**/package-lock.json"
         - name: Delete node_modules
           run: rm -rf node_modules
           
