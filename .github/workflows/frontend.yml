@@ -2,13 +2,13 @@ name: Deploy frontend
 
 on:
   push:
-     paths: 
-     - 'frontend/gamejam-tickets/**'
-     branches: [ main ]
+    paths: 
+    - 'frontend/gamejam-tickets/**'
+    branches: [ main ]
   pull_request:
-     paths:
-     - 'frontend/gamejam-tickets/**'
-     branches: [ main ]
+    paths:
+    - 'frontend/gamejam-tickets/**'
+    branches: [ main ]
 
 jobs:
     build:
