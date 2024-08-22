@@ -39,3 +39,17 @@ jobs:
               port: ${{secrets.SSH_PORT}}
               source: "./backend/**"
               target: ${{secrets.WORKING_DIR}}
+
+        - name: Restart service
+          uses: appleboy/ssh-action@master
+          env: 
+              SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USERNAME }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            port: 22
+            script: |
+                sudo systemctl restart $SERVICE_NAME
+              
+
