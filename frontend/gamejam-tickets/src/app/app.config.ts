@@ -16,18 +16,19 @@ export function createTranslateLoader(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    importProvidersFrom([
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [HttpClient],
-        },
-        defaultLanguage: 'en',
-      }),
-    ]),
-    provideRouter(routes),
-    provideHttpClient(withFetch()),
+    provideRouter(routes)
+    // provideZoneChangeDetection({ eventCoalescing: true }),
+    // importProvidersFrom([
+    //   TranslateModule.forRoot({
+    //     loader: {
+    //       provide: TranslateLoader,
+    //       useFactory: createTranslateLoader,
+    //       deps: [HttpClient],
+    //     },
+    //     defaultLanguage: 'en',
+    //   }),
+    // ]),
+    // provideRouter(routes),
+    // provideHttpClient(withFetch()),
   ],
 };
