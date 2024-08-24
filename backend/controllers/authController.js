@@ -22,7 +22,7 @@ const login = async (req, res) => {
     const hasAnyRole = rolesToCheck.some((role) => roles.includes(role));
 
     if (!hasAnyRole) {
-      return res.redirect(`http://${process.env.URL}:${process.env.APP_PORT}/`); //Should send to login
+      return res.redirect(`http://${process.env.URL}${process.env.APP_PORT}`); //Should send to login
     }
 
     res.cookie("session-token", loginToken, {
@@ -33,21 +33,21 @@ const login = async (req, res) => {
 
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}:${process.env.APP_PORT}/ticket-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/ticket-pool`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(
-        `http://${process.env.URL}:${process.env.APP_PORT}/ticket-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/ticket-pool`
       );
     } else {
       return res.redirect(
-        `http://${process.env.URL}:${process.env.APP_PORT}/my-tickets`
+        `http://${process.env.URL}${process.env.APP_PORT}/jammers-users`
       );
     }
   } catch (error) {
     return res
       .clearCookie("session-token")
-      .redirect(`http://${process.env.URL}/login/error`);
+      .redirect(`http://${process.env.URL}${process.env.APP_PORT}`);
   }
 };
 
@@ -56,7 +56,7 @@ const magicLink = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user)
-    res
+    return res
       .status(401)
       .json({ success: false, msg: "You must be registered first!" });
 
@@ -67,7 +67,7 @@ const magicLink = async (req, res) => {
       expiresIn: 3600,
     }
   );
-  const link = `http://${process.env.URL}:${process.env.APP_PORT}/api/auth/login/${token}`;
+  const link = `http://${process.env.URL}${process.env.APP_PORT}/api/auth/login/${token}`;
   const subject = "Login in GameJam Support Platform";
   const message = `Hi, click on this link to continue to the app:`;
   await sendEmail(email, subject, message, link);

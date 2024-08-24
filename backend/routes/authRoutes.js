@@ -6,6 +6,6 @@ const {
 } = require("../controllers/authController");
 const router = express.Router();
 
-router.post("/login/:token", login);
+router.get("/login/:token", login);
 router.post("/magic-link", magicLink);
 module.exports = router;

@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,15 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
   });
 
-  constructor() {}
+  constructor(public UserService: UserService) {}
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      this.UserService.login(
+        this.loginForm.value.email ? this.loginForm.value.email : ''
+      ).subscribe((res) => {
+        alert(res.msg);
+      });
     }
   }
 

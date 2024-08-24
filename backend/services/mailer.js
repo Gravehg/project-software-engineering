@@ -17,11 +17,11 @@ function replaceTokens(HTML, replacements) {
 const sendEmail = async (email, subject, message, link) => {
   try {
     let transporter = nodemailer.createTransport({
-      host: process.env.EMAILHOST,
-      port: process.env.SMTPPORT,
+      host: `${process.env.EMAILHOST}`,
+      port: `${process.env.SMTPPORT}`,
       auth: {
-        user: process.env.EMAILUSER,
-        pass: process.env.EMAILPASSWORD,
+        user: `${process.env.EMAIL}`,
+        pass: `${process.env.EMAILPASSWORD}`,
       },
       secureConnection: false,
       tls: { ciphers: "SSLv3" },
@@ -35,7 +35,7 @@ const sendEmail = async (email, subject, message, link) => {
     const htmlContent = replaceTokens(htmlTemplate, { subject, message, link });
 
     const mailOptions = {
-      from: process.env.EMAILUSER,
+      from: process.env.EMAIL,
       to: email,
       subject: subject,
       html: htmlContent,
