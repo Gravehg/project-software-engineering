@@ -1,3 +1,6 @@
 {
-  "title": "Hola, bienvenido al sistema"
+  "EMAIL_LOGIN_FIELD": "Correo electrónico",
+  "LOGIN_TEXT": "Iniciar Sesión",
+  "PLACEHOLDER_LOGIN": "Ingrese su correo electrónico",
+  "SELECT_LANGUAGE_TEXT": "Seleccione su idioma"
 }

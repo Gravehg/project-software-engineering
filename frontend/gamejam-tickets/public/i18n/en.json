@@ -1,3 +1,6 @@
 {
-  "title": "Hello, welcome to the system"
+  "EMAIL_LOGIN_FIELD": "Email",
+  "LOGIN_TEXT": "Login",
+  "PLACEHOLDER_LOGIN": "Enter your email",
+  "SELECT_LANGUAGE_TEXT": "Select Language"
 }

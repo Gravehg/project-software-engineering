@@ -9,12 +9,14 @@
       />
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group mb-3">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label">{{
+            "EMAIL_LOGIN_FIELD" | translate
+          }}</label>
           <input
             type="email"
             class="form-control"
             id="email"
-            placeholder="Enter your email"
+            [placeholder]="'PLACEHOLDER_LOGIN' | translate"
             formControlName="email"
           />
         </div>
@@ -23,9 +25,22 @@
           class="btn btn-primary w-100"
           [disabled]="!loginForm.valid"
         >
-          Login
+          {{ "LOGIN_TEXT" | translate }}
         </button>
       </form>
+      <label for="languageSelect" class="mt-2">{{
+        "SELECT_LANGUAGE_TEXT" | translate
+      }}</label>
+      <select
+        id="languageSelect"
+        class="form-control"
+        (change)="onLanguageChange($event)"
+      >
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="pr">Portuguese</option>
+        <!-- Add more languages as needed -->
+      </select>
     </div>
   </div>
 </div>
