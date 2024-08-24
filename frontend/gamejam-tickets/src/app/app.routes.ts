@@ -4,8 +4,8 @@ import { TicketsJammersComponent } from './jammers-users/tickets-jammers/tickets
 
 export const routes: Routes = [
   {
-    path: '', // Este es el default, cambiar al login cuando esté listo
-    loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN), //Aquí se importa el módulo de login
+    path: '',
+    loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN), //Aquí se importa el módulo de
   },
   {
     path: 'jammers-users',
