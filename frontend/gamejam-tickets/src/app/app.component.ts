@@ -10,6 +10,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  translate: TranslateService = inject(TranslateService);
-  title = 'gamejam-tickets';
+  // translate: TranslateService = inject(TranslateService); //Esto lo comente porque me estaba dando unos problemas al utilizar rutas
+  title = 'Gamejam-tickets';
 }
