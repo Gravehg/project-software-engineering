@@ -7,7 +7,7 @@
         alt="Login Image"
         style="max-width: 50%; height: auto"
       />
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group mb-3">
           <label for="email" class="form-label">Email</label>
           <input
@@ -15,9 +15,16 @@
             class="form-control"
             id="email"
             placeholder="Enter your email"
+            formControlName="email"
           />
         </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
       </form>
     </div>
   </div>
