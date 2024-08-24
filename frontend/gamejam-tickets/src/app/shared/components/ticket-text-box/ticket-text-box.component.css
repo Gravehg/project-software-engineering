@@ -1,0 +1,15 @@
+/*Se encarga div que contiene al text box*/
+.text-box-styles{
+    width: 100%;
+    height: 25%;
+    justify-content: center;
+    display: flex;
+}
+
+/*Se encarga del contenedor del text box*/
+.form-control{
+    width: 95%;
+    height: 100%;
+    resize: none;   
+}
+
