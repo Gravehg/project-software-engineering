@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserService } from '../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -29,10 +30,39 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.UserService.login(
         this.loginForm.value.email ? this.loginForm.value.email : ''
-      ).subscribe((res) => {
-        alert(res.msg);
+      ).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.triggerSuccess();
+          } else {
+            this.triggerFailure();
+          }
+        },
+        error: () => {
+          this.triggerFailure();
+        },
       });
     }
+  }
+
+  triggerSuccess() {
+    const translatedTitle = this.translate.instant('SUCCESS_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant('SUCCESS_LOGIN_ALERT_TEXT');
+    Swal.fire({
+      icon: 'success',
+      title: translatedTitle,
+      text: translatedText,
+    });
+  }
+
+  triggerFailure() {
+    const translatedTitle = this.translate.instant('FAILURE_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant('FAILURE_LOGIN_ALERT_TEXT');
+    Swal.fire({
+      icon: 'error',
+      title: translatedTitle,
+      text: translatedText,
+    });
   }
 
   onLanguageChange(event: Event): void {

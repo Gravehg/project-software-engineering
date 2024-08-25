@@ -2,5 +2,9 @@
   "EMAIL_LOGIN_FIELD": "Correo electrónico",
   "LOGIN_TEXT": "Iniciar Sesión",
   "PLACEHOLDER_LOGIN": "Ingrese su correo electrónico",
-  "SELECT_LANGUAGE_TEXT": "Seleccione su idioma"
+  "SELECT_LANGUAGE_TEXT": "Seleccione su idioma",
+  "SUCCESS_LOGIN_ALERT_TITLE": "Éxito",
+  "SUCCESS_LOGIN_ALERT_TEXT": "Enlace mágico enviado al correo!",
+  "FAILURE_LOGIN_ALERT_TITLE": "Error",
+  "FAILURE_LOGIN_ALERT_TEXT": "No se pudo enviar el enlace!"
 }
