@@ -6,5 +6,6 @@
   "SUCCESS_LOGIN_ALERT_TITLE": "Success!",
   "SUCCESS_LOGIN_ALERT_TEXT": "Sent magic link to email!",
   "FAILURE_LOGIN_ALERT_TITLE": "Failure!",
-  "FAILURE_LOGIN_ALERT_TEXT": "Couldn't send link!"
+  "FAILURE_LOGIN_ALERT_TEXT": "Couldn't send link!",
+  "LINK_LOGIN_REFERENCE": "You must be registered here first!"
 }
