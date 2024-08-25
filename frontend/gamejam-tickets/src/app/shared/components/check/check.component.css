@@ -1,5 +1,11 @@
-.form-check{
+.form-check {
+    margin-bottom: 10px;
     font-style:normal;
     font-size: 120%;
     margin: 30px;
-}
+  }
+  
+  .form-check-input {
+    margin-right: 10px;
+  }
+  

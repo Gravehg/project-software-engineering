@@ -1,34 +1,10 @@
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    Tecnología
-  </label>
-</div>
-
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-  <label class="form-check-label" for="flexCheckChecked">
-    Eventos
-  </label>
-</div>
-
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-  <label class="form-check-label" for="flexCheckChecked">
-    Aceleración
-  </label>
-</div>
-
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-  <label class="form-check-label" for="flexCheckChecked">
-    Viajes
-  </label>
-</div>
-
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-  <label class="form-check-label" for="flexCheckChecked">
-    Fellows
+<div *ngFor="let checkbox of checkboxes; let i = index" class="form-check">
+  <input 
+    class="form-check-input" 
+    type="checkbox" 
+    [checked]="checkbox.checked" 
+    (change)="selectOnlyOne(i)">
+  <label class="form-check-label">
+    {{ checkbox.label }}
   </label>
 </div>
