@@ -7,5 +7,15 @@
   "SUCCESS_LOGIN_ALERT_TEXT": "Sent magic link to email!",
   "FAILURE_LOGIN_ALERT_TITLE": "Failure!",
   "FAILURE_LOGIN_ALERT_TEXT": "Couldn't send link!",
-  "LINK_LOGIN_REFERENCE": "You must be registered here first!"
+  "LINK_LOGIN_REFERENCE": "You must be registered here first!",
+  "TICKET_POOL_NAVBAR": "Ticket pool",
+  "MY_TICKET_NAVBAR": "My tickets",
+  "SIGNOUT_NAVBAR": "Sign out",
+  "FILTER_CATEGORY_TEXT": "Filter category",
+  "FILTER_CLOSURE_TEXT": "Filter closure state",
+  "FILTER_RESOLUTION_TEXT": "Filter resolution state",
+  "OPEN_FILTER_TEXT": "Open",
+  "CLOSED_FILTER_TEXT": "Closed",
+  "RESOLVED_FILTER_TEXT": "Resolved",
+  "NOT_RESOLVED_FILTER_TEXT": "Not resolved"
 }
