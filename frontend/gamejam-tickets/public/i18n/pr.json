@@ -8,7 +8,14 @@
   "FAILURE_LOGIN_ALERT_TITLE": "Erro",
   "FAILURE_LOGIN_ALERT_TEXT": "Não foi possível enviar o link!",
   "LINK_LOGIN_REFERENCE": "Você deve estar registrado aqui primeiro!",
-  "TICKET_POOL_NAVBAR": "Pool de ingressos",
-  "MY_TICKET_NAVBAR": "Meus ingressos",
-  "SIGNOUT_NAVBAR": "Sair"
+  "TICKET_POOL_NAVBAR": "Pool de bilhetes",
+  "MY_TICKET_NAVBAR": "Meus bilhetes",
+  "SIGNOUT_NAVBAR": "Sair",
+  "FILTER_CATEGORY_TEXT": "Filtrar categoria",
+  "FILTER_CLOSURE_TEXT": "Filtrar o estado do fechamento",
+  "FILTER_RESOLUTION_TEXT": "Filtrar estado de resolução",
+  "OPEN_FILTER_TEXT": "Aberto",
+  "CLOSED_FILTER_TEXT": "Feichado",
+  "RESOLVED_FILTER_TEXT": "Resolvido",
+  "NOT_RESOLVED_FILTER_TEXT": "Não resolvido"
 }

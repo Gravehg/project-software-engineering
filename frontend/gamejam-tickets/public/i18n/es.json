@@ -10,5 +10,12 @@
   "LINK_LOGIN_REFERENCE": "Debes estar registrado aquí primero!",
   "TICKET_POOL_NAVBAR": "Pool de tiquetes",
   "MY_TICKET_NAVBAR": "Mis tiquetes",
-  "SIGNOUT_NAVBAR": "Salir"
+  "SIGNOUT_NAVBAR": "Salir",
+  "FILTER_CATEGORY_TEXT": "Filtrar categoría",
+  "FILTER_CLOSURE_TEXT": "Filtrar estado de cierre",
+  "FILTER_RESOLUTION_TEXT": "Filtrar estado de resolución",
+  "OPEN_FILTER_TEXT": "Abierto",
+  "CLOSED_FILTER_TEXT": "Cerrado",
+  "RESOLVED_FILTER_TEXT": "Resuelto",
+  "NOT_RESOLVED_FILTER_TEXT": "No resuelto"
 }
