@@ -6,8 +6,6 @@ import { NavBarJammerComponent } from '../../shared/components/nav-bar-jammer/na
   standalone: true,
   imports: [NavBarJammerComponent],
   templateUrl: './tickets-jammers.component.html',
-  styleUrl: './tickets-jammers.component.css'
+  styleUrl: './tickets-jammers.component.css',
 })
-export class TicketsJammersComponent {
-
-}
+export class TicketsJammersComponent {}

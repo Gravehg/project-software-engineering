@@ -1,3 +1,11 @@
 {
-  "title": "Hello, welcome to the system"
+  "EMAIL_LOGIN_FIELD": "Email",
+  "LOGIN_TEXT": "Login",
+  "PLACEHOLDER_LOGIN": "Enter your email",
+  "SELECT_LANGUAGE_TEXT": "Select Language",
+  "SUCCESS_LOGIN_ALERT_TITLE": "Success!",
+  "SUCCESS_LOGIN_ALERT_TEXT": "Sent magic link to email!",
+  "FAILURE_LOGIN_ALERT_TITLE": "Failure!",
+  "FAILURE_LOGIN_ALERT_TEXT": "Couldn't send link!",
+  "LINK_LOGIN_REFERENCE": "You must be registered here first!"
 }
