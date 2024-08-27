@@ -14,4 +14,15 @@ export const routes: Routes = [
         (m) => m.JAMMERS_USERS
       ),
   },
+  {
+    path: 'supp-tickets',
+    loadChildren: () =>
+      import('./my-supp-tickets/my-supp-tickets.routes').then(
+        (m) => m.SUPPORTTICKETS
+      ),
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN), //Aquí se importa el módulo de
+  },
 ];

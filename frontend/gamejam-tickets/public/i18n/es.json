@@ -7,5 +7,8 @@
   "SUCCESS_LOGIN_ALERT_TEXT": "Enlace mágico enviado al correo!",
   "FAILURE_LOGIN_ALERT_TITLE": "Error",
   "FAILURE_LOGIN_ALERT_TEXT": "No se pudo enviar el enlace!",
-  "LINK_LOGIN_REFERENCE": "Debes estar registrado aquí primero!"
+  "LINK_LOGIN_REFERENCE": "Debes estar registrado aquí primero!",
+  "TICKET_POOL_NAVBAR": "Pool de tiquetes",
+  "MY_TICKET_NAVBAR": "Mis tiquetes",
+  "SIGNOUT_NAVBAR": "Salir"
 }

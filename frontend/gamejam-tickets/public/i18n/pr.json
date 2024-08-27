@@ -7,5 +7,8 @@
   "SUCCESS_LOGIN_ALERT_TEXT": "Link mágico enviado para e-mail!",
   "FAILURE_LOGIN_ALERT_TITLE": "Erro",
   "FAILURE_LOGIN_ALERT_TEXT": "Não foi possível enviar o link!",
-  "LINK_LOGIN_REFERENCE": "Você deve estar registrado aqui primeiro!"
+  "LINK_LOGIN_REFERENCE": "Você deve estar registrado aqui primeiro!",
+  "TICKET_POOL_NAVBAR": "Pool de ingressos",
+  "MY_TICKET_NAVBAR": "Meus ingressos",
+  "SIGNOUT_NAVBAR": "Sair"
 }
