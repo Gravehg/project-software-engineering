@@ -15,4 +15,8 @@ export class UserService {
   login(email: String): Observable<any> {
     return this.http.post(`${this.authApiUrl}magic-link`, { email });
   }
+
+  isLogged(): Observable<any> {
+    return this.http.get(`${this.authApiUrl}is-logged`);
+  }
 }
