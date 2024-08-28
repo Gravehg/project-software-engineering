@@ -7,8 +7,6 @@ import { CardComponent } from '../../shared/components/card/card.component';
   standalone: true,
   imports: [NavBarJammerComponent, CardComponent],
   templateUrl: './tickets-jammers.component.html',
-  styleUrl: './tickets-jammers.component.css'
+  styleUrl: './tickets-jammers.component.css',
 })
-export class TicketsJammersComponent {
-
-}
+export class TicketsJammersComponent {}
