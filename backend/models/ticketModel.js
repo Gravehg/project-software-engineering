@@ -8,7 +8,7 @@ const ticketSchema = new Schema({
   },
   id_support: {
     type: String,
-    required: true,
+    required: false,
   },
   resolution_state: {
     type: String,
