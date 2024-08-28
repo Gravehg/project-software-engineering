@@ -11,4 +11,6 @@
     width: 30%;
     height: 6vh;
     background-color: #F59E4B;
+    color: black;
+    border: solid 0.5px black;
 }
