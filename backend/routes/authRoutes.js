@@ -8,4 +8,5 @@ const router = express.Router();
 
 router.get("/login/:token", login);
 router.post("/magic-link", magicLink);
+router.get("/is-logged", verifyToken);
 module.exports = router;

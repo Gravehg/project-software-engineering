@@ -25,7 +25,7 @@ const login = async (req, res) => {
       return res.redirect(`http://${process.env.URL}${process.env.APP_PORT}`); //Should send to login
     }
 
-    res.cookie("session-token", loginToken, {
+    res.cookie("sessionToken", loginToken, {
       httpOnly: false,
       sameSite: "lax",
       maxAge: 1000 * 60 * 30,
@@ -46,7 +46,7 @@ const login = async (req, res) => {
     }
   } catch (error) {
     return res
-      .clearCookie("session-token")
+      .clearCookie("sessionToken")
       .redirect(`http://${process.env.URL}${process.env.APP_PORT}`);
   }
 };
@@ -84,20 +84,20 @@ const magicLink = async (req, res) => {
 const verifyToken = async (req, res) => {
   const token = req.cookies.sessionToken;
   if (!token) {
-    return res.status(401).json({ error: "No token provided" });
+    return res.status(401).json({ success: false, error: "No token provided" });
   }
 
   try {
-    const decoded = JWT.verify(token, process.env.ACCESS_TOKEN_SEQUENCE);
-    const user = await User.findById(decoded.id);
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    const user = await User.findById(decoded.userId);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ success: false, error: "User not found" });
     }
     return res
       .status(200)
-      .json({ message: "Token is valid", userId: user._id });
+      .json({ success: true, message: "Token is valid", userId: user._id });
   } catch (error) {
-    return res.status(401).json({ error: "Invalid token" });
+    return res.status(401).json({ success: false, error: "Invalid token" });
   }
 };
 
