@@ -1,3 +1,21 @@
 {
-  "title": "Hola, bienvenido al sistema"
+  "EMAIL_LOGIN_FIELD": "Correo electrónico",
+  "LOGIN_TEXT": "Iniciar Sesión",
+  "PLACEHOLDER_LOGIN": "Ingrese su correo electrónico",
+  "SELECT_LANGUAGE_TEXT": "Seleccione su idioma",
+  "SUCCESS_LOGIN_ALERT_TITLE": "Éxito",
+  "SUCCESS_LOGIN_ALERT_TEXT": "Enlace mágico enviado al correo!",
+  "FAILURE_LOGIN_ALERT_TITLE": "Error",
+  "FAILURE_LOGIN_ALERT_TEXT": "No se pudo enviar el enlace!",
+  "LINK_LOGIN_REFERENCE": "Debes estar registrado aquí primero!",
+  "TICKET_POOL_NAVBAR": "Pool de tiquetes",
+  "MY_TICKET_NAVBAR": "Mis tiquetes",
+  "SIGNOUT_NAVBAR": "Salir",
+  "FILTER_CATEGORY_TEXT": "Filtrar categoría",
+  "FILTER_CLOSURE_TEXT": "Filtrar estado de cierre",
+  "FILTER_RESOLUTION_TEXT": "Filtrar estado de resolución",
+  "OPEN_FILTER_TEXT": "Abierto",
+  "CLOSED_FILTER_TEXT": "Cerrado",
+  "RESOLVED_FILTER_TEXT": "Resuelto",
+  "NOT_RESOLVED_FILTER_TEXT": "No resuelto"
 }

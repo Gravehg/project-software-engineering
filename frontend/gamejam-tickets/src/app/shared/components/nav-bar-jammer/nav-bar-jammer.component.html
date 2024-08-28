@@ -1,44 +1,94 @@
 <section>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img class="img-fluid" src="flaro-assets/logos/flaro-logo-black.svg" alt="" data-remove="true">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img
+          class="img-fluid"
+          src="flaro-assets/logos/flaro-logo-black.svg"
+          alt=""
+          data-remove="true"
+        />
+      </a>
+      <div
+        class="collapse navbar-collapse position-absolute top-50 start-50 translate-middle"
+      >
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Crear tiquete</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Mis tiquetes</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Idioma</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
+        </ul>
+      </div>
+      <div class="d-none d-lg-block">
+        <a
+          class="btn text-black btn-outline-light-dark"
+          href="#"
+          data-remove="true"
+          >Sign out</a
+        >
+      </div>
+      <div class="d-lg-none">
+        <button class="btn navbar-burger p-0">
+          <svg
+            class="text-primary"
+            width="51"
+            height="51"
+            viewbox="0 0 56 56"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="56" height="56" rx="28" fill="currentColor"></rect>
+            <path
+              d="M37 32H19M37 24H19"
+              stroke="white"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="d-none navbar-menu position-fixed top-0 start-0 bottom-0 w-75 mw-xs"
+    style="z-index: 9999"
+  >
+    <div
+      class="navbar-close navbar-backdrop position-fixed top-0 start-0 end-0 bottom-0 bg-dark"
+      style="opacity: 75%"
+    ></div>
+    <nav
+      class="position-relative h-100 w-100 d-flex flex-column justify-content-between py-8 px-8 bg-white overflow-auto"
+    >
+      <div class="d-flex align-items-center">
+        <a class="me-auto h4 mb-0 text-decoration-none" href="#">
+          <img
+            class="img-fluid"
+            src="flaro-assets/logos/flaro-logo-black.svg"
+            alt=""
+          />
         </a>
-        <div class="collapse navbar-collapse position-absolute top-50 start-50 translate-middle">
-          <ul class="navbar-nav mx-auto">
-            <li class="nav-item"><a class="nav-link" href="#">Crear tiquete</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Mis tiquetes</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Idioma</a></li>
-            <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
-          </ul>
-        </div>
-        <div class="d-none d-lg-block"><a class="btn text-black btn-outline-light-dark" href="#" data-remove="true">Sing out</a></div>
-        <div class="d-lg-none">
-          <button class="btn navbar-burger p-0">
-            <svg class="text-primary" width="51" height="51" viewbox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="56" height="56" rx="28" fill="currentColor"></rect>
-              <path d="M37 32H19M37 24H19" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </button>
-        </div>
+      </div>
+      <div class="py-16">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Crear tiquete</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Mis tiquetes</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Idioma</a></li>
+        </ul>
+      </div>
+      <div>
+        <a class="btn w-100 fw-medium" href="#">Login</a
+        ><a class="btn w-100 btn-primary" href="#">Sing out</a>
       </div>
     </nav>
-    <div class="d-none navbar-menu position-fixed top-0 start-0 bottom-0 w-75 mw-xs" style="z-index: 9999;">
-      <div class="navbar-close navbar-backdrop position-fixed top-0 start-0 end-0 bottom-0 bg-dark" style="opacity: 75%;"></div>
-      <nav class="position-relative h-100 w-100 d-flex flex-column justify-content-between py-8 px-8 bg-white overflow-auto">
-        <div class="d-flex align-items-center">
-          <a class="me-auto h4 mb-0 text-decoration-none" href="#">
-            <img class="img-fluid" src="flaro-assets/logos/flaro-logo-black.svg" alt="">
-          </a>
-        </div>
-        <div class="py-16">
-          <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#">Crear tiquete</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Mis tiquetes</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Idioma</a></li>
-          </ul>
-        </div>
-        <div><a class="btn w-100 fw-medium" href="#">Login</a><a class="btn w-100 btn-primary" href="#">Sing out</a></div>
-      </nav>
-    </div>
-  </section>
+  </div>
+</section>
