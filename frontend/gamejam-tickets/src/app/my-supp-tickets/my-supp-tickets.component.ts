@@ -5,11 +5,12 @@ import { SupportService } from '../services/support.service';
 import { Category } from '../models/category.model';
 import { SupportTicket } from '../models/supportTicket.model';
 import { RouterModule } from '@angular/router';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-my-supp-tickets',
   standalone: true,
-  imports: [TranslateModule, NavBarSupportComponent, RouterModule],
+  imports: [TranslateModule, NavBarSupportComponent, RouterModule, NgStyle],
   templateUrl: './my-supp-tickets.component.html',
   styleUrl: './my-supp-tickets.component.css',
 })
@@ -19,7 +20,7 @@ export class MySuppTicketsComponent implements OnInit {
   tickets: SupportTicket[] = [];
   filteredTickets: SupportTicket[] = [];
   errorMessage: string | null = null;
-  categoryMap: { [key: string]: string } = {};
+  categoryMap: { [key: string]: { name: string; color: string } } = {};
   selectedCategory: string | null = null;
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
@@ -29,9 +30,9 @@ export class MySuppTicketsComponent implements OnInit {
       next: (res: Category[]) => {
         this.categories = res;
         this.categoryMap = this.categories.reduce((map, category) => {
-          map[category._id] = category.name;
+          map[category._id] = { name: category.name, color: category.color };
           return map;
-        }, {} as { [key: string]: string });
+        }, {} as { [key: string]: { name: string; color: string } });
       },
       error: (err) => {
         this.errorMessage = 'Failed to load categories';
@@ -83,5 +84,9 @@ export class MySuppTicketsComponent implements OnInit {
     this.selectedClosure = null;
     this.selectedResolution = null;
     this.filteredTickets = [...this.tickets]; // Reset to all tickets
+  }
+
+  getCategoryColor(categoryId: string): string {
+    return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
   }
 }

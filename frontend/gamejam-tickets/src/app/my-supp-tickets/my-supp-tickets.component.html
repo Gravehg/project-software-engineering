@@ -97,7 +97,7 @@
       @if(selectedCategory){
       <div class="col-12 col-md-3 col-lg-3">
         <p>
-          {{ categoryMap[selectedCategory] }}
+          {{ categoryMap[selectedCategory].name }}
         </p>
       </div>
       } @if(selectedClosure){
@@ -132,14 +132,41 @@
               <h5 class="card-title">{{ ticket.topic }}</h5>
             </div>
             <!-- Section 3: Status Information -->
-            <div class="col-md-4">
-              <p class="card-text">{{ ticket.closureState }}</p>
-              <p class="card-text">
-                {{ ticket.resolutionState }}
-              </p>
-              <p class="card-text">
-                {{ categoryMap[ticket.category] }}
-              </p>
+            <div class="col-md-4 p-2">
+              <div
+                class="p-2 info-container shadow"
+                [ngStyle]="{
+                  'background-color':
+                    ticket.closureState === 'Open'
+                      ? '#005927'
+                      : '#a1052e',
+                }"
+              >
+                <p class="card-text">{{ ticket.closureState }}</p>
+              </div>
+              <div
+                class="p-2 info-container shadow mt-2"
+                [ngStyle]="{
+                  'background-color':
+                    ticket.resolutionState === 'Resolved'
+                      ? '#005927'
+                      : '#a1052e',
+                }"
+              >
+                <p class="card-text">
+                  {{ ticket.resolutionState }}
+                </p>
+              </div>
+              <div
+                class="p-2 info-container shadow mt-2"
+                [ngStyle]="{
+                  'background-color': getCategoryColor(ticket.category),
+                }"
+              >
+                <p class="card-text category-text">
+                  {{ categoryMap[ticket.category].name }}
+                </p>
+              </div>
             </div>
           </div>
         </div>

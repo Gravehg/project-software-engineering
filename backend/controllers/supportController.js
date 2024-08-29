@@ -1,4 +1,5 @@
 const Ticket = require("../models/ticketModel");
+const User = require("../models/userModel");
 
 const getAssignedTickets = async (req, res) => {
   try {
@@ -9,8 +10,12 @@ const getAssignedTickets = async (req, res) => {
     })
       .sort({ creationDate: -1 })
       .exec();
-
-    return res.status(200).json(tickets);
+    const user = await User.findById(supportPayLoad.idUser);
+    const ticketsWithUserName = tickets.map((ticket) => ({
+      ...ticket.toObject(),
+      userName: user.name,
+    }));
+    return res.status(200).json(ticketsWithUserName);
   } catch {
     return res
       .status(500)

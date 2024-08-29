@@ -9,3 +9,13 @@
 .card:hover {
   cursor: pointer;
 }
+
+.info-container {
+  max-width: 40%;
+  border-radius: 3%;
+  color: white;
+}
+
+.category-text {
+  color: white;
+}
