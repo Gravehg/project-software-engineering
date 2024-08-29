@@ -17,6 +17,8 @@ export class UserService {
   }
 
   isLogged(): Observable<any> {
-    return this.http.get(`${this.authApiUrl}is-logged`);
+    return this.http.get(`${this.authApiUrl}is-logged`, {
+      observe: 'response',
+    });
   }
 }

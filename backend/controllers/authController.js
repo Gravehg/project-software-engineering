@@ -1,5 +1,6 @@
 const JWT = require("jsonwebtoken");
 const User = require("../models/userModel");
+const Support = require("../models/supportModel");
 const { sendEmail } = require("../services/mailer");
 
 const login = async (req, res) => {
@@ -101,4 +102,46 @@ const verifyToken = async (req, res) => {
   }
 };
 
-module.exports = { login, verifyToken, magicLink };
+const validateSession = (req, res, next) => {
+  const token = req.cookies.sessionToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
+  try {
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    req.userPayLoad = {
+      userId: decoded.userId,
+      roles: decoded.roles,
+      email: decoded.email,
+    };
+    next();
+  } catch {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
+};
+
+const validateSupport = async (req, res, next) => {
+  try {
+    const userPayLoad = req.userPayLoad;
+    const support = await Support.findOne({
+      idUser: userPayLoad.userId,
+    }).populate("supportCategories");
+    if (!support) {
+      return res.status(401).json({ success: false, error: "Not a support" });
+    }
+    req.userPayLoad = { ...userPayLoad, supportInfo: support };
+    next();
+  } catch {
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal server error, try again" });
+  }
+};
+
+module.exports = {
+  login,
+  verifyToken,
+  magicLink,
+  validateSession,
+  validateSupport,
+};

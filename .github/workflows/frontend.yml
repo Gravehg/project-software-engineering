@@ -5,10 +5,6 @@ on:
     paths: 
     - 'frontend/gamejam-tickets/**'
     branches: [ main ]
-  pull_request:
-    paths:
-    - 'frontend/gamejam-tickets/**'
-    branches: [ main ]
 
 jobs:
   build:

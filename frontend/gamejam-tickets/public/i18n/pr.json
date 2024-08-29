@@ -21,5 +21,7 @@
   "USER_NAME": "Nome",
   "USER_EMAIL": "Correio eletrônico",
   "DATE": "Data",
-  "SEE_MORE": "Ver mais"
+  "SEE_MORE": "Ver mais",
+  "RESET_FILTERS_BUTTON": "Redefinir filtros",
+  "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados."
 }

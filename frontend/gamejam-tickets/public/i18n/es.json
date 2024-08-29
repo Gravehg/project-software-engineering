@@ -21,5 +21,7 @@
   "USER_NAME": "Nombre",
   "USER_EMAIL": "Correo electrónico",
   "DATE": "Fecha",
-  "SEE_MORE": "Ver más"
+  "SEE_MORE": "Ver más",
+  "RESET_FILTERS_BUTTON": "Resetear filtros",
+  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados"
 }
