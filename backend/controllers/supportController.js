@@ -1,11 +1,15 @@
 const Ticket = require("../models/ticketModel");
 
 const getAssignedTickets = async (req, res) => {
-  console.log("test");
   try {
     const userPayLoad = req.userPayLoad;
     const supportPayLoad = userPayLoad.supportInfo;
-    const tickets = await Ticket.find({ idSupport: supportPayLoad._id });
+    const tickets = await Ticket.find({
+      idSupport: supportPayLoad._id,
+    })
+      .sort({ creationDate: -1 })
+      .exec();
+
     return res.status(200).json(tickets);
   } catch {
     return res

@@ -18,5 +18,6 @@
   "CLOSED_FILTER_TEXT": "Feichado",
   "RESOLVED_FILTER_TEXT": "Resolvido",
   "NOT_RESOLVED_FILTER_TEXT": "Não resolvido",
-  "RESET_FILTERS_BUTTON": "Redefinir filtros"
+  "RESET_FILTERS_BUTTON": "Redefinir filtros",
+  "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados."
 }

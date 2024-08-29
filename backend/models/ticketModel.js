@@ -7,8 +7,8 @@ const ticketSchema = new Schema({
     required: true,
   },
   idSupport: {
-    type: String,
-    required: false,
+    type: Schema.Types.ObjectId,
+    ref: "Support",
   },
   resolutionState: {
     type: String,
@@ -24,6 +24,10 @@ const ticketSchema = new Schema({
   },
   topic: {
     type: String,
+    required: true,
+  },
+  creationDate: {
+    type: Date,
     required: true,
   },
 });
