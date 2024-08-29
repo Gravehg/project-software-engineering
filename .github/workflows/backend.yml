@@ -28,19 +28,7 @@ jobs:
 
         - name: Install Dependencies
           run: npm install
-          working-directory: ./backend/
-          
-        - name: Remove existing backend directory on remote server
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USERNAME }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            port: ${{ secrets.SSH_PORT }}
-            script: |
-              # Remove existing backend directory
-              sudo rm -rf ${{ secrets.WORKING_DIR }}/backend
-              # Optionally, create the directory if needed
+          working-directory: ./backend
 
         - name: Deploy to OCI VM
           uses: appleboy/scp-action@master
@@ -49,7 +37,7 @@ jobs:
               username: ${{ secrets.SSH_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: ${{secrets.SSH_PORT}}
-              source: "./backend/**"
+              source: "./backend/*"
               target: ${{secrets.WORKING_DIR}}/backend/
 
         - name: Restart service
@@ -60,7 +48,6 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             port: 22
             script: |
-              sudo cp ${{secrets.WORKING_DIR}}/${{secrets.SSH_COPY_FILE}} ${{ secrets.WORKING_DIR }}/backend
               sudo systemctl restart ${{ secrets.SERVICE_NAME }}
               
 
