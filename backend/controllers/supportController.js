@@ -1,4 +1,3 @@
-const SupportCategory = require("./supportCategoryController");
 const Ticket = require("../models/ticketModel");
 
 const getAssignedTickets = async (req, res) => {
