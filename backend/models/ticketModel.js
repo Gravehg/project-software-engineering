@@ -2,19 +2,27 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
-  id_user_issued: {
+  idUserIssued: {
     type: String,
     required: true,
   },
-  id_support: {
+  idSupport: {
+    type: String,
+    required: false,
+  },
+  resolutionState: {
     type: String,
     required: true,
   },
-  resolution_state: {
+  closureState: {
     type: String,
     required: true,
   },
-  closure_state: {
+  category: {
+    type: String,
+    required: true,
+  },
+  topic: {
     type: String,
     required: true,
   },

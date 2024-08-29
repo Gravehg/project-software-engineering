@@ -17,5 +17,6 @@
   "OPEN_FILTER_TEXT": "Abierto",
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
-  "NOT_RESOLVED_FILTER_TEXT": "No resuelto"
+  "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
+  "RESET_FILTERS_BUTTON": "Resetear filtros"
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { TicketsJammersComponent } from './jammers-users/tickets-jammers/tickets-jammers.component'; // Import the JammersUsersComponent class
+import { TicketsJammersComponent } from './jammers-users/tickets-jammers/tickets-jammers.component';
 import { authGuardGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
@@ -14,7 +14,7 @@ export const routes: Routes = [
       import('./jammers-users/jammers-users.routes').then(
         (m) => m.JAMMERS_USERS
       ),
-    //canActivate: [authGuardGuard], esto se tiene que descomentar despues
+    //canActivate: [authGuardGuard],
   },
   {
     path: 'supp-tickets',
@@ -22,7 +22,7 @@ export const routes: Routes = [
       import('./my-supp-tickets/my-supp-tickets.routes').then(
         (m) => m.SUPPORTTICKETS
       ),
-    //canActivate: [authGuardGuard], esto se tiene que descomentar despues
+    //canActivate: [authGuardGuard],
   },
   {
     path: '**',
