@@ -31,4 +31,6 @@ export class MySuppTicketsComponent implements OnInit {
   onFilterClosure(closure: String) {}
 
   onFilterResolution(resolution: String) {}
+
+  resetFilters() {}
 }
