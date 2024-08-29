@@ -25,7 +25,18 @@ export class MySuppTicketsComponent implements OnInit {
         console.error('Error fetching categories:', err);
       },
     });
+
+    this.SupportService.getSupportTickets().subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        (this.errorMessage = 'Failed to get tickets, try again!'),
+          console.log('Error fetching tickets', err);
+      },
+    });
   }
+
   onFilterCategory(category: String) {}
 
   onFilterClosure(closure: String) {}

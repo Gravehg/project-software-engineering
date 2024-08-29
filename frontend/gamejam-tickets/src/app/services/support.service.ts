@@ -23,5 +23,7 @@ export class SupportService {
     );
   }
 
-  getSupportTickets(): void {}
+  getSupportTickets(): Observable<any> {
+    return this.http.get(`${this.supportApiUrl}get-assigned-tickets`);
+  }
 }

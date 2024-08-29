@@ -1,10 +1,17 @@
 const SupportCategory = require("./supportCategoryController");
+const Ticket = require("../models/ticketModel");
 
-const getAssignedTickets = (req, res) => {
-  const userPayLoad = req.userPayLoad;
-  const supportPayLoad = userPayLoad.supportInfo;
-  console.log(supportPayLoad);
-  return res.status(200).json({ success: true, msg: "Testing" });
+const getAssignedTickets = async (req, res) => {
+  try {
+    const userPayLoad = req.userPayLoad;
+    const supportPayLoad = userPayLoad.supportInfo;
+    const tickets = await Ticket.find({ idSupport: supportPayLoad._id });
+    return res.status(200).json(tickets);
+  } catch {
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
 };
 
 const getSupportCategories = (req, res) => {
