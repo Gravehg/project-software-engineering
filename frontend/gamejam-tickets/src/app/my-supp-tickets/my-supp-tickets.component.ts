@@ -16,7 +16,7 @@ export class MySuppTicketsComponent implements OnInit {
   categories: Category[] = [];
   errorMessage: string | null = null;
   ngOnInit(): void {
-    this.SupportService.getCategories().subscribe({
+    this.SupportService.getSupportCategories().subscribe({
       next: (res: Category[]) => {
         this.categories = res;
       },

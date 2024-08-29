@@ -109,7 +109,7 @@ const validateSession = (req, res, next) => {
   }
   try {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
-    req.userPayload = {
+    req.userPayLoad = {
       userId: decoded.userId,
       roles: decoded.roles,
       email: decoded.email,
@@ -123,7 +123,9 @@ const validateSession = (req, res, next) => {
 const validateSupport = async (req, res, next) => {
   try {
     const userPayLoad = req.userPayLoad;
-    const support = await Support.findOne({ idUser: userPayLoad.idUser });
+    const support = await Support.findOne({
+      idUser: userPayLoad.userId,
+    }).populate("supportCategories");
     if (!support) {
       return res.status(401).json({ success: false, error: "Not a support" });
     }
