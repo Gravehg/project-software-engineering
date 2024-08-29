@@ -17,5 +17,9 @@
   "OPEN_FILTER_TEXT": "Abierto",
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
-  "NOT_RESOLVED_FILTER_TEXT": "No resuelto"
+  "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
+  "USER_NAME": "Nombre",
+  "USER_EMAIL": "Correo electrónico",
+  "DATE": "Fecha",
+  "SEE_MORE": "Ver más"
 }

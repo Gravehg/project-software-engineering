@@ -17,5 +17,9 @@
   "OPEN_FILTER_TEXT": "Open",
   "CLOSED_FILTER_TEXT": "Closed",
   "RESOLVED_FILTER_TEXT": "Resolved",
-  "NOT_RESOLVED_FILTER_TEXT": "Not resolved"
+  "NOT_RESOLVED_FILTER_TEXT": "Not resolved",
+  "USER_NAME": "Name",
+  "USER_EMAIL": "Email",
+  "DATE": "Date",
+  "SEE_MORE": "See more"
 }
