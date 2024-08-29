@@ -17,5 +17,6 @@
   "OPEN_FILTER_TEXT": "Aberto",
   "CLOSED_FILTER_TEXT": "Feichado",
   "RESOLVED_FILTER_TEXT": "Resolvido",
-  "NOT_RESOLVED_FILTER_TEXT": "Não resolvido"
+  "NOT_RESOLVED_FILTER_TEXT": "Não resolvido",
+  "TICKET_CREATION_NAVBAR":"Criação de bilhetes"
 }

@@ -8,6 +8,7 @@
 
 /*Se encarga del contenedor del text box*/
 .form-control{
+    margin-top: 10%;
     width: 95%;
     height: 100%;
     resize: none;   
