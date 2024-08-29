@@ -1,6 +1,7 @@
 const Ticket = require("../models/ticketModel");
 
 const getAssignedTickets = async (req, res) => {
+  console.log(req.userPayLoad);
   try {
     const userPayLoad = req.userPayLoad;
     const supportPayLoad = userPayLoad.supportInfo;
