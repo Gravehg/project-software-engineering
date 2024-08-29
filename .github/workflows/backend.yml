@@ -33,8 +33,8 @@ jobs:
               username: ${{ secrets.SSH_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: ${{secrets.SSH_PORT}}
-              source: "./backend/*"
-              target: ${{secrets.WORKING_DIR}}/backend/
+              source: "./backend/"
+              target: ${{ secrets.WORKING_DIR }}/
 
         - name: Restart service
           uses: appleboy/ssh-action@master
