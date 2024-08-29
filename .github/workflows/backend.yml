@@ -41,6 +41,7 @@ jobs:
               # Remove existing backend directory
               sudo rm -rf ${{ secrets.WORKING_DIR }}/backend
               # Optionally, create the directory if needed
+              sudo cp ${{secrets.WORKING_DIR}}/${secrets.SSH_COPY_FILE} ${{ secrets.WORKING_DIR }}/backend
 
         - name: Deploy to OCI VM
           uses: appleboy/scp-action@master
