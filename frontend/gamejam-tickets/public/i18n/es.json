@@ -18,5 +18,6 @@
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
   "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
-  "RESET_FILTERS_BUTTON": "Resetear filtros"
+  "RESET_FILTERS_BUTTON": "Resetear filtros",
+  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados"
 }

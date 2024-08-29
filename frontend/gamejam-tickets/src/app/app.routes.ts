@@ -14,7 +14,7 @@ export const routes: Routes = [
       import('./jammers-users/jammers-users.routes').then(
         (m) => m.JAMMERS_USERS
       ),
-    //canActivate: [authGuardGuard],
+    canActivate: [authGuardGuard],
   },
   {
     path: 'supp-tickets',
@@ -22,7 +22,7 @@ export const routes: Routes = [
       import('./my-supp-tickets/my-supp-tickets.routes').then(
         (m) => m.SUPPORTTICKETS
       ),
-    //canActivate: [authGuardGuard],
+    canActivate: [authGuardGuard],
   },
   {
     path: '**',

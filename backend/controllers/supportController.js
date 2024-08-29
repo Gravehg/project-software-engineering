@@ -1,12 +1,21 @@
 const Ticket = require("../models/ticketModel");
+const User = require("../models/userModel");
 
 const getAssignedTickets = async (req, res) => {
-  console.log("test");
   try {
     const userPayLoad = req.userPayLoad;
     const supportPayLoad = userPayLoad.supportInfo;
-    const tickets = await Ticket.find({ idSupport: supportPayLoad._id });
-    return res.status(200).json(tickets);
+    const tickets = await Ticket.find({
+      idSupport: supportPayLoad._id,
+    })
+      .sort({ creationDate: -1 })
+      .exec();
+    const user = await User.findById(supportPayLoad.idUser);
+    const ticketsWithUserName = tickets.map((ticket) => ({
+      ...ticket.toObject(),
+      userName: user.name,
+    }));
+    return res.status(200).json(ticketsWithUserName);
   } catch {
     return res
       .status(500)

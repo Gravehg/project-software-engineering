@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category.model';
+import { SupportTicket } from '../models/supportTicket.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,9 @@ export class SupportService {
     );
   }
 
-  getSupportTickets(): Observable<any> {
-    return this.http.get(`${this.supportApiUrl}get-assigned-tickets`);
+  getSupportTickets(): Observable<SupportTicket[]> {
+    return this.http.get<SupportTicket[]>(
+      `${this.supportApiUrl}get-assigned-tickets`
+    );
   }
 }
