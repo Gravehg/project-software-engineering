@@ -5,17 +5,19 @@ const Message = require("../models/messageModel");
 
 //Crea el tickete de manera completa, añadiendo su chat correspondiente y su primer mensaje.
 const addTicket = async (req, res) => {
+    
     const newTicket = new Ticket({
         idUserIssued:'',
         idSupport:'',
         resolutionState:'',
         closureState:'',
         category:'',
-        topic:''
+        topic:'',
+        creationDate:new Date()
     });
     newTicket.save().then(nTicket=>{
         //nTicket._id;
-        addNewChat(nTicket._id,'idUserIssued','idSupport');
+        addNewChat(nTicket._id,'idUserIssued','idSupport','creationDate');
     })
     return res
     .status(201)
@@ -34,25 +36,15 @@ function addNewChat(idTicket,idUserIssued,idSupport){
 }
 //Funcion encargada de agregar cualquier mensaje
 function addMessge(nIdChat,nIdUser,nIdSupport){
-    tempDateTime = getCurrentDateTime();
+    
     const newMessage = new Message({
         idChat:nIdChat,
         idUser:nIdUser,
         idSupport:nIdSupport,
-        dateHour:tempDateTime
+        dateHour:new Date()
+
     });
     newMessage.save();
-}
-//Funcion encargada de regresar fechas/hora actuales
-function getCurrentDateTime() {
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 

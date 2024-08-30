@@ -3,12 +3,12 @@ const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
   idUserIssued: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   idSupport: {
-    type: String,
-    required: false,
+    type: Schema.Types.ObjectId,
+    ref: "Support",
   },
   resolutionState: {
     type: String,
@@ -24,6 +24,10 @@ const ticketSchema = new Schema({
   },
   topic: {
     type: String,
+    required: true,
+  },
+  creationDate: {
+    type: Date,
     required: true,
   },
 });

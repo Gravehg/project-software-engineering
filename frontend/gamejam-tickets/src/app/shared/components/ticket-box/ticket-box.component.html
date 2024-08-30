@@ -1,7 +1,8 @@
   <div class="container custom-container-height">
     <div class="custom-rectangle mx-auto my-5">
       <app-check></app-check>
-      <app-ticket-text-box></app-ticket-text-box>
+      <app-topic-box></app-topic-box>
+      <app-ticket-text-box (newMessageEvent)="reseptorFather($event)"></app-ticket-text-box>
       <app-ticket-send-button></app-ticket-send-button>
       <!-- Contenido del rectángulo -->
     </div>

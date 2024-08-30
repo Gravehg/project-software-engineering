@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 
 @Component({
   selector: 'app-ticket-send-button',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './ticket-send-button.component.css'
 })
 export class TicketSendButtonComponent {
+  @Output() sendTicket = new EventEmitter<string>();
 
+
+  public btnClick():void{
+    this.sendTicket.emit('1');
+  }
 }
