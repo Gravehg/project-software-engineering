@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getAssignedTickets,
   getSupportCategories,
+  getSupportTicketPool,
 } = require("../controllers/supportController");
 const {
   validateSession,
@@ -21,6 +22,13 @@ router.get(
   validateSession,
   validateSupport,
   getSupportCategories
+);
+
+router.get(
+  "/get-pool-tickets",
+  validateSession,
+  validateSupport,
+  getSupportTicketPool
 );
 
 module.exports = router;

@@ -19,5 +19,6 @@
   "RESOLVED_FILTER_TEXT": "Resuelto",
   "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
-  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados"
+  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
+  "ASSIGN_TICKET_TEXT": "Asignar tiquete"
 }

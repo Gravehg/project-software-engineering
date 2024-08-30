@@ -19,5 +19,6 @@
   "RESOLVED_FILTER_TEXT": "Resolved",
   "NOT_RESOLVED_FILTER_TEXT": "Not resolved",
   "RESET_FILTERS_BUTTON": "Reset filters",
-  "NO_TICKETS_FILTER": "No tickets with the selected filters"
+  "NO_TICKETS_FILTER": "No tickets with the selected filters",
+  "ASSIGN_TICKET_TEXT": "Assign ticket"
 }

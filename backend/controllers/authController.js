@@ -34,11 +34,11 @@ const login = async (req, res) => {
 
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/ticket-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/tickets-pool`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/ticket-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/tickets-pool`
       );
     } else {
       return res.redirect(

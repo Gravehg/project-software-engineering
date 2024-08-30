@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavBarSupportComponent } from '../shared/components/nav-bar-support/nav-bar-support.component';
+import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { SupportService } from '../services/support.service';
-import { Category } from '../models/category.model';
-import { SupportTicket } from '../models/supportTicket.model';
+import { SupportService } from '../../services/support.service';
+import { Category } from '../../models/category.model';
+import { SupportTicket } from '../../models/supportTicket.model';
 import { RouterModule } from '@angular/router';
 import { NgStyle } from '@angular/common';
 
