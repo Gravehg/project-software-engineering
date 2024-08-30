@@ -9,12 +9,19 @@ const getAssignedTickets = async (req, res) => {
       idSupport: supportPayLoad._id,
     })
       .sort({ creationDate: -1 })
+      .populate("idUserIssued")
       .exec();
-    const user = await User.findById(supportPayLoad.idUser);
-    const ticketsWithUserName = tickets.map((ticket) => ({
-      ...ticket.toObject(),
-      userName: user.name,
+
+    const ticketsWithUserName = tickets.map((item) => ({
+      _id: item._id,
+      userName: item.idUserIssued.name,
+      category: item.category,
+      topic: item.topic,
+      creationDate: item.creationDate,
+      closureState: item.closureState,
+      resolutionState: item.resolutionState,
     }));
+
     return res.status(200).json(ticketsWithUserName);
   } catch {
     return res
@@ -34,4 +41,38 @@ const getSupportCategories = (req, res) => {
   return res.status(201).json(r_categories);
 };
 
-module.exports = { getAssignedTickets, getSupportCategories };
+const getSupportTicketPool = async (req, res) => {
+  const userPayLoad = req.userPayLoad;
+  const supportPayLoad = userPayLoad.supportInfo;
+  const categories = supportPayLoad.supportCategories.map((category) => ({
+    ...category.toObject(),
+    _id: category._id.toString(),
+  }));
+
+  const categoryIds = categories.map((category) => category._id);
+  const tickets = await Ticket.find({
+    category: { $in: categoryIds },
+    $or: [{ idSupport: { $exists: false } }, { idSupport: null }],
+  })
+    .sort({ creationDate: -1 })
+    .populate("idUserIssued")
+    .exec();
+
+  const ticketsWithUserName = tickets.map((item) => ({
+    _id: item._id,
+    userName: item.idUserIssued.name,
+    category: item.category,
+    topic: item.topic,
+    creationDate: item.creationDate,
+    closureState: item.closureState,
+    resolutionState: item.resolutionState,
+  }));
+
+  return res.status(200).json(ticketsWithUserName);
+};
+
+module.exports = {
+  getAssignedTickets,
+  getSupportCategories,
+  getSupportTicketPool,
+};
