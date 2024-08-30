@@ -1,0 +1,45 @@
+<app-nav-bar-jammer></app-nav-bar-jammer>
+<section>
+  <div class="container">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Servicio al cliente</span>
+        <div class="d-flex align-items-center">
+          <span>Ticket Status:</span>
+          <span class="m1-2 status-text " [ngClass]="{'text-success': status === 'Open', 'text-danger': status === 'Close'}">
+            {{ status }}
+          </span>
+          <span 
+            class="status-circle ml-2"
+            [ngClass]="{'bg-success': status === 'Open', 'bg-danger': status === 'Close'}"
+          ></span>
+        </div>
+      </div>
+      
+      <div class="message-container-wrapper">
+        <div *ngFor="let msg of messages" class="d-flex flex-column">
+          <div class="d-flex flex-row" [ngClass]="msg.remitent === 'Support' ? 'justify-content-start' : 'justify-content-end'">
+            <div class="message-container p-2">
+              <div 
+                class="message-bubble" [ngClass]="msg.remitent === 'Support' ? 'bg-orange' : 'bg-blue text-white'">
+                {{ msg.text}}
+              </div>
+              <hr>
+              <div class="message-footer" [ngClass]="msg.remitent === 'Support' ? 'bg-orange' : 'bg-blue text-white'">
+                <small>{{ msg.idUser }}</small>
+                <small class="ml-auto">{{ msg.textDate | date:'HH:mm' }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-footer d-flex align-items-center">
+          <input type="text" class="form-control flex-grow-3 me-2"  [(ngModel)]="newMessage" (keydown.enter)="sendMessage(newMessage)" 
+          placeholder="Escribe un mensaje...">
+          <button class="btn btn-primary" (click)="sendMessage(newMessage)">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
