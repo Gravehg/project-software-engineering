@@ -19,10 +19,17 @@ export const routes: Routes = [
   {
     path: 'supp-tickets',
     loadChildren: () =>
-      import('./my-supp-tickets/my-supp-tickets.routes').then(
+      import('./users-supports/my-supp-tickets/my-supp-tickets.routes').then(
         (m) => m.SUPPORTTICKETS
       ),
     canActivate: [authGuardGuard],
+  },
+  {
+    path: 'tickets-pool',
+    loadChildren: () =>
+      import('./users-supports/tickets-pool/tickets-pool.routes').then(
+        (m) => m.TICKETSPOOL
+      ),
   },
   {
     path: '**',

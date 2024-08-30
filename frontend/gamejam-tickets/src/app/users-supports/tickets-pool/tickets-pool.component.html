@@ -1,0 +1,79 @@
+<app-nav-bar-support></app-nav-bar-support>
+<div class="d-flex p-4 justify-content-center align-items-center">
+  <div class="container-fluid p-4 w-100 overflow-hidden">
+    <div class="row gy-4 mt-4">
+      <!-- Card 1 -->
+      @for(ticket of tickets; track ticket._id){
+      <div class="col-12">
+        <div class="card p-4 shadow">
+          <div class="row">
+            <!-- Section 1: Ticket Information -->
+            <div class="col-md-3">
+              <h5 class="card-title">{{ ticket._id }}</h5>
+              <p class="card-text">{{ ticket.userName }}</p>
+              <p class="card-text">{{ ticket.creationDate }}</p>
+            </div>
+            <!-- Section 2: Category Information -->
+            <div class="col-md-3 align-self-center">
+              <h5 class="card-title">{{ ticket.topic }}</h5>
+            </div>
+
+            <div class="col-md-3 align-self-center">
+              <button type="button" class="btn btn-warning">
+                {{ "ASSIGN_TICKET_TEXT" | translate }}
+              </button>
+            </div>
+            <!-- Section 3: Status Information -->
+            <div class="col-md-3 p-2">
+              <div
+                class="p-2 info-container shadow"
+                [ngStyle]="{
+                  'background-color':
+                    ticket.closureState === 'Open'
+                      ? '#005927'
+                      : '#a1052e',
+                }"
+              >
+                <p class="card-text">{{ ticket.closureState }}</p>
+              </div>
+              <div
+                class="p-2 info-container shadow mt-2"
+                [ngStyle]="{
+                  'background-color':
+                    ticket.resolutionState === 'Resolved'
+                      ? '#005927'
+                      : '#a1052e',
+                }"
+              >
+                <p class="card-text">
+                  {{ ticket.resolutionState }}
+                </p>
+              </div>
+              <div
+                class="p-2 info-container shadow mt-2"
+                [ngStyle]="{
+                  'background-color': getCategoryColor(ticket.category),
+                }"
+              >
+                <p class="card-text category-text">
+                  {{ categoryMap[ticket.category].name }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }@empty {
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6 col-md-12 col-lg-12">
+              <p>{{ "NO_TICKETS_FILTER" | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
   idUserIssued: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   idSupport: {
     type: Schema.Types.ObjectId,

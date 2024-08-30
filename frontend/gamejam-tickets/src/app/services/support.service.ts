@@ -29,4 +29,10 @@ export class SupportService {
       `${this.supportApiUrl}get-assigned-tickets`
     );
   }
+
+  getSupportPoolTickets(): Observable<SupportTicket[]> {
+    return this.http.get<SupportTicket[]>(
+      `${this.supportApiUrl}get-pool-tickets`
+    );
+  }
 }
