@@ -1,9 +1,120 @@
 <app-nav-bar-support></app-nav-bar-support>
 <div class="d-flex p-4 justify-content-center align-items-center">
   <div class="container-fluid p-4 w-100 overflow-hidden">
+    <div class="row gy-4 p-4">
+      <div class="col-12 col-md-3 col-lg-3">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_CATEGORY_TEXT" | translate }}
+          </a>
+          <ul class="dropdown-menu">
+            @for (category of categories; track category._id) {
+            <li>
+              <a
+                (click)="onFilterCategory(category._id)"
+                class="dropdown-item"
+                >{{ category.name }}</a
+              >
+            </li>
+            } @empty {
+            <li>There are no items.</li>
+            }
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_CLOSURE_TEXT" | translate }}
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="onFilterClosure('Open')">{{
+                "OPEN_FILTER_TEXT" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="onFilterClosure('Closed')">{{
+                "CLOSED_FILTER_TEXT" | translate
+              }}</a>
+            </li>
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_RESOLUTION_TEXT" | translate }}
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="onFilterResolution('Resolved')"
+                >{{ "RESOLVED_FILTER_TEXT" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="onFilterResolution('Not resolved')"
+                >{{ "NOT_RESOLVED_FILTER_TEXT" | translate }}</a
+              >
+            </li>
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="resetFilters()"
+        >
+          {{ "RESET_FILTERS_BUTTON" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-2 gy-2 p-4">
+      @if(selectedCategory){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>
+          {{ categoryMap[selectedCategory].name }}
+        </p>
+      </div>
+      } @if(selectedClosure){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>{{ selectedClosure }}</p>
+      </div>
+      } @if(selectedResolution){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>
+          {{ selectedResolution }}
+        </p>
+      </div>
+      }
+    </div>
     <div class="row gy-4 mt-4">
       <!-- Card 1 -->
-      @for(ticket of tickets; track ticket._id){
+      @for(ticket of filteredTickets; track ticket._id){
       <div class="col-12">
         <div class="card p-4 shadow">
           <div class="row">
