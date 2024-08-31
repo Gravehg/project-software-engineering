@@ -48,4 +48,4 @@ function addMessge(nIdChat,nIdUser,nIdSupport){
 }
 
 
-
+module.exports = { addTicket };

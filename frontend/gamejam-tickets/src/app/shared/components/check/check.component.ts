@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Asegúrate de importar CommonModule
 import { SupportService } from '../../../services/support.service';
 import { Category } from '../../../models/category.model';
@@ -11,6 +11,7 @@ import { Category } from '../../../models/category.model';
 })
 
 export class CheckComponent implements OnInit{
+  @Output() newMessageEvent = new EventEmitter<string>();
   constructor(public SupportService: SupportService) {}
   categories: Category[] = [];
   errorMessage: string | null = null;
@@ -29,10 +30,14 @@ export class CheckComponent implements OnInit{
   selectedCategoryId: string | null = null;
   toggleSelection(categoryId: string): void {
     this.selectedCategoryId = this.selectedCategoryId === categoryId ? null : categoryId;
+    this.newMessageEvent.emit(categoryId);//Manda el category id al padre text-box
   }
   isChecked(categoryId: string): boolean {
     return this.selectedCategoryId === categoryId;
   }
+  
+
+
 }
 
 

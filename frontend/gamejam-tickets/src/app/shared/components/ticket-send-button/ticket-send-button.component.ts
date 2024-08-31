@@ -8,10 +8,10 @@ import { Component, EventEmitter, Output, output } from '@angular/core';
   styleUrl: './ticket-send-button.component.css'
 })
 export class TicketSendButtonComponent {
-  @Output() sendTicket = new EventEmitter<string>();
+  @Output() newMessageEvent = new EventEmitter<string>();
 
 
   public btnClick():void{
-    this.sendTicket.emit('1');
+    this.newMessageEvent.emit('1');
   }
 }
