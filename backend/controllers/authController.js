@@ -142,7 +142,7 @@ const validateAdmin = async (req, res, next) => {
   try {
     const userPayLoad = req.userPayLoad;
     const user = await User.findById(userPayLoad.userId);
-    if (!user || !user.roles.includes("Admin")) {
+    if (!user || !user.roles.includes("GlobalOrganizer")) {
       return res.status(403).json({ success: false, error: "Not authorized as admin" });
     }
     req.userPayLoad = { ...userPayLoad, adminInfo: { isAdmin: true } };
