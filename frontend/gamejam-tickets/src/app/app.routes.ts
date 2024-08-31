@@ -32,6 +32,21 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'admin-tickets',
+    loadChildren: () =>
+      import('./users-admins/admin-tickets/admin-tickets.routes').then(
+        (m) => m.ADMINTICKETS
+      ),
+    canActivate: [authGuardGuard],
+  },
+  {
+    path: 'admin-tickets-pool',
+    loadChildren: () =>
+      import('./users-admins/tickets-pool/tickets-pool.routes').then(
+        (m) => m.TICKETSPOOL
+      ),
+  },
+  {
     path: '**',
     loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN), //Aquí se importa el módulo de
   },
