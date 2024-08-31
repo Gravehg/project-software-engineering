@@ -138,10 +138,27 @@ const validateSupport = async (req, res, next) => {
   }
 };
 
+const validateAdmin = async (req, res, next) => {
+  try {
+    const userPayLoad = req.userPayLoad;
+    const user = await User.findById(userPayLoad.userId);
+    if (!user || !user.roles.includes("Admin")) {
+      return res.status(403).json({ success: false, error: "Not authorized as admin" });
+    }
+    req.userPayLoad = { ...userPayLoad, adminInfo: { isAdmin: true } };
+    next();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal server error, try again" });
+  }
+};
+
 module.exports = {
   login,
   verifyToken,
   magicLink,
   validateSession,
   validateSupport,
+  validateAdmin,
 };
