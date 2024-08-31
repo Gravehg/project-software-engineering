@@ -23,5 +23,7 @@
   "DATE": "Date",
   "SEE_MORE": "See more",
   "RESET_FILTERS_BUTTON": "Reset filters",
-  "NO_TICKETS_FILTER": "No tickets with the selected filters"
+  "NO_TICKETS_FILTER": "No tickets with the selected filters",
+  "CATEGORY": "Category",
+  "STATUS": "Status"
 }

@@ -23,5 +23,7 @@
   "DATE": "Data",
   "SEE_MORE": "Ver mais",
   "RESET_FILTERS_BUTTON": "Redefinir filtros",
-  "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados."
+  "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados.",
+  "CATEGORY": "Categoria",
+  "STATUS": "Estado"
 }

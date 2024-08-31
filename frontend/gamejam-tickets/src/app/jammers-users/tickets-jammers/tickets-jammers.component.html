@@ -2,24 +2,33 @@
 <div class="ticket-historail-container">
   <div class="container">
     <div class="menu-drops-container">
-      <div class="dropdown">
+      <div class=" dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown button
+          {{ "CATEGORY" | translate }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+          @for (category of categories; track category._id) {
+          <li>
+            <a
+              (click)="onFilterCategory(category._id)"
+              class="dropdown-item"
+              >{{ category.name }}</a
+            >
+          </li>
+          } @empty {
+          <li><a class="dropdown-item" href="#">There are no items.</a></li>
+          }
         </ul>
       </div>
+
       <div class="dropdown moving-right">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown button
+          {{ "STATUS" | translate }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+          <li><a class="dropdown-item" href="#">{{ "OPEN_FILTER_TEXT" | translate }}</a></li>
+          <li><a class="dropdown-item" href="#">{{ "CLOSED_FILTER_TEXT" | translate }}</a></li>
+          <li><a class="dropdown-item" href="#">{{  "RESOLVED_FILTER_TEXT" | translate}}</a></li>
         </ul>
       </div>
     </div>

@@ -138,10 +138,38 @@ const validateSupport = async (req, res, next) => {
   }
 };
 
+const validateUser = (req, res, next) => {
+  const token = req.cookies.sessionToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
+
+  try {
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    const rolesToCheck = ["LocalOrganizer", "Judge", "Jammer"];
+
+    const hasValidRole = rolesToCheck.some((role) => decoded.roles.includes(role));
+
+    if (!hasValidRole) {
+      return res.status(403).json({ success: false, error: "User not authorized" });
+    }
+
+    req.userPayLoad = {
+      userId: decoded.userId,
+      roles: decoded.roles,
+      email: decoded.email,
+    };
+    next();
+  } catch (error) {
+    return res.status(401).json({ success: false, error: "Invalid token" });
+  }
+};
+
 module.exports = {
   login,
   verifyToken,
   magicLink,
   validateSession,
   validateSupport,
+  validateUser,
 };

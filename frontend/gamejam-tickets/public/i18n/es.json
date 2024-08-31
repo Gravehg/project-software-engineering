@@ -23,5 +23,7 @@
   "DATE": "Fecha",
   "SEE_MORE": "Ver más",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
-  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados"
+  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
+  "CATEGORY": "Categoría",
+  "STATUS": "Estado"
 }

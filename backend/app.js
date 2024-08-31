@@ -5,6 +5,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const categoryRoutes = require("./routes/supportCategoryRoutes");
 const supportRoutes = require("./routes/supportRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // Serve static files from the Angular app
 app.use(express.static(path.join(__dirname, "public/browser")));
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use("/api/auth/", authRoutes);
 app.use("/api/category/", categoryRoutes);
 app.use("/api/support/", supportRoutes);
+app.use("/api/user/", userRoutes);
 
 // Handle Angular routing, return all requests to the Angular app
 app.get("*", (req, res) => {
