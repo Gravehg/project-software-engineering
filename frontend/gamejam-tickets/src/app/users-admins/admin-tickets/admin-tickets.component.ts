@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
+import { NavBarAdminComponent } from '../../shared/components/nav-bar-admin/nav-bar-admin.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminService } from '../../services/admin.service';
 import { Category } from '../../models/category.model';
@@ -10,7 +10,7 @@ import { NgStyle } from '@angular/common';
 @Component({
   selector: 'app-admin-tickets',
   standalone: true,
-  imports: [TranslateModule, NavBarSupportComponent, RouterModule, NgStyle],
+  imports: [TranslateModule, NavBarAdminComponent, RouterModule, NgStyle],
   templateUrl: './admin-tickets.component.html',
   styleUrl: './admin-tickets.component.css',
 })
@@ -37,6 +37,7 @@ export class AdminTicketsComponent implements OnInit {
       error: (err) => {
         this.errorMessage = 'Failed to load categories';
         console.error('Error fetching categories:', err);
+        console.error('Error response body:', err.error);
       },
     });
 
@@ -48,6 +49,7 @@ export class AdminTicketsComponent implements OnInit {
       error: (err) => {
         (this.errorMessage = 'Failed to get tickets, try again!'),
           console.log('Error fetching tickets', err);
+          console.error('Error response body:', err.error);
       },
     });
   }

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { TicketsPoolComponent } from './tickets-pool.component';
+import { TicketsPoolComponent } from './admin-tickets-pool.component';
 export const TICKETSPOOL: Routes = [
   { path: '', component: TicketsPoolComponent },
 ];

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TicketsPoolComponent } from './tickets-pool.component';
+import { TicketsPoolComponent } from './admin-tickets-pool.component';
 
 describe('TicketsPoolComponent', () => {
   let component: TicketsPoolComponent;
