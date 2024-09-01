@@ -38,7 +38,7 @@ export class SupportService {
   }
 
   private fetchSupportPoolTickets(): Observable<SupportTicket[]> {
-    return this.http.get<SupportTicket[]>(`${this.supportApiUrl}support-ticket-pool`).pipe(
+    return this.http.get<SupportTicket[]>(`${this.supportApiUrl}get-pool-tickets`).pipe(
       retry(2), // Reintenta hasta 2 veces en caso de error
       catchError(error => {
         console.error('Error al obtener tickets:', error);
