@@ -30,7 +30,6 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('TicketsPoolComponent initialized');
     this.loadCategories();
-    this.subscribeToTickets();
   }
 
   ngOnDestroy(): void {
@@ -53,21 +52,6 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
       error: (err) => {
         this.errorMessage = 'Failed to load categories';
         console.error('Error fetching categories:', err);
-      },
-    });
-  }
-
-  private subscribeToTickets(): void {
-    console.log('Subscribing to tickets');
-    this.ticketSubscription = this.SupportService.getSupportPoolTickets().subscribe({
-      next: (res: SupportTicket[]) => {
-        console.log('Tickets actualizados:', new Date().toLocaleString(), 'Cantidad:', res.length);
-        this.tickets = res;
-        this.applyFilters();
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to get tickets, try again!';
-        console.error('Error fetching tickets', err);
       },
     });
   }
@@ -102,6 +86,11 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
     this.selectedClosure = null;
     this.selectedResolution = null;
     this.filteredTickets = [...this.tickets]; // Reset to all tickets
+  }
+
+  refreshTickets() {
+    console.log("Refresh tickets");
+    this.SupportService.refreshTickets();
   }
 
   getCategoryColor(categoryId: string): string {

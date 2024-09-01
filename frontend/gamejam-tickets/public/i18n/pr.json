@@ -19,6 +19,7 @@
   "RESOLVED_FILTER_TEXT": "Resolvido",
   "NOT_RESOLVED_FILTER_TEXT": "Não resolvido",
   "RESET_FILTERS_BUTTON": "Redefinir filtros",
+  "REFRESH_TICKETS_BUTTON": "Atualizar bilhetes",
   "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados.",
   "ASSIGN_TICKET_TEXT": "Atribuir bilhete"
 }
