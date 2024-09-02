@@ -19,7 +19,9 @@ export class SupportService {
   constructor(private http: HttpClient) {}
 
   refreshTickets(): Observable<SupportTicket[]> {
-    return this.http.get<SupportTicket[]>(`${this.categoryApiUrl}get-pool-tickets`);
+    return this.http.get<SupportTicket[]>(
+      `${this.categoryApiUrl}get-pool-tickets`
+    );
   }
 
   getCategories(): Observable<Category[]> {
@@ -39,10 +41,12 @@ export class SupportService {
   }
 
   getSupportPoolTickets(): Observable<SupportTicket[]> {
-    return this.ticketsSubject.asObservable();
+    return this.http.get<SupportTicket[]>(
+      `${this.supportApiUrl}get-pool-tickets`
+    );
   }
 
   assignTicket(ticketId: string): Observable<any> {
-    return this.http.post(`${this.supportApiUrl}assign-ticket`, ticketId);
+    return this.http.post(`${this.supportApiUrl}assign-ticket`, { ticketId });
   }
 }

@@ -18,9 +18,12 @@
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
   "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
-  "TICKET_CREATION_NAVBAR":"Creación de tiquetes",
+  "TICKET_CREATION_NAVBAR": "Creación de tiquetes",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
   "REFRESH_TICKETS_BUTTON": "Refrescar tiquetes",
   "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
-  "ASSIGN_TICKET_TEXT": "Asignar tiquete"
+  "ASSIGN_TICKET_TEXT": "Asignar tiquete",
+  "SUCCESS_TICKET_ASSIGN_ALERT_TEXT": "El tiquete ha sido asignado exitosamente",
+  "FAILURE_TICKET_ASSIGN_ALERT_TEXT": "Ha habido un error, porfavor trate de nuevo",
+  "FAILURE_TICKET_ASSIGNED": "Este tiquete ya se ha asignado, se refrescará el pool"
 }
