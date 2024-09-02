@@ -22,5 +22,10 @@
   "RESET_FILTERS_BUTTON": "Redefinir filtros",
   "REFRESH_TICKETS_BUTTON": "Atualizar bilhetes",
   "NO_TICKETS_FILTER": "Não há tickets com os filtros selecionados.",
-  "ASSIGN_TICKET_TEXT": "Atribuir bilhete"
+  "ASSIGN_TICKET_TEXT": "Atribuir bilhete",
+  "ALERT_SUCCESS_TICKET_SEND": "O ticket foi enviado com sucesso, o departamento responderá o mais breve possível",
+  "ALERT_ERROR_TICKET_SEND":"O ticket não pôde ser enviado, verifique se todas as informações estão completas",
+  "SUBMIT":"Enviar",
+  "TOPIC":"Assunto",
+  "MESSAGE":"Mensagem"
 }

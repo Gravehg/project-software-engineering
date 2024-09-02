@@ -47,8 +47,6 @@ function addMessage(nIdChat,nIdUser,nIdSupport,idText){
 }
 
 
-module.exports = { addTicket };
-
 const getTicketById = async (req, res) => {
     try {
       const ticketID = req.query.ticketID; 
@@ -97,5 +95,5 @@ const updateClosureState = async (req, res) => {
     return res.status(500).json({ success: false, msg: 'There have been an error while changing closureState' });
   }
 };
-
-module.exports = { getTicketById,updateClosureState};
+module.exports = { addTicket };
+module.exports = { getTicketById,updateClosureState,addTicket};

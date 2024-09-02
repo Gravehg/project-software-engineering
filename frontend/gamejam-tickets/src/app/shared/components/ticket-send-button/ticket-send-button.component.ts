@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output, output } from '@angular/core';
-
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-ticket-send-button',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './ticket-send-button.component.html',
   styleUrl: './ticket-send-button.component.css'
 })
