@@ -18,6 +18,7 @@
   "CLOSED_FILTER_TEXT": "Closed",
   "RESOLVED_FILTER_TEXT": "Resolved",
   "NOT_RESOLVED_FILTER_TEXT": "Not resolved",
+  "TICKET_CREATION_NAVBAR": "Ticket creation",
   "RESET_FILTERS_BUTTON": "Reset filters",
   "REFRESH_TICKETS_BUTTON": "Refresh tickets",
   "NO_TICKETS_FILTER": "No tickets with the selected filters",

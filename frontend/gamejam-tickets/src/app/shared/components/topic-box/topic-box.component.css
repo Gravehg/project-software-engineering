@@ -1,0 +1,21 @@
+/*Se encarga div que contiene al text box*/
+.text-box-styles{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+/*Se encarga del contenedor del text box*/
+.form-control{
+    width: 95%;
+    resize: none;   
+}
+
+/*Si el margin-left esta en12% se alinea con el texto de los checks  */
+.fonts {
+    margin-top: 2%;
+    font-style:normal;
+    font-size: 120%;
+    margin-left: 5%; 
+    display: block;
+  }

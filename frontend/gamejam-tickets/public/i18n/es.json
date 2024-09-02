@@ -18,6 +18,7 @@
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
   "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
+  "TICKET_CREATION_NAVBAR":"Creación de tiquetes",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
   "REFRESH_TICKETS_BUTTON": "Refrescar tiquetes",
   "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
