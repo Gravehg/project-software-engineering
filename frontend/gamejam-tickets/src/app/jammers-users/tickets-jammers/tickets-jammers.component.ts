@@ -4,7 +4,7 @@ import { CardComponent } from '../../shared/components/card/card.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Category } from '../../models/category.model';
-import { SupportTicket } from '../../models/supportTicket.model';
+import { UsertTicket } from '../../models/userTicket.model';
 import { CommonModule } from '@angular/common'; // Asegúrate de importar CommonModule
 
 @Component({
@@ -15,15 +15,17 @@ import { CommonModule } from '@angular/common'; // Asegúrate de importar Common
   styleUrl: './tickets-jammers.component.css',
 })
 export class TicketsJammersComponent {
-  translate: TranslateService = inject(TranslateService);
   constructor(public UserService: UserService) {}
+  translate: TranslateService = inject(TranslateService);
+
   categories: Category[] = [];
   errorMessage: string | null = null;
   selectedCategory: string | null = null;
-  filteredTickets: SupportTicket[] = [];
-  tickets: SupportTicket[] = [];
+  filteredTickets: UsertTicket[] = [];
+  tickets: UsertTicket[] = [];
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
+
   ngOnInit(): void {
     this.UserService.getCategories().subscribe({
       next: (res: Category[]) => {
@@ -35,50 +37,43 @@ export class TicketsJammersComponent {
       },
     });
 
-    // this.UserService.getUserCategories().subscribe({
-    //   next: (res: SupportTicket[]) => {
-    //     this.tickets = res;
-    //     this.filteredTickets = [...this.tickets];
-    //   },
-    //   error: (err) => {
-    //     (this.errorMessage = 'Failed to get tickets, try again!'),
-    //       console.log('Error fetching tickets', err);
-    //   },
-    // });
+    this.UserService.getJammerTickets().subscribe({
+      next: (res: UsertTicket[]) => {
+        this.tickets = res;
+        this.filteredTickets = [...this.tickets];
+        console.log('Tickets: ', this.tickets);
+      },
+      error: (err) => {
+        (this.errorMessage = 'Failed to get tickets, try again!'),
+          console.log('Error fetching tickets', err);
+      },
+    });
 
   }
-  selectedCategoryId: string | null = null;
-  toggleSelection(categoryId: string): void {
-    this.selectedCategoryId = this.selectedCategoryId === categoryId ? null : categoryId;
-  }
-  isChecked(categoryId: string): boolean {
-    return this.selectedCategoryId === categoryId;
-  }
 
-  onFilterCategory(category: string) {
-    this.selectedCategory = category;
+  onFilterCategory(categoryId: string) {
+    this.selectedCategory = categoryId;
+    console.log('Selected category:', this.selectedCategory);
     this.applyFilters();
   }
 
-  onFilterClosure(closure: string) {
-    this.selectedClosure = closure;
+  onFilterClosure(closureState: string) {
+    this.selectedClosure = closureState;
     this.applyFilters();
   }
 
-  onFilterResolution(resolution: string) {
-    this.selectedResolution = resolution;
+  onFilterResolution(resolutionState: string) {
+    this.selectedResolution = resolutionState;
     this.applyFilters();
   }
 
   private applyFilters() {
     this.filteredTickets = this.tickets.filter((ticket) => {
-      return (
-        (!this.selectedCategory || ticket.category === this.selectedCategory) &&
-        (!this.selectedClosure ||
-          ticket.closureState === this.selectedClosure) &&
-        (!this.selectedResolution ||
-          ticket.resolutionState === this.selectedResolution)
-      );
+      const matchesCategory = !this.selectedCategory || ticket.category === this.selectedCategory;
+      const matchesClosure = !this.selectedClosure || ticket.closureState === this.selectedClosure;
+      const matchesResolution = !this.selectedResolution || ticket.resolutionState === this.selectedResolution;
+
+      return matchesCategory && matchesClosure && matchesResolution;
     });
   }
 

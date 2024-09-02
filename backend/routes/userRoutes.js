@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  getAssignedTickets,
+  getUserTickets,
   getUserCategories,
 } = require("../controllers/userController");
 const {
@@ -13,7 +13,7 @@ router.get(
   "/get-jammer-tickets",
   validateSession,
   validateUser,
-  getAssignedTickets
+  getUserTickets
 );
 
 router.get(

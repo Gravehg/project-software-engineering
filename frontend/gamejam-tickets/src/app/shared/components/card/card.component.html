@@ -1,31 +1,36 @@
 <div class="container">
-    <div class="custom-card">
-      <div class="body-card">
-        <p>
-          <strong>ID:</strong> estoesunid
-        </p>
-        <p>
-          <strong>{{ "USER_EMAIL" | translate }}:</strong> esto es un Correo
-        </p>
-        <p>
-          <strong>{{ "DATE" | translate }}:</strong> 23/08/2024
-        </p>
+  <div class="custom-card">
+    <div class="body-card">
+      <p>
+        <strong>ID:</strong> {{ ticket._id || "" }}
+      </p>
+      <p>
+        <strong>{{ "USER_EMAIL" | translate }}:</strong> {{ ticket.email || "" }}
+      </p>
+      <p>
+        <strong>{{ "DATE" | translate }}:</strong> {{ ticket.date || "" }}
+      </p>
+    </div>
+    <div class="body-card">
+      <p>
+        <strong>{{ "TOPIC" | translate }}:</strong> {{ ticket.topic || "" }}
+      </p>
+    </div>
+    <div class="body-card">
+      <div class="states">
+        <ng-container *ngIf="ticket.closureState === 'Open'; else elseBlock">
+          <div class="badge rounded-pill bg-primary">{{ ticket.closureState }}</div>
+        </ng-container>
+        <ng-template #elseBlock>
+          <div class="badge rounded-pill bg-danger">{{ ticket.closureState }}</div>
+        </ng-template>
+        <div class="badge rounded-pill bg-dark">{{ ticket.category || "" }}</div>
       </div>
-      <div class="body-card">
-        <p>
-          dfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-          ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-        </p>
-      </div>
-      <div class="body-card">
-        <div class="states">
-          <div class="badge rounded-pill bg-primary">Cerrado</div>
-          <div class="badge rounded-pill bg-dark">Categoría</div>
-        </div>
-        <div class="read-more">
-          <a rel="stylesheet " href="#">
-            {{  "READ_MORE" | translate }}
-          </a>
-        </div>
+      <div class="read-more">
+        <a href="#">
+          {{ "READ_MORE" | translate }}
+        </a>
       </div>
     </div>
+  </div>
+</div>

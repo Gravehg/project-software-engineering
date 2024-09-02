@@ -1,6 +1,6 @@
 .ticket-historail-container {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 
     display: flex;
     flex-direction: column;
@@ -37,7 +37,15 @@
     height: 100%;
 
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column; /* Cambiado de 'row' a 'column' para apilar las tarjetas en columna */
+    justify-content: flex-start; /* Ajusta la alineación si es necesario */
     align-items: center;
+
+    border: none;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 2vh; /* Espacio entre las tarjetas */
+    border: none;
 }

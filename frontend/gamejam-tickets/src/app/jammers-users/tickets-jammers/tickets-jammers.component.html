@@ -10,7 +10,7 @@
           @for (category of categories; track category._id) {
           <li>
             <a
-              (click)="onFilterCategory(category._id)"
+              (click)="onFilterCategory(category.name)"
               class="dropdown-item"
               >{{ category.name }}</a
             >
@@ -26,14 +26,27 @@
           {{ "STATUS" | translate }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">{{ "OPEN_FILTER_TEXT" | translate }}</a></li>
-          <li><a class="dropdown-item" href="#">{{ "CLOSED_FILTER_TEXT" | translate }}</a></li>
-          <li><a class="dropdown-item" href="#">{{  "RESOLVED_FILTER_TEXT" | translate}}</a></li>
+          <li><a (click)="onFilterClosure('Open')" class="dropdown-item" href="#">{{ "OPEN_FILTER_TEXT" | translate }}</a></li>
+          <li><a (click)="onFilterClosure('Closed')" class="dropdown-item" href="#">{{ "CLOSED_FILTER_TEXT" | translate }}</a></li>
+          <!-- <li><a class="dropdown-item" href="#">{{  "RESOLVED_FILTER_TEXT" | translate}}</a></li> -->
         </ul>
+      </div>
+
+      <div class="dropdown moving-right">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="resetFilters()"
+        >
+          {{ "RESET_FILTERS_BUTTON" | translate }}
+        </button>
       </div>
     </div>
     <div class="card-container">
-      <app-card/>
+      <!-- <p>Esto es un id temporal: {{filteredTickets[0].topic}}</p> -->
+      @for (ticket of filteredTickets; track ticket._id) {
+        <app-card class="card" [ticket]="ticket" />
+      }
     </div>
   </div>
 </div>
