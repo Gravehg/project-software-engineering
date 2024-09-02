@@ -25,5 +25,10 @@
   "ASSIGN_TICKET_TEXT": "Asignar tiquete",
   "SUCCESS_TICKET_ASSIGN_ALERT_TEXT": "El tiquete ha sido asignado exitosamente",
   "FAILURE_TICKET_ASSIGN_ALERT_TEXT": "Ha habido un error, porfavor trate de nuevo",
-  "FAILURE_TICKET_ASSIGNED": "Este tiquete ya se ha asignado, se refrescará el pool"
+  "FAILURE_TICKET_ASSIGNED": "Este tiquete ya se ha asignado, se refrescará el pool",
+  "ALERT_SUCCESS_TICKET_SEND": "El tiequete se ha enviado con exito, el departamento responderá con la menor brevedad posible",
+  "ALERT_ERROR_TICKET_SEND": "El ticket no se ha podido enviar, chequea que se encuentre toda la información",
+  "SUBMIT": "Enviar",
+  "TOPIC": "Asunto",
+  "MESSAGE": "Mensaje"
 }

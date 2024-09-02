@@ -103,5 +103,4 @@ const updateClosureState = async (req, res) => {
     });
   }
 };
-
 module.exports = { getTicketById, updateClosureState, addTicket };

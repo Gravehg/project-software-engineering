@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-ticket-text-box',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './ticket-text-box.component.html',
   styleUrl: './ticket-text-box.component.css'
 })

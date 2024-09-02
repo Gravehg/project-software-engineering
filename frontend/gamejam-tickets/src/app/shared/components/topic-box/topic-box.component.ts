@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-topic-box',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './topic-box.component.html',
   styleUrl: './topic-box.component.css'
 })

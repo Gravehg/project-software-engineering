@@ -25,5 +25,10 @@
   "ASSIGN_TICKET_TEXT": "Atribuir bilhete",
   "SUCCESS_TICKET_ASSIGN_ALERT_TEXT": "O ticket foi atribuído com sucesso",
   "FAILURE_TICKET_ASSIGN_ALERT_TEXT": "Houve um erro, por favor tente novamente",
-  "FAILURE_TICKET_ASSIGNED": "Este ticket já foi atribuído, o pool será atualizado."
+  "FAILURE_TICKET_ASSIGNED": "Este ticket já foi atribuído, o pool será atualizado.",
+  "ALERT_SUCCESS_TICKET_SEND": "O ticket foi enviado com sucesso, o departamento responderá o mais breve possível",
+  "ALERT_ERROR_TICKET_SEND": "O ticket não pôde ser enviado, verifique se todas as informações estão completas",
+  "SUBMIT": "Enviar",
+  "TOPIC": "Assunto",
+  "MESSAGE": "Mensagem"
 }
