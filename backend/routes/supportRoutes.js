@@ -3,6 +3,7 @@ const {
   getAssignedTickets,
   getSupportCategories,
   getSupportTicketPool,
+  assignTicket,
 } = require("../controllers/supportController");
 const {
   validateSession,
@@ -30,5 +31,7 @@ router.get(
   validateSupport,
   getSupportTicketPool
 );
+
+router.post("/assign-ticket", validateSession, validateSupport, assignTicket);
 
 module.exports = router;

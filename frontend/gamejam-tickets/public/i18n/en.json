@@ -23,9 +23,12 @@
   "REFRESH_TICKETS_BUTTON": "Refresh tickets",
   "NO_TICKETS_FILTER": "No tickets with the selected filters",
   "ASSIGN_TICKET_TEXT": "Assign ticket",
-  "ALERT_SUCCESS_TICKET_SEND":"The ticket has been successfully sent, the department will respond as soon as possible",
+  "SUCCESS_TICKET_ASSIGN_ALERT_TEXT": "The ticket has been assigned successfuly",
+  "FAILURE_TICKET_ASSIGN_ALERT_TEXT": "There has been an error, please try again",
+  "FAILURE_TICKET_ASSIGNED": "This ticket has already been assigned. The pool will be refreshed",
+  "ALERT_SUCCESS_TICKET_SEND": "The ticket has been successfully sent, the department will respond as soon as possible",
   "ALERT_ERROR_TICKET_SEND": "The ticket could not be sent, please check that all the information is complete",
-  "SUBMIT":"Submit",
-  "TOPIC":"Topic",
-  "MESSAGE":"Message"
+  "SUBMIT": "Submit",
+  "TOPIC": "Topic",
+  "MESSAGE": "Message"
 }

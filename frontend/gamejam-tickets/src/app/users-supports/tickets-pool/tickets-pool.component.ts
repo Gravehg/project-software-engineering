@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupportService } from '../../services/support.service';
 import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './tickets-pool.component.css',
 })
 export class TicketsPoolComponent implements OnInit, OnDestroy {
+  translate: TranslateService = inject(TranslateService);
   categories: Category[] = [];
   tickets: SupportTicket[] = [];
   filteredTickets: SupportTicket[] = [];
@@ -29,21 +30,8 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
   constructor(public SupportService: SupportService) {}
 
   ngOnInit(): void {
-    console.log('TicketsPoolComponent initialized');
-    this.loadCategories();
-  }
-
-  ngOnDestroy(): void {
-    console.log('TicketsPoolComponent destroyed');
-    if (this.ticketSubscription) {
-      this.ticketSubscription.unsubscribe();
-    }
-  }
-
-  private loadCategories(): void {
     this.SupportService.getSupportCategories().subscribe({
       next: (res: Category[]) => {
-        console.log(`Categories loaded: ${res.length}`);
         this.categories = res;
         this.categoryMap = this.categories.reduce((map, category) => {
           map[category._id] = { name: category.name, color: category.color };
@@ -55,6 +43,24 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
         console.error('Error fetching categories:', err);
       },
     });
+
+    this.SupportService.getSupportPoolTickets().subscribe({
+      next: (res: SupportTicket[]) => {
+        this.tickets = res;
+        this.filteredTickets = [...this.tickets];
+      },
+      error: (err) => {
+        (this.errorMessage = 'Failed to get tickets, try again!'),
+          console.log('Error fetching tickets', err);
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    console.log('TicketsPoolComponent destroyed');
+    if (this.ticketSubscription) {
+      this.ticketSubscription.unsubscribe();
+    }
   }
 
   onFilterCategory(category: string) {
@@ -92,8 +98,16 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
   }
 
   refreshTickets() {
-    console.log('Refresh tickets');
-    this.SupportService.refreshTickets();
+    this.SupportService.getSupportPoolTickets().subscribe({
+      next: (res: SupportTicket[]) => {
+        this.tickets = res;
+        this.filteredTickets = [...this.tickets];
+      },
+      error: (err) => {
+        (this.errorMessage = 'Failed to get tickets, try again!'),
+          console.log('Error fetching tickets', err);
+      },
+    });
   }
 
   getCategoryColor(categoryId: string): string {
@@ -104,9 +118,42 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
     this.SupportService.assignTicket(ticketId).subscribe({
       next: (res) => {
         if (res.success) {
+          this.triggerSuccess();
+          this.refreshTickets();
         } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
         }
       },
+      error: (err) => {
+        if (err.error.assigned) {
+          this.triggerFailure('FAILURE_TICKET_ASSIGNED');
+          this.refreshTickets();
+        } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
+        }
+      },
+    });
+  }
+
+  triggerSuccess() {
+    const translatedTitle = this.translate.instant('SUCCESS_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant(
+      'SUCCESS_TICKET_ASSIGN_ALERT_TEXT'
+    );
+    Swal.fire({
+      icon: 'success',
+      title: translatedTitle,
+      text: translatedText,
+    });
+  }
+
+  triggerFailure(toTranslateText: string) {
+    const translatedTitle = this.translate.instant('FAILURE_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant(toTranslateText);
+    Swal.fire({
+      icon: 'error',
+      title: translatedTitle,
+      text: translatedText,
     });
   }
 }
