@@ -22,5 +22,10 @@
   "RESET_FILTERS_BUTTON": "Reset filters",
   "REFRESH_TICKETS_BUTTON": "Refresh tickets",
   "NO_TICKETS_FILTER": "No tickets with the selected filters",
-  "ASSIGN_TICKET_TEXT": "Assign ticket"
+  "ASSIGN_TICKET_TEXT": "Assign ticket",
+  "ALERT_SUCCESS_TICKET_SEND":"The ticket has been successfully sent, the department will respond as soon as possible",
+  "ALERT_ERROR_TICKET_SEND": "The ticket could not be sent, please check that all the information is complete",
+  "SUBMIT":"Submit",
+  "TOPIC":"Topic",
+  "MESSAGE":"Message"
 }
