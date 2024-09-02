@@ -5,6 +5,7 @@ import { SupportService } from '../../services/support.service';
 import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
 import { NgStyle } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tickets-pool',
@@ -88,5 +89,15 @@ export class TicketsPoolComponent {
 
   getCategoryColor(categoryId: string): string {
     return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
+  }
+
+  assignTicket(ticketId: string) {
+    this.SupportService.assignTicket(ticketId).subscribe({
+      next: (res) => {
+        if (res.success) {
+        } else {
+        }
+      },
+    });
   }
 }

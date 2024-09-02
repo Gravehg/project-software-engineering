@@ -35,4 +35,8 @@ export class SupportService {
       `${this.supportApiUrl}get-pool-tickets`
     );
   }
+
+  assignTicket(ticketId: string): Observable<any> {
+    return this.http.post(`${this.supportApiUrl}assign-ticket`, ticketId);
+  }
 }
