@@ -12,22 +12,36 @@ export class ChatService {
   baseApiUrl: string = environment.apiUrl;
   chatApiUrl: string = this.baseApiUrl + '/chat/';
   messageApiUrl: string = this.baseApiUrl + '/message/';
+  ticketApiUrl: string = this.baseApiUrl + '/ticket/';
   
   constructor(private http: HttpClient) {}
 
-  getMessages(chatID: String): Observable<any> {
-    return this.http.post(`${this.chatApiUrl}getMessages`, { chatID });
+  getMessages(chatID: string): Observable<any> { 
+    return this.http.get(`${this.chatApiUrl}getMessages`, {
+      params: { chatID } 
+    });
   }
 
-  getChatID(ticketID: String): Observable<any> {
-    return this.http.post(`${this.chatApiUrl}getMessages`, { ticketID });
-  }
+  getChatID(ticketID: string): Observable<any> {
+    return this.http.get(`${this.chatApiUrl}getChatID`, {
+      params: { ticketID } 
+    });
+  } 
 
-  sendMessage(message: any): Observable<any> {
+  sendMessage(message: Message): Observable<any> {
     return this.http.post(`${this.messageApiUrl}sendMessage`, message);
   }
 
- 
+  getTicketById(ticketID: string): Observable<any> {
+    return this.http.get(`${this.ticketApiUrl}getTicketById`, {
+      params: { ticketID } 
+    });
+  } 
 
-  
+  updateClosureState(ticketID: string, newClosureState: string): Observable<any> {
+    return this.http.put<any>(`${this.ticketApiUrl}updateClosureState`, { ticketID, newClosureState });
+  }
+
+
+
 }

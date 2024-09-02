@@ -5,5 +5,4 @@ const router = express.Router();
 router.get("/getMessages", getMessages);
 router.get("/getChatID", getChatID);
 
-
 module.exports = router;
