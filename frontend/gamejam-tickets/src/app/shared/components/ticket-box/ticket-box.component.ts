@@ -3,7 +3,8 @@ import { CheckComponent } from '../check/check.component';
 import { TicketTextBoxComponent } from '../ticket-text-box/ticket-text-box.component';
 import { TicketSendButtonComponent } from '../ticket-send-button/ticket-send-button.component';
 import { TopicBoxComponent } from '../topic-box/topic-box.component';
-
+import {TicketService} from '../../../services/ticket.service';
+import {ticket} from '../../../models/ticket.model';
 
 @Component({
   selector: 'app-ticket-box',
@@ -16,6 +17,7 @@ export class TicketBoxComponent {
   nFatherChildInfoTextBox = '';
   nFatherChildInfoTopicBox = '';
   nFatherChildInfoCheck = '';
+  constructor(public TicketService: TicketService) {}
   //Función para optener le información brindada por el text-box
   public receptorFatherTextBox(nString:string){
     console.log("Msg "+nString);
@@ -39,16 +41,20 @@ export class TicketBoxComponent {
     const ticketInfo = {
       text: this.nFatherChildInfoTextBox,
       topic: this.nFatherChildInfoTopicBox,
-      check: this.nFatherChildInfoCheck
+      category: this.nFatherChildInfoCheck
     };
-  
-    return {
-      ticketInfo
-    };
-    // console.log("Mandamos la info "+nString);
-    // console.log("Check id "+this.nFatherChildInfoCheck);
-    // console.log("text id "+this.nFatherChildInfoTextBox);
-    // console.log("top id "+this.nFatherChildInfoTopicBox);
-    //this.nFatherChildInfoCheck = nString;
+    this.TicketService.sendTicket(ticketInfo).subscribe({
+      next: (response) => {
+        if (response.success) {
+          console.log("send ticket")
+        } else {
+          console.error('Error sending message:', response.msg);
+        }
+      },
+      error: (error) => {
+        console.error('Error sending message:', error);
+      },
+    });  
   }
+  
 }

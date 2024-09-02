@@ -5,19 +5,18 @@ const Message = require("../models/messageModel");
 
 //Crea el tickete de manera completa, añadiendo su chat correspondiente y su primer mensaje.
 const addTicket = async (req, res) => {
-    
+    console.log("mensaje addticket");
+    const userID = req.userPayLoad.userId;
     const newTicket = new Ticket({
-        idUserIssued:'',
-        idSupport:'',
-        resolutionState:'',
-        closureState:'',
-        category:'',
-        topic:'',
+        idUserIssued: userID,
+        resolutionState:'Not resolved',
+        closureState:'Open',
+        category:req.body.category,
+        topic:req.body.topic,
         creationDate:new Date()
     });
     newTicket.save().then(nTicket=>{
-        //nTicket._id;
-        addNewChat(nTicket._id,'idUserIssued','idSupport','creationDate');
+        addNewChat(nTicket._id, userID,''/*'idSupport'*/,req.body.text);
     })
     return res
     .status(201)
@@ -25,24 +24,24 @@ const addTicket = async (req, res) => {
 
 }
 //Función encargada de agregar un chat nuevo
-function addNewChat(idTicket,idUserIssued,idSupport){
+function addNewChat(idTicket,idUserIssued,idSupport,idText){
     const newChat = new Chat({
-        id_ticket:''
+        id_ticket:idTicket
     });
     newChat.save().then(nChat=>{
-        //nChat._id;
-        addMessge(nChat._id,idUserIssued,idSupport);
+        addMessage(nChat._id,idUserIssued,idSupport,idText);
+        console.log("mensaje",idText);
     });
 }
 //Funcion encargada de agregar cualquier mensaje
-function addMessge(nIdChat,nIdUser,nIdSupport){
-    
+function addMessage(nIdChat,nIdUser,nIdSupport,idText){    
     const newMessage = new Message({
         idChat:nIdChat,
         idUser:nIdUser,
         idSupport:nIdSupport,
+        text:idText,
+        remitent:'Jammer',
         dateHour:new Date()
-
     });
     newMessage.save();
 }

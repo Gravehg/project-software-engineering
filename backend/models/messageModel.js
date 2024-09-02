@@ -1,3 +1,4 @@
+const { text } = require("express");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const messageModelSchema = new Schema({
@@ -13,9 +14,15 @@ const messageModelSchema = new Schema({
         type: String,
         required: false,
       },
-    dateHour:{
-      type: String,
+    textDate:{
+      type: Date,
       required: false,
+    },
+    text:{
+      type: String,
+    },    
+    remitent:{
+      type: String,
     },
   });
 
