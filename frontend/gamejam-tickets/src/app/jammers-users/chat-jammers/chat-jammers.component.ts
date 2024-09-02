@@ -153,7 +153,7 @@ export class ChatJammersComponent implements OnInit  {
     switch (this.closureState) {
       case 'Open':
         return 'bg-success';
-      case 'Close':
+      case 'Closed':
         return 'bg-danger';
       case 'ReOpen':
         return 'bg-reopen';
@@ -166,7 +166,7 @@ export class ChatJammersComponent implements OnInit  {
     switch (this.closureState) {
       case 'Open':
         return 'text-success';
-      case 'Close':
+      case 'Closed':
         return 'text-danger';
       case 'ReOpen':
         return 'text-orange';
@@ -233,7 +233,7 @@ export class ChatJammersComponent implements OnInit  {
 
   handleMessage(): void {
     if (this.newMessage !== '') {
-      if (this.closureState !== 'Close') {
+      if (this.closureState !== 'Closed') {
         this.sendMessage();
       } else {
         this.modal.show();
