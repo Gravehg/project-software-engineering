@@ -5,6 +5,7 @@ import { SupportService } from '../../services/support.service';
 import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
 import { NgStyle } from '@angular/common';
+import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -75,8 +76,10 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
     this.filteredTickets = this.tickets.filter((ticket) => {
       return (
         (!this.selectedCategory || ticket.category === this.selectedCategory) &&
-        (!this.selectedClosure || ticket.closureState === this.selectedClosure) &&
-        (!this.selectedResolution || ticket.resolutionState === this.selectedResolution)
+        (!this.selectedClosure ||
+          ticket.closureState === this.selectedClosure) &&
+        (!this.selectedResolution ||
+          ticket.resolutionState === this.selectedResolution)
       );
     });
   }
@@ -89,11 +92,21 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
   }
 
   refreshTickets() {
-    console.log("Refresh tickets");
+    console.log('Refresh tickets');
     this.SupportService.refreshTickets();
   }
 
   getCategoryColor(categoryId: string): string {
     return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
+  }
+
+  assignTicket(ticketId: string) {
+    this.SupportService.assignTicket(ticketId).subscribe({
+      next: (res) => {
+        if (res.success) {
+        } else {
+        }
+      },
+    });
   }
 }

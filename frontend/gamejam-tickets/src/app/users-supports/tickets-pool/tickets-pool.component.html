@@ -137,7 +137,11 @@
             </div>
 
             <div class="col-md-3 align-self-center">
-              <button type="button" class="btn btn-warning">
+              <button
+                (click)="assignTicket(ticket._id)"
+                type="button"
+                class="btn btn-warning"
+              >
                 {{ "ASSIGN_TICKET_TEXT" | translate }}
               </button>
             </div>

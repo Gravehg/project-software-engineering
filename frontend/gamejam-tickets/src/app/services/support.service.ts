@@ -41,4 +41,8 @@ export class SupportService {
   getSupportPoolTickets(): Observable<SupportTicket[]> {
     return this.ticketsSubject.asObservable();
   }
+
+  assignTicket(ticketId: string): Observable<any> {
+    return this.http.post(`${this.supportApiUrl}assign-ticket`, ticketId);
+  }
 }
