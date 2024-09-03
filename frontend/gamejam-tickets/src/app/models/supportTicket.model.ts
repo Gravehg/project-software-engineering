@@ -1,4 +1,4 @@
-export interface SupportTicket {
+  export interface SupportTicket {
   _id: string;
   userName: string;
   category: string;

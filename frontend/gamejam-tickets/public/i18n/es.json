@@ -22,8 +22,16 @@
   "USER_EMAIL": "Correo electrónico",
   "DATE": "Fecha",
   "SEE_MORE": "Ver más",
-  "RESET_FILTERS_BUTTON": "Resetear filtros",
-  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
   "CATEGORY": "Categoría",
-  "STATUS": "Estado"
+  "STATUS": "Estado",
+  "TICKET_CREATION_NAVBAR":"Creación de tiquetes",
+  "RESET_FILTERS_BUTTON": "Resetear filtros",
+  "REFRESH_TICKETS_BUTTON": "Refrescar tiquetes",
+  "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
+  "ASSIGN_TICKET_TEXT": "Asignar tiquete",
+  "ALERT_SUCCESS_TICKET_SEND": "El tiequete se ha enviado con exito, el departamento responderá con la menor brevedad posible",
+  "ALERT_ERROR_TICKET_SEND": "El ticket no se ha podido enviar, chequea que se encuentre toda la información",
+  "SUBMIT":"Enviar",
+  "TOPIC":"Asunto",
+  "MESSAGE":"Mensaje"
 }

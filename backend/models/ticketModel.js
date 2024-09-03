@@ -9,6 +9,7 @@ const ticketSchema = new Schema({
   idSupport: {
     type: Schema.Types.ObjectId,
     ref: "Support",
+    required: false,
   },
   resolutionState: {
     type: String,

@@ -45,33 +45,6 @@ const getUserTickets = async (req, res) => {
       .json({ success: false, msg: "There has been an error" });
   }
 };
-// const getUserTickets = async (req, res) => {
-//   try {
-//     const userPayLoad = req.userPayLoad;
-    
-//     // Buscar los tickets donde el usuario es el propietario
-//     const tickets = await Ticket.find({
-//       idUserIssued: userPayLoad.userId,
-//     }) .populate('idUserIssued') .populate('category')
-//       .sort({ creationDate: -1 })
-//       .exec();
-
-//     // Opcional: Si se necesita más información sobre el usuario
-//     const user = await User.findById(userPayLoad.userId);
-
-//     // Agregar el nombre de usuario a los tickets
-//     const ticketsWithUserName = tickets.map((ticket) => ({
-//       ...ticket.toObject(),
-//       userName: user.name,
-//     }));
-//     console.log("Enviado tickets:", ticketsWithUserName);
-//     return res.status(200).json(ticketsWithUserName);
-//   } catch (error) {
-//     return res
-//       .status(500)
-//       .json({ success: false, msg: "There has been an error" });
-//   }
-// };
 
 const getUserCategories = (req, res) => {
   const userPayLoad = req.userPayLoad;
