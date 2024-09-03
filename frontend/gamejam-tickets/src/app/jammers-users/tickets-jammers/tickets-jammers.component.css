@@ -1,0 +1,51 @@
+.ticket-historail-container {
+    width: 100%;
+    /* height: 100%; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    margin-top: 3vh;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-drops-container {
+    width: 100%;
+    height: 5vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.moving-right {
+    margin-left: 10vw;
+}
+
+.card-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column; /* Cambiado de 'row' a 'column' para apilar las tarjetas en columna */
+    justify-content: flex-start; /* Ajusta la alineación si es necesario */
+    align-items: center;
+
+    border: none;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 2vh; /* Espacio entre las tarjetas */
+    border: none;
+}
