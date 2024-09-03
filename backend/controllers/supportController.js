@@ -53,7 +53,6 @@ const getSupportTicketPool = async (req, res) => {
     const supportPayLoad = userPayLoad.supportInfo;
     const categories = supportPayLoad.supportCategories.map((category) => ({
       ...category.toObject(),
-      _id: category._id.toString(),
     }));
 
     const categoryIds = categories.map((category) => category._id);
@@ -83,8 +82,38 @@ const getSupportTicketPool = async (req, res) => {
   }
 };
 
+const assignTicket = async (req, res) => {
+  try {
+    const userPayLoad = req.userPayLoad;
+    const supportPayLoad = userPayLoad.supportInfo;
+    const ticketId = req.body.ticketId;
+    const ticket = await Ticket.findOne({
+      _id: ticketId,
+      $or: [{ idSupport: { $exists: false } }, { idSupport: null }],
+    });
+
+    if (!ticket) {
+      return res.status(400).json({
+        success: false,
+        msg: "Ticket already assigned to support",
+        assigned: true,
+      });
+    }
+
+    ticket.idSupport = supportPayLoad.id;
+    await ticket.save();
+
+    return res
+      .status(200)
+      .json({ success: true, msg: "The ticket has been assigned correctly" });
+  } catch {
+    res.status(500).json({ success: false, msg: "There has been an error" });
+  }
+};
+
 module.exports = {
   getAssignedTickets,
   getSupportCategories,
   getSupportTicketPool,
+  assignTicket,
 };
