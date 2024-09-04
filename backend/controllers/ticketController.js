@@ -15,7 +15,7 @@ const addTicket = async (req, res) => {
       creationDate: new Date(),
     });
     newTicket.save().then((nTicket) => {
-      addNewChat(nTicket._id, userID, "" /*'idSupport'*/, req.body.text);
+      addNewChat(nTicket._id, userID, req.body.text);
     });
     return res
       .status(201)
@@ -27,24 +27,22 @@ const addTicket = async (req, res) => {
   }
 };
 //Función encargada de agregar un chat nuevo
-function addNewChat(idTicket, idUserIssued, idSupport, idText) {
+function addNewChat(idTicket, idUserIssued, idText) {
   const newChat = new Chat({
     idTicket: idTicket,
   });
   newChat.save().then((nChat) => {
-    addMessage(nChat._id, idUserIssued, idSupport, idText);
-    console.log("mensaje", idText);
+    addMessage(nChat._id, idUserIssued, idText);
   });
 }
 //Funcion encargada de agregar cualquier mensaje
-function addMessage(nIdChat, nIdUser, nIdSupport, idText) {
+function addMessage(nIdChat, nIdUser, idText) {
   const newMessage = new Message({
     idChat: nIdChat,
     idUser: nIdUser,
-    idSupport: nIdSupport,
     text: idText,
     remitent: "Jammer",
-    dateHour: new Date(),
+    textDate: new Date(),
   });
   newMessage.save();
 }
@@ -63,15 +61,15 @@ const getTicketById = async (req, res) => {
       _id: ticket._id,
       idUserIssued: ticket.idUserIssued._id,
       userName: ticket.idUserIssued.name,
-      idSupport: ticket.idSupport._id,
-      supportName: ticket.idSupport.name,
+      idSupport: ticket.idSupport ? ticket.idSupport._id : "Not assigned",
+      supportName: ticket.idSupport ? ticket.idSupport.name : "Not assigned",
       resolutionState: ticket.resolutionState,
       closureState: ticket.closureState,
       topic: ticket.topic,
     };
     return res.status(200).json({ success: true, ticket: ticketData });
   } catch (error) {
-    console.error("Error al obtener el ticket:", error);
+    console.log(error);
     return res.status(500).json({
       success: false,
       msg: "There have been an error while trying to get the Ticket",
