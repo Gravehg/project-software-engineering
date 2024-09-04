@@ -14,12 +14,12 @@ export const authGuardGuard: CanActivateFn = () => {
       if (response.status === 200) {
         return true;
       } else {
-        router.navigate(['/login']); // Redirect to login if not authenticated
+        router.navigate(['/not-loged-in']); // Redirect to login if not authenticated
         return false;
       }
     }),
     catchError(() => {
-      router.navigate(['/login']); // Redirect to login on error
+      router.navigate(['/not-loged-in']); // Redirect to login on error
       return of(false);
     })
   );
