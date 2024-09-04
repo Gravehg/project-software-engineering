@@ -39,8 +39,11 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
         }, {} as { [key: string]: { name: string; color: string } });
       },
       error: (err) => {
-        this.errorMessage = 'Failed to load categories';
-        console.error('Error fetching categories:', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
 
@@ -50,14 +53,16 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
         this.filteredTickets = [...this.tickets];
       },
       error: (err) => {
-        (this.errorMessage = 'Failed to get tickets, try again!'),
-          console.log('Error fetching tickets', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
   }
 
   ngOnDestroy(): void {
-    console.log('TicketsPoolComponent destroyed');
     if (this.ticketSubscription) {
       this.ticketSubscription.unsubscribe();
     }
@@ -104,9 +109,20 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
         this.filteredTickets = [...this.tickets];
       },
       error: (err) => {
-        (this.errorMessage = 'Failed to get tickets, try again!'),
-          console.log('Error fetching tickets', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
+    });
+  }
+
+  triggerError(error: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error,
     });
   }
 

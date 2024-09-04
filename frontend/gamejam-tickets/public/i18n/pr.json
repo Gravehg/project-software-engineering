@@ -36,5 +36,8 @@
   "ALERT_ERROR_TICKET_SEND": "O ticket não pôde ser enviado, verifique se todas as informações estão completas",
   "SUBMIT": "Enviar",
   "TOPIC": "Assunto",
-  "MESSAGE": "Mensagem"
+  "MESSAGE": "Mensagem",
+  "NOT_FOUND_TEXT": "A página que você está procurando não pôde ser encontrada!",
+  "GO_TO_LOGIN_TEXT": "Ir para a página de login.",
+  "NOT_LOGED_TEXT": "Você não está logado ou sua sessão expirou"
 }
