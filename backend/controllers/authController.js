@@ -148,10 +148,14 @@ const validateUser = (req, res, next) => {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
     const rolesToCheck = ["LocalOrganizer", "Judge", "Jammer"];
 
-    const hasValidRole = rolesToCheck.some((role) => decoded.roles.includes(role));
+    const hasValidRole = rolesToCheck.some((role) =>
+      decoded.roles.includes(role)
+    );
 
     if (!hasValidRole) {
-      return res.status(403).json({ success: false, error: "User not authorized" });
+      return res
+        .status(403)
+        .json({ success: false, error: "User not authorized" });
     }
 
     req.userPayLoad = {

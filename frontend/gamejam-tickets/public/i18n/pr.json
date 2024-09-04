@@ -37,5 +37,8 @@
   "SUBMIT": "Enviar",
   "TOPIC": "Assunto",
   "MESSAGE": "Mensagem",
-  "READ_MORE": "Leia mais"
+  "READ_MORE": "Leia mais",
+  "NOT_FOUND_TEXT": "A página que você está procurando não pôde ser encontrada!",
+  "GO_TO_LOGIN_TEXT": "Ir para a página de login.",
+  "NOT_LOGED_TEXT": "Você não está logado ou sua sessão expirou"
 }

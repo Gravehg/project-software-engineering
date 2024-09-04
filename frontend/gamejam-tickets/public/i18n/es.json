@@ -24,7 +24,7 @@
   "SEE_MORE": "Ver más",
   "CATEGORY": "Categoría",
   "STATUS": "Estado",
-  "TICKET_CREATION_NAVBAR":"Creación de tiquetes",
+  "TICKET_CREATION_NAVBAR": "Creación de tiquetes",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
   "REFRESH_TICKETS_BUTTON": "Refrescar tiquetes",
   "NO_TICKETS_FILTER": "No hay tiquetes con los filtros seleccionados",
@@ -37,5 +37,8 @@
   "SUBMIT": "Enviar",
   "TOPIC": "Asunto",
   "MESSAGE": "Mensaje",
-  "READ_MORE": "Leer más"
+  "READ_MORE": "Leer más",
+  "NOT_FOUND_TEXT": "La página que estás buscando no pudo ser encontrada!",
+  "GO_TO_LOGIN_TEXT": "Ir a la página de login",
+  "NOT_LOGED_TEXT": "No estás logeado o tu sesión expiró"
 }
