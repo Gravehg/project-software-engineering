@@ -41,4 +41,8 @@ export class UserService {
       `${this.supportApiUrl}get-jammer-tickets`
     );
   }
+
+  comprobateTicketSupport(idTicket: string): Observable<any> {
+    return this.http.get(`${this.supportApiUrl}comprobate-ticket-support/` + idTicket);
+  }
 }

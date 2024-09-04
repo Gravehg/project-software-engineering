@@ -36,5 +36,6 @@
   "ALERT_ERROR_TICKET_SEND": "O ticket não pôde ser enviado, verifique se todas as informações estão completas",
   "SUBMIT": "Enviar",
   "TOPIC": "Assunto",
-  "MESSAGE": "Mensagem"
+  "MESSAGE": "Mensagem",
+  "READ_MORE": "Leia mais"
 }

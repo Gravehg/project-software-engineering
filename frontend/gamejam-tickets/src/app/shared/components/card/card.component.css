@@ -42,3 +42,7 @@
     align-self: center;
     display: flex;
 }
+
+.pointer {
+    cursor: pointer;
+}

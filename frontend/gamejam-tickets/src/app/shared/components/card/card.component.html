@@ -27,7 +27,7 @@
         <div class="badge rounded-pill bg-dark">{{ ticket.category || "" }}</div>
       </div>
       <div class="read-more">
-        <a href="#">
+        <a class="pointer" (click)="comprobateTicketSupport(ticket._id)">
           {{ "READ_MORE" | translate }}
         </a>
       </div>
