@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Category } from '../models/category.model';
-import { SupportTicket } from '../models/supportTicket.model';
+import { UsertTicket } from '../models/userTicket.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { SupportTicket } from '../models/supportTicket.model';
 export class UserService {
   baseApiUrl: string = environment.apiUrl;
   categoryApiUrl: string = this.baseApiUrl + '/category/';
-  supportApiUrl: string = this.baseApiUrl + '/support/';
+  supportApiUrl: string = this.baseApiUrl + '/user/';
   authApiUrl: string = this.baseApiUrl + '/auth/';
 
   constructor(private http: HttpClient) {}
@@ -36,8 +36,8 @@ export class UserService {
     );
   }
 
-  getJammerTickets(): Observable<SupportTicket[]> {
-    return this.http.get<SupportTicket[]>(
+  getJammerTickets(): Observable<UsertTicket[]> {
+    return this.http.get<UsertTicket[]>(
       `${this.supportApiUrl}get-jammer-tickets`
     );
   }

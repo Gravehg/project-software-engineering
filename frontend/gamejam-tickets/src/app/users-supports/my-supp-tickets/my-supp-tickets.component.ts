@@ -6,6 +6,7 @@ import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
 import { RouterModule } from '@angular/router';
 import { NgStyle } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-my-supp-tickets',
@@ -35,8 +36,11 @@ export class MySuppTicketsComponent implements OnInit {
         }, {} as { [key: string]: { name: string; color: string } });
       },
       error: (err) => {
-        this.errorMessage = 'Failed to load categories';
-        console.error('Error fetching categories:', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
 
@@ -46,8 +50,11 @@ export class MySuppTicketsComponent implements OnInit {
         this.filteredTickets = [...this.tickets];
       },
       error: (err) => {
-        (this.errorMessage = 'Failed to get tickets, try again!'),
-          console.log('Error fetching tickets', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
   }
@@ -88,5 +95,13 @@ export class MySuppTicketsComponent implements OnInit {
 
   getCategoryColor(categoryId: string): string {
     return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
+  }
+
+  triggerError(error: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error,
+    });
   }
 }

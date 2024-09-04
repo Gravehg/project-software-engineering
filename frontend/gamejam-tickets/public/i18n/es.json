@@ -18,6 +18,12 @@
   "CLOSED_FILTER_TEXT": "Cerrado",
   "RESOLVED_FILTER_TEXT": "Resuelto",
   "NOT_RESOLVED_FILTER_TEXT": "No resuelto",
+  "USER_NAME": "Nombre",
+  "USER_EMAIL": "Correo electrónico",
+  "DATE": "Fecha",
+  "SEE_MORE": "Ver más",
+  "CATEGORY": "Categoría",
+  "STATUS": "Estado",
   "TICKET_CREATION_NAVBAR": "Creación de tiquetes",
   "RESET_FILTERS_BUTTON": "Resetear filtros",
   "REFRESH_TICKETS_BUTTON": "Refrescar tiquetes",
@@ -30,5 +36,8 @@
   "ALERT_ERROR_TICKET_SEND": "El ticket no se ha podido enviar, chequea que se encuentre toda la información",
   "SUBMIT": "Enviar",
   "TOPIC": "Asunto",
-  "MESSAGE": "Mensaje"
+  "MESSAGE": "Mensaje",
+  "NOT_FOUND_TEXT": "La página que estás buscando no pudo ser encontrada!",
+  "GO_TO_LOGIN_TEXT": "Ir a la página de login",
+  "NOT_LOGED_TEXT": "No estás logeado o tu sesión expiró"
 }

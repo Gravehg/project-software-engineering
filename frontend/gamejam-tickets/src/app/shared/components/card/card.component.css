@@ -1,0 +1,44 @@
+.custom-card {
+    width: 100%;
+    height: 100%;
+    /* margin: 0 1vw; */
+    padding: 1vw;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #f8f9fa;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 2vh;
+}
+
+.body-card {
+    width: 33%;
+
+    overflow: hidden; /* Esconde el texto que se sale */
+    text-overflow: ellipsis; /* Agrega "..." cuando el texto es demasiado largo */
+}
+
+.states {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closed {
+    background-color: #dc3545;
+    color: white;
+}
+
+.read-more {
+    color: #007bff;
+    height: 50%;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    display: flex;
+}

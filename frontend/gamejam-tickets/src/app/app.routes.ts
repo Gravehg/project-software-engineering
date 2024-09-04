@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ChatSuppComponent } from './users-supports/chat-supp/chat-supp.component';
 import { authGuardGuard } from './guards/auth-guard.guard';
-
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { NotLogedInComponent } from './error-pages/not-loged-in/not-loged-in.component';
 
 export const routes: Routes = [
   {
@@ -37,7 +38,11 @@ export const routes: Routes = [
     component: ChatSuppComponent,
   },
   {
+    path: 'not-loged-in',
+    component: NotLogedInComponent,
+  },
+  {
     path: '**',
-    loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN), //Aquí se importa el módulo de
+    component: NotFoundComponent,
   },
 ];
