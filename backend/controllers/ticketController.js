@@ -4,27 +4,32 @@ const Message = require("../models/messageModel");
 
 //Crea el tickete de manera completa, añadiendo su chat correspondiente y su primer mensaje.
 const addTicket = async (req, res) => {
-  console.log("mensaje addticket");
-  const userID = req.userPayLoad.userId;
-  const newTicket = new Ticket({
-    idUserIssued: userID,
-    resolutionState: "Not resolved",
-    closureState: "Open",
-    category: req.body.category,
-    topic: req.body.topic,
-    creationDate: new Date(),
-  });
-  newTicket.save().then((nTicket) => {
-    addNewChat(nTicket._id, userID, "" /*'idSupport'*/, req.body.text);
-  });
-  return res
-    .status(201)
-    .json({ success: true, msg: "Created category successfully" });
+  try {
+    const userID = req.userPayLoad.userId;
+    const newTicket = new Ticket({
+      idUserIssued: userID,
+      resolutionState: "Not resolved",
+      closureState: "Open",
+      category: req.body.category,
+      topic: req.body.topic,
+      creationDate: new Date(),
+    });
+    newTicket.save().then((nTicket) => {
+      addNewChat(nTicket._id, userID, "" /*'idSupport'*/, req.body.text);
+    });
+    return res
+      .status(201)
+      .json({ success: true, msg: "Created category successfully" });
+  } catch {
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error, try again" });
+  }
 };
 //Función encargada de agregar un chat nuevo
 function addNewChat(idTicket, idUserIssued, idSupport, idText) {
   const newChat = new Chat({
-    id_ticket: idTicket,
+    idTicket: idTicket,
   });
   newChat.save().then((nChat) => {
     addMessage(nChat._id, idUserIssued, idSupport, idText);
