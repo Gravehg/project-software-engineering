@@ -169,6 +169,28 @@ const validateUser = (req, res, next) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    const token = req.cookies.sessionToken;
+
+    res.clearCookie("sessionToken");
+
+    if (!token) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "Logged out successfully" });
+    }
+    return res
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
+  } catch (error) {
+    return res
+      .clearCookie("sessionToken")
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
+  }
+};
+
 module.exports = {
   login,
   verifyToken,
@@ -176,4 +198,5 @@ module.exports = {
   validateSession,
   validateSupport,
   validateUser,
+  logOut,
 };

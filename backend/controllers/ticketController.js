@@ -69,7 +69,6 @@ const getTicketById = async (req, res) => {
     };
     return res.status(200).json({ success: true, ticket: ticketData });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       success: false,
       msg: "There have been an error while trying to get the Ticket",
