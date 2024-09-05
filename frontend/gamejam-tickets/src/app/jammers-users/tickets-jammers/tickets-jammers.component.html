@@ -2,8 +2,14 @@
 <div class="ticket-historail-container">
   <div class="container">
     <div class="menu-drops-container">
-      <div class=" dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           {{ "CATEGORY" | translate }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -22,12 +28,26 @@
       </div>
 
       <div class="dropdown moving-right">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           {{ "STATUS" | translate }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a (click)="onFilterClosure('Open')" class="dropdown-item" href="#">{{ "OPEN_FILTER_TEXT" | translate }}</a></li>
-          <li><a (click)="onFilterClosure('Closed')" class="dropdown-item" href="#">{{ "CLOSED_FILTER_TEXT" | translate }}</a></li>
+          <li>
+            <a (click)="onFilterClosure('Open')" class="dropdown-item">{{
+              "OPEN_FILTER_TEXT" | translate
+            }}</a>
+          </li>
+          <li>
+            <a (click)="onFilterClosure('Closed')" class="dropdown-item">{{
+              "CLOSED_FILTER_TEXT" | translate
+            }}</a>
+          </li>
           <!-- <li><a class="dropdown-item" href="#">{{  "RESOLVED_FILTER_TEXT" | translate}}</a></li> -->
         </ul>
       </div>
@@ -45,10 +65,8 @@
     <div class="card-container">
       <!-- <p>Esto es un id temporal: {{filteredTickets[0].topic}}</p> -->
       @for (ticket of filteredTickets; track ticket._id) {
-        <app-card class="card" [ticket]="ticket" />
+      <app-card class="card" [ticket]="ticket" />
       }
     </div>
   </div>
 </div>
-
-

@@ -32,10 +32,12 @@ export const routes: Routes = [
       import('./users-supports/tickets-pool/tickets-pool.routes').then(
         (m) => m.TICKETSPOOL
       ),
+    canActivate: [authGuardGuard],
   },
   {
     path: 'ticket-chat/:id',
     component: ChatSuppComponent,
+    canActivate: [authGuardGuard],
   },
   {
     path: 'not-loged-in',
