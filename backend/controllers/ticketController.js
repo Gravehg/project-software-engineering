@@ -105,4 +105,36 @@ const updateClosureState = async (req, res) => {
     });
   }
 };
-module.exports = { getTicketById, updateClosureState, addTicket };
+
+const updateResolutionState = async (req, res) => {
+  try {
+    const { ticketID, newResolutionState} = req.body;
+    if (!ticketID || !newResolutionState) {
+      return res.status(400).json({
+        success: false,
+        msg: "ticketID and newResolutionState are required",
+      });
+    }
+    const result = await Ticket.updateOne(
+      { _id: ticketID },
+      { $set: { resolutionState: newResolutionState } }
+    );
+
+    if (result.modifiedCount > 0) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "resolutionState updated" });
+    } else {
+      return res.status(404).json({ success: false, msg: "Ticket not found" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar el estado:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while changing resolutionState",
+    });
+  }
+};
+
+
+module.exports = { getTicketById, updateClosureState, addTicket, updateResolutionState };

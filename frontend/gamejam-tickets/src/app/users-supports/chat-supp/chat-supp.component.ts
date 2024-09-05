@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
 import { ConfirmationModalComponent } from '../../shared/components/confirmation-modal/confirmation-modal.component';
 import { CommonModule } from '@angular/common';
@@ -21,23 +21,15 @@ import { JammerTicket } from '../../models/jammerTicket.model';
   templateUrl: './chat-supp.component.html',
   styleUrl: './chat-supp.component.css',
 })
-export class ChatSuppComponent implements OnInit  {
-  
-
+export class ChatSuppComponent implements OnInit {
   constructor(public chatService: ChatService, public route: ActivatedRoute) {}
-
-  // Cosas del modal.
-  modalTitle: string = 'Confirmation';
-  modalMessage: string =
-    'The ticket currently has a status of Closed so sending a message again would put it in "Open", do you want to send the message?';
-  modalElement = document.getElementById('confirmationModal');
-  modal: any;
 
   messages: Message[] = [];
   ticket: JammerTicket | undefined;
   errorMessage: string | null = null;
   newMessage = '';
   closureState: string | null = null;
+  resolutionState = '';
   jammer = '';
   support = '';
   jammerName = '';
@@ -48,7 +40,6 @@ export class ChatSuppComponent implements OnInit  {
 
   ngOnInit(): void {
     this.ticketID = this.route.snapshot.paramMap.get('id');
-    this.loadModal();
     if (this.ticketID) {
       this.getTicket(this.ticketID);
       this.chatService
@@ -76,7 +67,6 @@ export class ChatSuppComponent implements OnInit  {
   }
 
   loadMessages(chatID: string): void {
-    
     this.chatService.getMessages(chatID).subscribe({
       next: (data) => {
         this.messages = data;
@@ -107,6 +97,7 @@ export class ChatSuppComponent implements OnInit  {
         this.ticket = data.ticket;
         if (this.ticket) {
           this.closureState = this.ticket?.closureState;
+          this.resolutionState = this.ticket.resolutionState;
           if (this.ticket.idUserIssued) {
             this.jammer = this.ticket.idUserIssued;
             this.jammerName = this.ticket.userName;
@@ -199,47 +190,86 @@ export class ChatSuppComponent implements OnInit  {
     }
   }
 
-  //Actualizar ticket
-  updateTicketState() {
+  //Actualizar tickets
+  updateTicketState(closureState: string) {
     if (this.ticketID) {
-      this.chatService.updateClosureState(this.ticketID, 'Open').subscribe(
-        (response) => {
-          console.log('Estado actualizado exitosamente', response);
-        },
-        (error) => {
-          console.error('Error al actualizar el estado', error);
-        }
-      );
+      this.chatService
+        .updateClosureState(this.ticketID, closureState)
+        .subscribe(
+          (response) => {
+            console.log('Estado actualizado exitosamente', response);
+            this.closureState = closureState;
+          },
+          (error) => {
+            console.error('Error al actualizar el estado', error);
+          }
+        );
     } else {
       console.error('ID del ticket o nuevo estado no proporcionados');
     }
   }
 
-  //Funciones para modal.
-
-  loadModal(): void {
-    const modalElement = document.getElementById('confirmationModal');
-    if (modalElement) {
-      this.modal = new (window as any).bootstrap.Modal(modalElement);
+  updateTicketResolution(resolutionState: string) {
+    if (this.ticketID) {
+      this.chatService
+        .updateResolutionState(this.ticketID, resolutionState)
+        .subscribe(
+          (response) => {
+            console.log('Resolution actualizado exitosamente', response);
+            this.resolutionState = resolutionState;
+          },
+          (error) => {
+            console.error('Error al actualizar el estado', error);
+          }
+        );
+    } else {
+      console.error('ID del ticket o nuevo estado no proporcionados');
     }
-  }
-
-  handleConfirmation(): void {
-    this.sendMessage();
-    this.updateTicketState();
-    this.closureState = 'Open';
-    this.modal.hide();
   }
 
   handleMessage(): void {
     if (this.newMessage !== '') {
-      if (this.closureState !== 'Closed') {
-        this.sendMessage();
-      } else {
-        this.modal.show();
-      }
+      this.sendMessage();
+      this.handleUpdates();
     }
   }
 
-  
+  handleUpdates() {
+    const estadoCheckbox = document.getElementById(
+      'estadoCheckbox'
+    ) as HTMLInputElement | null;
+    const resolucionCheckbox = document.getElementById(
+      'resolucionCheckbox'
+    ) as HTMLInputElement | null;
+
+    if (estadoCheckbox && resolucionCheckbox) {
+      if (this.closureState === 'Closed') {
+        if (estadoCheckbox.checked) {
+        } else {
+          this.updateTicketState('Open');
+        }
+        if (
+          resolucionCheckbox.checked &&
+          this.resolutionState === 'Not resolved'
+        ) {
+          this.updateTicketResolution('Resolved');
+        } else if (!resolucionCheckbox.checked) {
+          this.updateTicketResolution('Not resolved');
+        }
+      } else {
+        if (estadoCheckbox.checked) {
+          this.updateTicketState('Closed');
+        }
+        console.log('etra');
+        if (
+          resolucionCheckbox.checked &&
+          this.resolutionState === 'Not resolved'
+        ) {
+          this.updateTicketResolution('Resolved');
+        } else if (!resolucionCheckbox.checked) {
+          this.updateTicketResolution('Not resolved');
+        }
+      }
+    }
+  }
 }
