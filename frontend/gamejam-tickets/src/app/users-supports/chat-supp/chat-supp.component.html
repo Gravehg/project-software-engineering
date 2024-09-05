@@ -1,58 +1,89 @@
 
-<app-confirmation-modal
-  [title]="modalTitle"
-  [message]="modalMessage"
-  (confirmed)="handleConfirmation()">
-</app-confirmation-modal>
-
 <app-nav-bar-support></app-nav-bar-support>
-<section class="chat-section" >
-
-  <div class="container">
-
-    <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <span class="ticket-topic">{{ ticket?.topic }}</span>
-        <div class="status-container d-flex align-items-center">
-          <span class="status-label">Ticket Status:</span>
-          <span class="status-text" [ngClass]="getStatusClass()">
-            {{ closureState }}
-          </span>
-          <span class="status-circle" [ngClass]="getCircleClass()"></span>
+<section class="chat-section">
+  <div class="container d-flex justify-content-between">
+    <!-- Contenedor del chat -->
+    <div class="chat-content">
+      <!-- Aquí va todo tu contenido de chat -->
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="ticket-topic">{{ ticket?.topic }}</span>
+          <div class="status-container d-flex align-items-center">
+            <span class="status-label">Ticket Status:</span>
+            <span class="status-text" [ngClass]="getStatusClass()">
+              {{ closureState }}
+            </span>
+            <span class="status-circle" [ngClass]="getCircleClass()"></span>
+          </div>
         </div>
-      </div>  
 
-      <div *ngIf="isLoading" class="loading-spinner">
-        <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Cargando...</span>
+        <div *ngIf="isLoading" class="loading-spinner">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
         </div>
-      </div>
 
-      <div *ngIf="!isLoading">
-        <div  class="message-container-wrapper">
-          <div *ngFor="let msg of messages" class="message-row">
-            <div class="d-flex flex-column" [ngClass]="getMessageAlignment(msg.remitent)">
-              <div class="message-container p-2">
-                <div class="message-bubble" [ngClass]="getBubbleClasses(msg.remitent)">
-                  {{ msg.text }}
-                </div>
-                <div class="message-footer" [ngClass]="getBubbleClasses(msg.remitent)">
-                  <small>{{ getSenderName(msg.remitent) }}</small>
-                  <small class="message-time ml-auto">{{ msg.textDate | date:'HH:mm' }}</small>
+        <div *ngIf="!isLoading">
+          <div class="message-container-wrapper">
+            <div *ngFor="let msg of messages" class="message-row">
+              <div class="d-flex flex-column" [ngClass]="getMessageAlignment(msg.remitent)">
+                <div class="message-container p-2">
+                  <div class="message-bubble" [ngClass]="getBubbleClasses(msg.remitent)">
+                    {{ msg.text }}
+                  </div>
+                  <div class="message-footer" [ngClass]="getBubbleClasses(msg.remitent)">
+                    <small>{{ getSenderName(msg.remitent) }}</small>
+                    <small class="message-time ml-auto">{{ msg.textDate | date:'HH:mm' }}</small>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-footer">
-        <div class="input-group d-flex align-items-center">
-          <input type="text" class="form-control me-2" [(ngModel)]="newMessage" (keydown.enter)="handleMessage()" 
-                 placeholder="Escribe un mensaje...">
-          <button class="btn btn-primary" (click)="handleMessage()">Send</button>
+
+        <div class="card-footer">
+          <div class="input-group d-flex align-items-center">
+            <input type="text" class="form-control me-2" [(ngModel)]="newMessage" (keydown.enter)="handleMessage()" placeholder="Escribe un mensaje...">
+            <button class="btn btn-primary" (click)="handleMessage()">Send</button>
+          </div>
         </div>
       </div>
     </div>
+    
+    <!-- Panel de opciones de chat -->
+    <div class="chat-options">
+      <h3>Ticket Options</h3>
+      
+      <div class="checkbox-container">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="estadoCheckbox" checked>
+          <label class="form-check-label" for="estadoCheckbox">
+            Close ticket?
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="resolucionCheckbox" checked>
+          <label class="form-check-label" for="resolucionCheckbox">
+            It´s solved?
+          </label>
+        </div>
+      </div>
+      
+      <hr>
+      <h3>Transfer options</h3>
+      <div class="select-container">
+        <label for="departamentosSelect">Departamentos</label>
+        <select class="form-select" id="departamentosSelect">
+          <option selected>Value</option>
+          <option value="1">Departamento 1</option>
+          <option value="2">Departamento 2</option>
+          <option value="3">Departamento 3</option>
+        </select>
+      </div>
+    
+      <button class="btn btn-transferir">Transfer</button>
+    </div>
+
+
   </div>
 </section>
-
