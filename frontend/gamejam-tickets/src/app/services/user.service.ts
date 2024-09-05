@@ -41,4 +41,8 @@ export class UserService {
       `${this.supportApiUrl}get-jammer-tickets`
     );
   }
+
+  logout(): Observable<any> {
+    return this.http.get(`${this.authApiUrl}log-out`);
+  }
 }

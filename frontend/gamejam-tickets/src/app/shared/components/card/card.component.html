@@ -1,11 +1,10 @@
 <div class="container">
   <div class="custom-card">
     <div class="body-card">
+      <p><strong>ID:</strong> {{ ticket._id || "" }}</p>
       <p>
-        <strong>ID:</strong> {{ ticket._id || "" }}
-      </p>
-      <p>
-        <strong>{{ "USER_EMAIL" | translate }}:</strong> {{ ticket.email || "" }}
+        <strong>{{ "USER_EMAIL" | translate }}:</strong>
+        {{ ticket.email || "" }}
       </p>
       <p>
         <strong>{{ "DATE" | translate }}:</strong> {{ ticket.date || "" }}
@@ -19,15 +18,21 @@
     <div class="body-card">
       <div class="states">
         <ng-container *ngIf="ticket.closureState === 'Open'; else elseBlock">
-          <div class="badge rounded-pill bg-primary">{{ ticket.closureState }}</div>
+          <div class="badge rounded-pill bg-primary">
+            {{ ticket.closureState }}
+          </div>
         </ng-container>
         <ng-template #elseBlock>
-          <div class="badge rounded-pill bg-danger">{{ ticket.closureState }}</div>
+          <div class="badge rounded-pill bg-danger">
+            {{ ticket.closureState }}
+          </div>
         </ng-template>
-        <div class="badge rounded-pill bg-dark">{{ ticket.category || "" }}</div>
+        <div class="badge rounded-pill bg-dark">
+          {{ ticket.category || "" }}
+        </div>
       </div>
       <div class="read-more">
-        <a href="#">
+        <a [routerLink]="['chat-jammer/', ticket._id]">
           {{ "READ_MORE" | translate }}
         </a>
       </div>

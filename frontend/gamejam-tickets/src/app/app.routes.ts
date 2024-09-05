@@ -34,7 +34,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'ticket-chat/:id',  
+    path: 'ticket-chat/:id',
     component: ChatSuppComponent,
   },
   {
