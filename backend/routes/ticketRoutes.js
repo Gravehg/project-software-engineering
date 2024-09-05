@@ -2,7 +2,8 @@ const express = require("express");
 const {
   getTicketById,
   updateClosureState,
-  updateResolutionState
+  updateResolutionState,
+  updateAssignedSupp
 } = require("../controllers/ticketController");
 const { addTicket } = require("../controllers/ticketController");
 const router = express.Router();
@@ -13,5 +14,6 @@ router.post("/add-ticket", validateSession, addTicket);
 router.get("/getTicketById", getTicketById);
 router.put("/updateClosureState", updateClosureState);
 router.put("/updateResolutionState", updateResolutionState);
+router.put("/updateAssignedSupp", updateAssignedSupp);
 
 module.exports = router;

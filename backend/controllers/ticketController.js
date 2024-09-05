@@ -108,7 +108,7 @@ const updateClosureState = async (req, res) => {
 
 const updateResolutionState = async (req, res) => {
   try {
-    const { ticketID, newResolutionState} = req.body;
+    const { ticketID, newResolutionState } = req.body;
     if (!ticketID || !newResolutionState) {
       return res.status(400).json({
         success: false,
@@ -136,5 +136,38 @@ const updateResolutionState = async (req, res) => {
   }
 };
 
+const updateAssignedSupp = async (req, res) => {
+  try {
+    const { ticketID } = req.body;
+    if (!ticketID) {
+      return res.status(400).json({
+        success: false,
+        msg: "ticketID is required",
+      });
+    }
+    const result = await Ticket.updateOne(
+      { _id: ticketID },
+      { $set: { idSupport: null } }
+    );
 
-module.exports = { getTicketById, updateClosureState, addTicket, updateResolutionState };
+    if (result.modifiedCount > 0) {
+      return res.status(200).json({ success: true, msg: "idSupport updated" });
+    } else {
+      return res.status(404).json({ success: false, msg: "Ticket not found" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar el estado:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while changing idSupport",
+    });
+  }
+};
+
+module.exports = {
+  getTicketById,
+  updateClosureState,
+  addTicket,
+  updateResolutionState,
+  updateAssignedSupp,
+};

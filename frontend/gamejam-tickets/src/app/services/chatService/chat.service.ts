@@ -46,6 +46,10 @@ export class ChatService {
     return this.http.put<any>(`${this.ticketApiUrl}updateResolutionState`, { ticketID, newResolutionState });
   }
 
+  updateAssignedSupp(ticketID: string,): Observable<any> {
+    return this.http.put<any>(`${this.ticketApiUrl}updateAssignedSupp`, { ticketID });
+  }
+
 
 
 }

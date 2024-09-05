@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavBarJammerComponent } from '../../shared/components/nav-bar-jammer/nav-bar-jammer.component';
 import { ConfirmationModalComponent } from '../../shared/components/confirmation-modal/confirmation-modal.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { ChatService } from '../../services/chatService/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { JammerTicket } from '../../models/jammerTicket.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets-jammers',
@@ -21,15 +22,13 @@ import { JammerTicket } from '../../models/jammerTicket.model';
   templateUrl: './chat-jammers.component.html',
   styleUrl: './chat-jammers.component.css',
 })
-export class ChatJammersComponent implements OnInit  {
-  
-
-  constructor(public chatService: ChatService, public route: ActivatedRoute) {}
+export class ChatJammersComponent implements OnInit {
+  constructor(private router: Router,public chatService: ChatService, public route: ActivatedRoute) {}
 
   // Cosas del modal.
   modalTitle: string = 'Confirmation';
   modalMessage: string =
-    'The ticket currently has a status of Closed so sending a message again would put it in "Open", do you want to send the message?';
+    'The ticket currently has a status of Closed so sending a message again would put it in "Open" and you will have to wait for a new supp to get assigned, do you want to send the message?';
   modalElement = document.getElementById('confirmationModal');
   modal: any;
 
@@ -76,7 +75,6 @@ export class ChatJammersComponent implements OnInit  {
   }
 
   loadMessages(chatID: string): void {
-    
     this.chatService.getMessages(chatID).subscribe({
       next: (data) => {
         this.messages = data;
@@ -215,6 +213,21 @@ export class ChatJammersComponent implements OnInit  {
     }
   }
 
+  updateAssignedSupp() {
+    if (this.ticketID) {
+      this.chatService.updateAssignedSupp(this.ticketID).subscribe(
+        (response) => {
+          console.log('Supp actualizado', response);
+        },
+        (error) => {
+          console.error('Error al actualizar el supp', error);
+        }
+      );
+    } else {
+      console.error('ID del ticket no proporcionado');
+    }
+  }
+
   //Funciones para modal.
 
   loadModal(): void {
@@ -227,8 +240,11 @@ export class ChatJammersComponent implements OnInit  {
   handleConfirmation(): void {
     this.sendMessage();
     this.updateTicketState();
+    this.updateAssignedSupp();
     this.closureState = 'Open';
     this.modal.hide();
+    this.router.navigate(['/jammers-users/tickets-jammers']);
+    
   }
 
   handleMessage(): void {
@@ -240,6 +256,4 @@ export class ChatJammersComponent implements OnInit  {
       }
     }
   }
-
-  
 }
