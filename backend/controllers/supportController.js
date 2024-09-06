@@ -9,7 +9,7 @@ const getAssignedTickets = async (req, res) => {
     const tickets = await Ticket.find({
       idSupport: supportPayLoad._id,
     })
-      .sort({ creationDate: 1 })
+      .sort({ creationDate: -1 })
       .populate("idUserIssued")
       .exec();
 
