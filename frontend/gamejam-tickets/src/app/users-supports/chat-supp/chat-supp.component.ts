@@ -320,7 +320,6 @@ export class ChatSuppComponent implements OnInit {
         if (estadoCheckbox.checked) {
           this.updateTicketState('Closed');
         }
-        console.log('etra');
         if (
           resolucionCheckbox.checked &&
           this.resolutionState === 'Not resolved'
