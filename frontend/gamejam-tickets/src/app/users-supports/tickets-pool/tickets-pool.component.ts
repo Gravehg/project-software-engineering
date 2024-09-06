@@ -21,7 +21,7 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
   tickets: SupportTicket[] = [];
   filteredTickets: SupportTicket[] = [];
   errorMessage: string | null = null;
-  categoryMap: { [key: string]: { name: string; color: string } } = {};
+  categoryMap: { [key: string]: { name: string } } = {};
   selectedCategory: string | null = null;
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
@@ -34,9 +34,9 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
       next: (res: Category[]) => {
         this.categories = res;
         this.categoryMap = this.categories.reduce((map, category) => {
-          map[category._id] = { name: category.name, color: category.color };
+          map[category._id] = { name: category.name };
           return map;
-        }, {} as { [key: string]: { name: string; color: string } });
+        }, {} as { [key: string]: { name: string } });
       },
       error: (err) => {
         if (err.error.error) {
@@ -124,10 +124,6 @@ export class TicketsPoolComponent implements OnInit, OnDestroy {
       title: 'Error',
       text: error,
     });
-  }
-
-  getCategoryColor(categoryId: string): string {
-    return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
   }
 
   assignTicket(ticketId: string) {
