@@ -13,6 +13,7 @@ export class ChatService {
   chatApiUrl: string = this.baseApiUrl + '/chat/';
   messageApiUrl: string = this.baseApiUrl + '/message/';
   ticketApiUrl: string = this.baseApiUrl + '/ticket/';
+  categoryApiUrl: string = this.baseApiUrl + '/category/';
   
   constructor(private http: HttpClient) {}
 
@@ -45,6 +46,29 @@ export class ChatService {
   updateResolutionState(ticketID: string, newResolutionState: string): Observable<any> {
     return this.http.put<any>(`${this.ticketApiUrl}updateResolutionState`, { ticketID, newResolutionState });
   }
+
+  updateAssignedSupp(ticketID: string,): Observable<any> {
+    return this.http.put<any>(`${this.ticketApiUrl}updateAssignedSupp`, { ticketID });
+  }
+
+  getSuppTicketById(ticketID: string): Observable<any> {
+    return this.http.get(`${this.ticketApiUrl}getSuppTicketById`, {
+      params: { ticketID } 
+    });
+  } 
+
+  getCategoriesLessone(categoryID: string): Observable<any> {
+    return this.http.get(`${this.categoryApiUrl}getCategoriesLessOne`, {
+      params: { categoryID } 
+    });
+  } 
+
+  updateCategory(ticketID: string, newCategory: string,): Observable<any> {
+    return this.http.put<any>(`${this.ticketApiUrl}updateCategory`, {ticketID, newCategory });
+  }
+
+
+  
 
 
 

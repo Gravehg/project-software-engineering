@@ -4,10 +4,13 @@ import { ConfirmationModalComponent } from '../../shared/components/confirmation
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Message } from '../../models/message.model';
+import { Category } from '../../models/category.model';
 import { ChatService } from '../../services/chatService/chat.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { JammerTicket } from '../../models/jammerTicket.model';
+import { switchMap, tap } from 'rxjs/operators';
+import { SuppChatTicket } from '../../models/suppChatTicket.model';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-chat-supp',
@@ -22,10 +25,16 @@ import { JammerTicket } from '../../models/jammerTicket.model';
   styleUrl: './chat-supp.component.css',
 })
 export class ChatSuppComponent implements OnInit {
-  constructor(public chatService: ChatService, public route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    public chatService: ChatService,
+    public route: ActivatedRoute
+  ) {}
 
   messages: Message[] = [];
-  ticket: JammerTicket | undefined;
+  categories: Category[] = [];
+  categoriaSeleccionada = '';
+  ticket: SuppChatTicket | undefined;
   errorMessage: string | null = null;
   newMessage = '';
   closureState: string | null = null;
@@ -40,14 +49,56 @@ export class ChatSuppComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketID = this.route.snapshot.paramMap.get('id');
+    this.initializeData();
+  }
+
+  initializeData() {
     if (this.ticketID) {
-      this.getTicket(this.ticketID);
       this.chatService
-        .getChatID(this.ticketID)
+        .getSuppTicketById(this.ticketID)
         .pipe(
-          switchMap((data: any) => {
-            this.chatID = data.chatID;
-            return this.chatService.getMessages(this.chatID);
+          switchMap((response) => {
+            this.ticket = response.ticket;
+
+            if (this.ticket && this.ticket._id) {
+              this.closureState = this.ticket.closureState;
+              this.resolutionState = this.ticket.resolutionState;
+
+              if (this.ticket.idUserIssued) {
+                this.jammer = this.ticket.idUserIssued;
+                this.jammerName = this.ticket.userName;
+              }
+
+              if (this.ticket.idSupport) {
+                this.support = this.ticket.idSupport;
+                this.supportName = this.ticket.supportName;
+              }
+
+              return this.chatService.getChatID(this.ticket._id);
+            } else {
+              throw new Error('Ticket ID is missing');
+            }
+          }),
+
+          tap((chatIDData) => (this.chatID = chatIDData.chatID)),
+
+          switchMap(() => {
+            if (this.ticket && this.ticket.idCategory) {
+              return this.chatService.getCategoriesLessone(
+                this.ticket.idCategory
+              );
+            } else {
+              throw new Error('Category ID is missing');
+            }
+          }),
+          tap((categoriesData) => (this.categories = categoriesData)),
+
+          switchMap(() => {
+            if (this.chatID) {
+              return this.chatService.getMessages(this.chatID);
+            } else {
+              throw new Error('Chat ID is missing');
+            }
           })
         )
         .subscribe({
@@ -55,14 +106,11 @@ export class ChatSuppComponent implements OnInit {
             this.messages = messagesData;
             this.isLoading = false;
           },
-          error: (error) => {
-            this.errorMessage = 'Failed to load chat and messages';
+          error: (err) => {
+            console.error('Error initializing data:', err);
             this.isLoading = false;
-            console.error('Error loading chat and messages:', error);
           },
         });
-    } else {
-      console.error('No ticketID provided in route.');
     }
   }
 
@@ -75,6 +123,18 @@ export class ChatSuppComponent implements OnInit {
       error: (error) => {
         this.errorMessage = 'failed to load messages';
         console.error('Error fetching messages:', this.errorMessage);
+      },
+    });
+  }
+
+  loadCategories(categoryID: string): void {
+    this.chatService.getCategoriesLessone(categoryID).subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (error) => {
+        this.errorMessage = 'failed to load categories';
+        console.error('Error fetching categories:', this.errorMessage);
       },
     });
   }
@@ -92,7 +152,7 @@ export class ChatSuppComponent implements OnInit {
   }
 
   getTicket(ticketID: string): void {
-    this.chatService.getTicketById(ticketID).subscribe({
+    this.chatService.getSuppTicketById(ticketID).subscribe({
       next: (data) => {
         this.ticket = data.ticket;
         if (this.ticket) {
@@ -260,7 +320,6 @@ export class ChatSuppComponent implements OnInit {
         if (estadoCheckbox.checked) {
           this.updateTicketState('Closed');
         }
-        console.log('etra');
         if (
           resolucionCheckbox.checked &&
           this.resolutionState === 'Not resolved'
@@ -271,5 +330,64 @@ export class ChatSuppComponent implements OnInit {
         }
       }
     }
+  }
+
+  updateAssignedSupp() {
+    if (this.ticketID) {
+      this.chatService.updateAssignedSupp(this.ticketID).subscribe(
+        (response) => {
+          console.log('Supp actualizado', response);
+        },
+        (error) => {
+          console.error('Error al actualizar el supp', error);
+        }
+      );
+    } else {
+      console.error('ID del ticket no proporcionado');
+    }
+  }
+
+  updateCategory(categorySelected: string) {
+    if (this.ticketID) {
+      this.chatService
+        .updateCategory(this.ticketID, categorySelected)
+        .subscribe(
+          (response) => {
+            console.log('Categoria actualizado', response);
+          },
+          (error) => {
+            console.error('Error al actualizar la Categoria', error);
+          }
+        );
+    } else {
+      console.error('ID del ticket no proporcionado');
+    }
+  }
+
+  handleTransfer(): void {
+    if (this.categoriaSeleccionada !== '') {
+      this.updateAssignedSupp();
+      this.updateCategory(this.categoriaSeleccionada);
+      this.handleTransferNotifications();
+    }
+  }
+
+  handleTransferNotifications(): void {
+    Swal.fire({
+      title: 'Transfer has been completed',
+      text: 'You will be unsigned from this ticket.',
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/supp-tickets']);
+      } else if (
+        result.dismiss === Swal.DismissReason.backdrop ||
+        result.dismiss === Swal.DismissReason.esc
+      ) {
+        this.router.navigate(['/supp-tickets']);
+      }
+    });
   }
 }
