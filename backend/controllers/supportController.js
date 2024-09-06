@@ -1,5 +1,6 @@
 const Ticket = require("../models/ticketModel");
 const User = require("../models/userModel");
+const { format } = require("date-fns");
 
 const getAssignedTickets = async (req, res) => {
   try {
@@ -8,21 +9,21 @@ const getAssignedTickets = async (req, res) => {
     const tickets = await Ticket.find({
       idSupport: supportPayLoad._id,
     })
-      .sort({ creationDate: -1 })
+      .sort({ creationDate: 1 })
       .populate("idUserIssued")
       .exec();
 
-    const ticketsWithUserName = tickets.map((item) => ({
+    const ticketsformmated = tickets.map((item) => ({
       _id: item._id,
       userName: item.idUserIssued.name,
       category: item.category,
       topic: item.topic,
-      creationDate: item.creationDate,
+      creationDate: format(new Date(item.creationDate), "dd/MM/yyyy"),
       closureState: item.closureState,
       resolutionState: item.resolutionState,
     }));
 
-    return res.status(200).json(ticketsWithUserName);
+    return res.status(200).json(ticketsformmated);
   } catch {
     return res
       .status(500)
@@ -60,7 +61,7 @@ const getSupportTicketPool = async (req, res) => {
       category: { $in: categoryIds },
       $or: [{ idSupport: { $exists: false } }, { idSupport: null }],
     })
-      .sort({ creationDate: -1 })
+      .sort({ creationDate: 1 })
       .populate("idUserIssued")
       .exec();
 
@@ -69,7 +70,7 @@ const getSupportTicketPool = async (req, res) => {
       userName: item.idUserIssued.name,
       category: item.category,
       topic: item.topic,
-      creationDate: item.creationDate,
+      creationDate: format(new Date(item.creationDate), "dd/MM/yyyy"),
       closureState: item.closureState,
       resolutionState: item.resolutionState,
     }));
