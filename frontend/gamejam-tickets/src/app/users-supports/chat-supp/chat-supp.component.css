@@ -151,8 +151,6 @@
   margin-left: auto;
 }
 
-
-
 .card-footer {
   padding: 10px;
   background-color: #dfefff;
@@ -243,13 +241,12 @@
   margin-bottom: 5px;
 }
 
-
 .form-check-label {
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #333;
   text-align: center;
-  width: 100%; 
+  width: 100%;
 }
 
 .select-container {
@@ -286,4 +283,3 @@
 .btn-transferir:hover {
   background-color: #000;
 }
-

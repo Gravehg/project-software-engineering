@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { JammerTicket } from '../../models/jammerTicket.model';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tickets-jammers',
@@ -18,12 +19,17 @@ import { Router } from '@angular/router';
     CommonModule,
     FormsModule,
     ConfirmationModalComponent,
+    TranslateModule,
   ],
   templateUrl: './chat-jammers.component.html',
   styleUrl: './chat-jammers.component.css',
 })
 export class ChatJammersComponent implements OnInit {
-  constructor(private router: Router,public chatService: ChatService, public route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    public chatService: ChatService,
+    public route: ActivatedRoute
+  ) {}
 
   // Cosas del modal.
   modalTitle: string = 'Confirmation';
@@ -244,7 +250,6 @@ export class ChatJammersComponent implements OnInit {
     this.closureState = 'Open';
     this.modal.hide();
     this.router.navigate(['/jammers-users/tickets-jammers']);
-    
   }
 
   handleMessage(): void {
