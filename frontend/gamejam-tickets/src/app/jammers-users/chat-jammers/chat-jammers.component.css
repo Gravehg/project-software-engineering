@@ -1,6 +1,7 @@
 .card {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 15px 40px rgba(0, 0, 0, 0.2); /* Sombra flotante más pronunciada */
   margin-top: 20px;
+  width: 100%;
 }
 
 .card-header {
@@ -151,8 +152,6 @@
   margin-left: auto;
 }
 
-
-
 .card-footer {
   padding: 10px;
   background-color: #dfefff;
@@ -206,4 +205,3 @@
   flex: 1; /* El contenido del chat ocupa todo el espacio restante */
   max-width: 75%; /* Ajusta el ancho del chat al 75% del contenedor */
 }
-  

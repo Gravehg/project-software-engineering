@@ -39,5 +39,15 @@
   "MESSAGE": "Mensagem",
   "NOT_FOUND_TEXT": "A página que você está procurando não pôde ser encontrada!",
   "GO_TO_LOGIN_TEXT": "Ir para a página de login.",
-  "NOT_LOGED_TEXT": "Você não está logado ou sua sessão expirou"
+  "NOT_LOGED_TEXT": "Você não está logado ou sua sessão expirou",
+  "SEND_BUTTON": "Enviar",
+  "TICKET_STATUS": "Status do Bilhete:",
+  "LOADING": "Carregando...",
+  "MSG_PLACEHOLDER": "Escreva uma mensagem...",
+  "TICKET_OPTIONS_TXT": "Opções de ticket",
+  "CLOSE_TICKET_TXT": "Fechar ticket?",
+  "ITS_SOLVED_TXT": "Está resolvido?",
+  "TRANSFER_OPTIONS_TXT": "Opções de transferência",
+  "CATEGORIES": "Categorias",
+  "TRANSFER_BUTTON": "Transferir"
 }

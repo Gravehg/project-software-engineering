@@ -11,6 +11,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { SuppChatTicket } from '../../models/suppChatTicket.model';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-chat-supp',
@@ -20,6 +21,7 @@ import Swal from 'sweetalert2';
     CommonModule,
     FormsModule,
     ConfirmationModalComponent,
+    TranslateModule,
   ],
   templateUrl: './chat-supp.component.html',
   styleUrl: './chat-supp.component.css',
