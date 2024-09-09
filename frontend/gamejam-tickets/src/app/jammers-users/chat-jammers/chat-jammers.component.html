@@ -14,7 +14,7 @@
       >
         <span class="ticket-topic">{{ ticket?.topic }}</span>
         <div class="status-container d-flex align-items-center">
-          <span class="status-label">{{ "TICKET_STATUS" | translate }}<</span>
+          <span class="status-label">{{ "TICKET_STATUS" | translate }}</span>
           <span class="status-text" [ngClass]="getStatusClass()">
             {{ closureState }}
           </span>
