@@ -1,0 +1,19 @@
+.nav-link {
+  color: #ffffff; /* Change text color to white */
+  font-size: x-large;
+  cursor: pointer;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+  transform: scale(1.1);
+}
+
+.my-navbar {
+  background-color: #1779fa;
+}
+
+.container-fluid {
+  background-color: #1779fa;
+}

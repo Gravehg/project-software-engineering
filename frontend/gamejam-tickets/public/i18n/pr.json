@@ -50,5 +50,7 @@
   "TRANSFER_OPTIONS_TXT": "Opções de transferência",
   "CATEGORIES": "Categorias",
   "TRANSFER_BUTTON": "Transferir",
-  "USERS_NAVBAR": "Usuários"
+  "USERS_NAVBAR": "Usuários",
+  "FILTER_ROLE_TEXT": "Filtrar por função",
+  "FILTER_NAME_PLACEHOLDER": "Filtrar por nome"
 }
