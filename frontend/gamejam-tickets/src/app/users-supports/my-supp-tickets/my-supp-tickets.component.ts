@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SupportService } from '../../services/support.service';
@@ -7,15 +7,25 @@ import { SupportTicket } from '../../models/supportTicket.model';
 import { RouterModule } from '@angular/router';
 import { NgStyle } from '@angular/common';
 import Swal from 'sweetalert2';
+import {ChangeDetectionStrategy} from '@angular/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-my-supp-tickets',
   standalone: true,
-  imports: [TranslateModule, NavBarSupportComponent, RouterModule, NgStyle],
+  providers: [provideNativeDateAdapter()],
+  imports: [TranslateModule, NavBarSupportComponent, RouterModule, NgStyle, MatFormFieldModule, MatInputModule, MatDatepickerModule],
   templateUrl: './my-supp-tickets.component.html',
   styleUrl: './my-supp-tickets.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MySuppTicketsComponent implements OnInit {
+  @Output() newMessageEvent = new EventEmitter<string>();
+  
   constructor(public SupportService: SupportService) {}
   categories: Category[] = [];
   tickets: SupportTicket[] = [];
@@ -26,6 +36,13 @@ export class MySuppTicketsComponent implements OnInit {
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
 
+
+  dateChange(event: MatDatepickerInputEvent<any>) {
+    // Aquí puedes acceder a event.value para obtener la fecha seleccionada
+    const selectedDate = event.value;
+    console.log('Fecha seleccionada:', selectedDate);
+  }
+  
   ngOnInit(): void {
     this.SupportService.getSupportCategories().subscribe({
       next: (res: Category[]) => {
