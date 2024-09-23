@@ -1,0 +1,29 @@
+<div class="custom-main-container">
+    <app-nav-bar-admin/>
+    <h1>{{ "CREATE_SUPPORT" | translate }}</h1>
+    <div class="custom-form-container">
+      <form #userForm="ngForm" (ngSubmit)="submitSupport(userForm)" >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">{{ "EMAIL_ADDRESS" | translate }}</label>
+          <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" name="email" required>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+            <div *ngIf="email.errors.required">{{ "EMAIL_REQUIRED" | translate }}</div>
+            <div *ngIf="email.errors.email">{{ "EMAIL_INVALID" | translate }}</div>
+          </div>
+          <div id="emailHelp" class="form-text">{{ "WELL_NEVER_SHARE" | translate }}</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">{{ "USER_NAME" | translate }}</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="username" required>
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+            <div *ngIf="username.errors.required">{{ "USER_NAME_REQUIRED" | translate }}</div>
+          </div>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">{{ "UP_GRADE_USER" | translate }}</label>
+        </div>
+        <button type="submit" class="btn btn-primary" >{{ "CREATE_BUTTON" | translate }}</button>
+    </form>
+    </div>
+</div>

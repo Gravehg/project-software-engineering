@@ -50,5 +50,13 @@
   "TRANSFER_OPTIONS_TXT": "Opções de transferência",
   "CATEGORIES": "Categorias",
   "TRANSFER_BUTTON": "Transferir",
-  "USERS_NAVBAR": "Usuários"
+  "USERS_NAVBAR": "Usuários",
+  "EMAIL_ADDRESS": "Endereço de e-mail",
+  "WELL_NEVER_SHARE": "Nós nunca compartilharemos seu e-mail com mais ninguém.",
+  "UP_GRADE_USER": "Aumentar o usuário existente",
+  "CREATE_SUPPORT": "Criar usuário de suporte",
+  "CREATE_BUTTON": "Criar",
+  "EMAIL_REQUIRED": "E-mail é obrigatório",
+  "EMAIL_INVALID": "E-mail é inválido",
+  "USER_NAME_REQUIRED": "Nome é obrigatório"
 }

@@ -31,10 +31,10 @@ const login = async (req, res) => {
       sameSite: "lax",
       maxAge: 1000 * 60 * 30,
     });
-
+    console.log("Roles", roles);
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/tickets-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/admin-users/create-support`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(

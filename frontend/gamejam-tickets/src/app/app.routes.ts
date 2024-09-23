@@ -27,6 +27,14 @@ export const routes: Routes = [
     canActivate: [authGuardGuard],
   },
   {
+    path: 'admin-users',
+    loadChildren: () =>
+      import('./users-admins/admin-users.routes').then(
+        (m) => m.ADMIN_USERS
+      ),
+    canActivate: [authGuardGuard],
+  },
+  {
     path: 'tickets-pool',
     loadChildren: () =>
       import('./users-supports/tickets-pool/tickets-pool.routes').then(
