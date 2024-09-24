@@ -41,7 +41,7 @@ export const MY_FORMATS = {
   imports: [TranslateModule, NavBarSupportComponent, RouterModule, NgStyle, MatFormFieldModule, MatInputModule, MatDatepickerModule],
   templateUrl: './my-supp-tickets.component.html',
   styleUrl: './my-supp-tickets.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MySuppTicketsComponent implements OnInit {
   @Output() newMessageEvent = new EventEmitter<string>();
@@ -56,7 +56,7 @@ export class MySuppTicketsComponent implements OnInit {
   selectedCategory: string | null = null;
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
-  
+  fecha = new Date(); //cambio
   ngOnInit(): void {
     this.SupportService.getSupportCategories().subscribe({
       next: (res: Category[]) => {
@@ -79,6 +79,8 @@ export class MySuppTicketsComponent implements OnInit {
       next: (res: SupportTicket[]) => {
         this.tickets = res;
         this.filteredTickets = [...this.tickets];
+        console.log(this.tickets);
+        //this.dateChange(this.fecha);////////////////////////////////////////////////////////////
       },
       error: (err) => {
         if (err.error.error) {
@@ -132,7 +134,13 @@ export class MySuppTicketsComponent implements OnInit {
     
       return `${day}/${month}/${year}`;  // Retorna el formato dd/mm/yyyy
     }
-
+    // preDateChange(event: MatDatepickerInputEvent<any>) {
+    //   const selectedDate = this.normalizeDate(event.value); // Normaliza la fecha seleccionada
+    //   console.log('Fecha seleccionada (normalizada): ', selectedDate);
+    //   //return selectedDate
+    //   this.dateChange(selectedDate);
+    // }
+    //dateChange(selectedDate:Date) {
   dateChange(event: MatDatepickerInputEvent<any> ) {
     const selectedDate = this.normalizeDate(event.value); // Normaliza la fecha seleccionada
     console.log('Fecha seleccionada (normalizada): ', selectedDate);
@@ -149,7 +157,7 @@ export class MySuppTicketsComponent implements OnInit {
       return isAfterOrEqual;
     });
   }
-  
+ 
   // Método para normalizar fechas eliminando horas, minutos y segundos
   normalizeDate(date: Date): Date {
     const normalizedDate = new Date(date);
