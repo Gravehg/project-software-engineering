@@ -146,7 +146,7 @@ const validateUser = (req, res, next) => {
 
   try {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
-    const rolesToCheck = ["LocalOrganizer", "Judge", "Jammer"];
+    const rolesToCheck = ["GlobalOrganizer","LocalOrganizer", "Judge", "Jammer"];
 
     const hasValidRole = rolesToCheck.some((role) =>
       decoded.roles.includes(role)
