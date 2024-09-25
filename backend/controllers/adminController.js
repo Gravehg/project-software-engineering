@@ -1,11 +1,84 @@
 const User = require("../models/userModel");
 const Support = require("../models/supportModel");
 
+const createNewSupportWithUser = async (req, res) => {
+  try {
+    // Busca el usuario con el correo proporcionado
+    const user = await User.findOne({ email: req.body.email }).exec();
+    user.roles.push("Support");
+    await user.save();
+
+    // Crear un nuevo soporte con el id del usuario recién creado
+
+    const cateries = req.body.categoris.map((category) => {
+      return category.category
+    });
+
+    const newSupport = new Support({
+      idUser: user._id,
+      name: user.name,
+      supportCategories: cateries,
+    });
+    await newSupport.save();
+
+    // Devolver ok=true
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    // Manejo de errores del servidor
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error", error: error.msg });
+  }
+}
+
+const createNewUserSupport = async (req, res) => {
+  try {
+    // Crear un nuevo usuario con el correo proporcionado
+    const newUser = new User({
+                                email: req.body.email, 
+                                roles: ["Support"],
+                                name: req.body.name,
+                              });
+    await newUser.save();
+
+    // Crear un nuevo soporte con el id del usuario recién creado
+    const cateries = req.body.categoris.map((category) => {
+      return category.category
+    });
+
+    const newSupport = new Support({
+      idUser: newUser._id,
+      name: newUser.name,
+      supportCategories: cateries,
+    });
+    await newSupport.save();
+
+    // Devolver ok=true
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    // Manejo de errores del servidor
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
+};
+
 const getExistingUsers = async (req, res) => {
   try {
-    const users = await User.find({ role: "user" }).exec();
-    return res.status(200).json(users);
+    // Buscar un usuario por el correo proporcionado
+    const user = await User.findOne({ email: req.params.email }).exec();
+    
+    // Si no se encuentra el usuario, devolver error 404
+    if (!user) {
+      return res
+        .status(200)
+        .json({ success: false, msg: "No users found with this email" });
+    }
+
+    // Si se encuentra el usuario, devolver ok=true
+    return res.status(200).json({ ok: true});
   } catch (error) {
+    // Manejo de errores del servidor
     return res
       .status(500)
       .json({ success: false, msg: "There has been an error" });
@@ -14,14 +87,28 @@ const getExistingUsers = async (req, res) => {
 
 const getExistingSupports = async (req, res) => {
   try {
-    const supports = await Support.find().exec();
-    return res.status(200).json(supports);
+    // Buscar el usuario por el correo proporcionado
+    const user = await User.findOne({ email: req.params.email }).exec();
+    
+    // Si no se encuentra el usuario, devolver error 404
+    if (!user) {
+      return res.status(200).json({ success: false, msg: "User not found" });
+    }
+
+    // Verificar si el rol "Support" está presente en la lista de roles
+    const hasSupportRole = user.roles.includes("Support");
+
+    // Si tiene el rol "Support", devolver ok=true
+    if (hasSupportRole) {
+      return res.status(200).json({ ok: true });
+    } else {
+      // Si no tiene el rol, devolver ok=false
+      return res.status(200).json({ ok: false, msg: "User does not have Support role" });
+    }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ success: false, msg: "There has been an error" });
+    // Manejo de errores de servidor
+    return res.status(500).json({ success: false, msg: "There has been an error" });
   }
 };
 
-
-module.exports = { getExistingUsers, getExistingSupports };
+module.exports = { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser };

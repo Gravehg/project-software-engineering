@@ -16,12 +16,20 @@ export class AdminService {
 
     constructor(private http: HttpClient) {}
 
-    getExistingUsers(email: String): Observable<suppUser[]> {
-        return this.http.get<suppUser[]>(`${this.adminApiUrl}get-existing-users/${email}`);
+    getExistingUsers(email: String): Observable<any> {
+        return this.http.get<any>(`${this.adminApiUrl}get-existing-users/${email}`);
     }
 
-    getExistingSupports(email: String): Observable<suppUser[]> {
-        return this.http.get<suppUser[]>(`${this.adminApiUrl}get-existing-supports/${email}`);
+    getExistingSupports(email: String): Observable<any> {
+        return this.http.get<any>(`${this.adminApiUrl}get-existing-supports/${email}`);
+    }
+
+    postUserSupport(info: any): Observable<any> {
+        return this.http.post<any>(`${this.adminApiUrl}create-new-user-support`, info);
+    }
+
+    postIncresAUserToSupport(info: any): Observable<any> {
+        return this.http.post<any>(`${this.adminApiUrl}create-new-support-with-user`, info);
     }
 
 }

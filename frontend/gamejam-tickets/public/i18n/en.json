@@ -53,10 +53,14 @@
   "USERS_NAVBAR": "Users",
   "EMAIL_ADDRESS": "Email Address",
   "WELL_NEVER_SHARE": "We'll never share your email with anyone else.",
-  "UP_GRADE_USER": "Increase the existing user",
+  "UP_GRADE_USER": "Increase an existing user",
   "CREATE_SUPPORT": "Create support user",
   "CREATE_BUTTON": "Create",
   "EMAIL_REQUIRED": "Email is required",
   "EMAIL_INVALID": "Email is invalid",
-  "USER_NAME_REQUIRED": "User name is required"
+  "USER_NAME_REQUIRED": "User name is required",
+  "EMAIL_ALREADY_EXISTS": "Email already exists",
+  "EMAIL_NOT_FOUND": "Email not found",
+  "SUPPORT_USER_CREATED": "Support user created",
+  "SUPPORT_USER_ALREADY_EXISTS": "Support user already exists"
 }

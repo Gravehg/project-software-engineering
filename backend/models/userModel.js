@@ -63,10 +63,10 @@ const userSchema = new Schema({
       ref: "Chat",
     },
   ],
-  creationDate: {
-    type: Date,
-    required: true,
-  },
+  // creationDate: {
+  //   type: Date,
+  //   required: true,
+  // },
   lastUpdateDate: {
     type: Date,
     required: false,

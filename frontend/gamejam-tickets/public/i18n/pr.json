@@ -58,5 +58,9 @@
   "CREATE_BUTTON": "Criar",
   "EMAIL_REQUIRED": "E-mail é obrigatório",
   "EMAIL_INVALID": "E-mail é inválido",
-  "USER_NAME_REQUIRED": "Nome é obrigatório"
+  "USER_NAME_REQUIRED": "Nome é obrigatório",
+  "EMAIL_ALREADY_EXISTS": "E-mail já existe",
+  "EMAIL_NOT_FOUND": "E-mail não encontrado",
+  "SUPPORT_USER_CREATED": "Usuário de suporte criado",
+  "SUPPORT_USER_ALREADY_EXISTS": "Usuário de suporte já existe"
 }
