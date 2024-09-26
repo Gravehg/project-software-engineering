@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Support = require("../models/supportModel");
+const { format } = require("date-fns");
 
 const createNewSupportWithUser = async (req, res) => {
   try {
@@ -85,6 +86,28 @@ const getExistingUsers = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    const formattedUsers = users.map((user) => {
+      const userRole = getUserRole(user);
+      return {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        creationDate: format(user.creationDate, "dd/MM/yyyy"),
+        role: userRole,
+      };
+    });
+
+    return res.status(201).json(formattedUsers);
+  } catch {
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
+};
+
 const getExistingSupports = async (req, res) => {
   try {
     // Buscar el usuario por el correo proporcionado
@@ -111,4 +134,15 @@ const getExistingSupports = async (req, res) => {
   }
 };
 
-module.exports = { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser };
+
+const getUserRole = (user) => {
+  if (user.roles.includes("GlobalOrganizer")) {
+    return "Global Organizer";
+  } else if (user.roles.includes("Support")) {
+    return "Support";
+  } else {
+    return "User";
+  }
+};
+    
+module.exports = { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser,getUsers };

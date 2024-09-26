@@ -1,7 +1,17 @@
 const express = require("express");
-const { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser } = require("../controllers/adminController");
-const { validateSession, validateUser } = require("../controllers/authController");
+const { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser,getUsers } = require("../controllers/adminController");
+const {
+  validateAdmin,
+  validateSession,
+  validateSupport,
+  validateUser
+} = require("../controllers/authController");
+
 const router = express.Router();
+
+//No se valida que sea supp, porque para este caso no se necesitan los datos del soporte para
+//enviar los usuarios, con que sea admin basta.
+router.get("/get-users", validateSession, validateAdmin, getUsers);
 
 module.exports = router;
 
