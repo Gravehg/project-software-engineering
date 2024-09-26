@@ -51,6 +51,18 @@
   "CATEGORIES": "Categorías",
   "TRANSFER_BUTTON": "Transferir",
   "USERS_NAVBAR": "Usuarios",
+  "EMAIL_ADDRESS": "Dirección de correo electrónico",
+  "WELL_NEVER_SHARE": "Nunca compartiremos tu correo con nadie más.",
+  "UP_GRADE_USER": "Aumentar un usuario existente",
+  "CREATE_SUPPORT": "Crear usuario de soporte",
+  "CREATE_BUTTON": "Crear",
+  "EMAIL_REQUIRED": "Correo electrónico es requerido",
+  "EMAIL_INVALID": "Correo electrónico es inválido",
+  "USER_NAME_REQUIRED": "Nombre de usuario es requerido",
+  "EMAIL_ALREADY_EXISTS": "El correo electrónico ya existe",
+  "EMAIL_NOT_FOUND": "Correo electrónico no encontrado",
+  "SUPPORT_USER_CREATED": "Usuario de soporte creado",
+  "SUPPORT_USER_ALREADY_EXISTS": "El usuario de soporte ya existe"
   "FILTER_ROLE_TEXT": "Filtrar rol",
   "FILTER_NAME_PLACEHOLDER": "Filtrar nombre"
 }

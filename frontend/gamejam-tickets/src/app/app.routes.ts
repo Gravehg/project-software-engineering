@@ -29,7 +29,10 @@ export const routes: Routes = [
   {
     path: 'admin-users',
     loadChildren: () =>
-      import('./users-admins/admin-users.routes').then((m) => m.ADMINS_USERS),
+      import('./users-admins/admin-users.routes').then(
+        (m) => m.ADMIN_USERS
+      ),
+    canActivate: [authGuardGuard],
   },
   {
     path: 'tickets-pool',
