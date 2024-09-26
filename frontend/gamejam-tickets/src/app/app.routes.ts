@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ChatSuppComponent } from './users-supports/chat-supp/chat-supp.component';
+import { ChatAdminComponent } from './users-admins/chat-admin/chat-admin.component';
 import { authGuardGuard } from './guards/auth-guard.guard';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { NotLogedInComponent } from './error-pages/not-loged-in/not-loged-in.component';
@@ -45,6 +46,11 @@ export const routes: Routes = [
   {
     path: 'ticket-chat/:id',
     component: ChatSuppComponent,
+    canActivate: [authGuardGuard],
+  },
+  {
+    path: 'ticket-admin-chat/:id',
+    component: ChatAdminComponent,
     canActivate: [authGuardGuard],
   },
   {
