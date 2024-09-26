@@ -62,7 +62,7 @@
   "EMAIL_ALREADY_EXISTS": "El correo electrónico ya existe",
   "EMAIL_NOT_FOUND": "Correo electrónico no encontrado",
   "SUPPORT_USER_CREATED": "Usuario de soporte creado",
-  "SUPPORT_USER_ALREADY_EXISTS": "El usuario de soporte ya existe"
+  "SUPPORT_USER_ALREADY_EXISTS": "El usuario de soporte ya existe",
   "FILTER_ROLE_TEXT": "Filtrar rol",
   "FILTER_NAME_PLACEHOLDER": "Filtrar nombre"
 }
