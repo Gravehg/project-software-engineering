@@ -43,11 +43,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  onFilterRole(role: string) {}
+  onFilterRole(role: string) {
+    this.selectedRole = role;
+    this.applyFilters();
+  }
 
   onFilterName() {}
 
-  private applyFilters() {}
+  private applyFilters() {
+    this.filteredUsers = this.users.filter((user) => {
+      return (
+        (!this.selectedRole || user.role === this.selectedRole) &&
+        (!this.filterName || user.name === this.filterName)
+      );
+    });
+  }
 
   resetFilters() {
     this.selectedRole = null;
