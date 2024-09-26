@@ -182,7 +182,7 @@ const getSuppTicketById = async (req, res) => {
       idSupport: ticket.idSupport ? ticket.idSupport._id : "Not assigned",
       supportName: ticket.idSupport ? ticket.idSupport.name : "Not assigned",
       idCategory: ticket.category._id,
-      categorytName: ticket.category.name,
+      categoryName: ticket.category.name,
       resolutionState: ticket.resolutionState,
       closureState: ticket.closureState,
       topic: ticket.topic,
