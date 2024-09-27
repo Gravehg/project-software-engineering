@@ -10,6 +10,7 @@
   "LINK_LOGIN_REFERENCE": "You must be registered here first!",
   "TICKET_POOL_NAVBAR": "Ticket pool",
   "MY_TICKET_NAVBAR": "My tickets",
+  "TICKETS_NAVBAR": "Tickets",
   "SIGNOUT_NAVBAR": "Sign out",
   "FILTER_CATEGORY_TEXT": "Filter category",
   "FILTER_CLOSURE_TEXT": "Filter closure state",
