@@ -184,7 +184,9 @@ export class ChatAdminComponent implements OnInit {
     const userMessage = {
       idChat: this.chatID,
       idUser: this.jammer,
+      userName: this.jammerName,
       idSupport: this.support,
+      supportName: this.supportName,
       text: this.newMessage,
       textDate: new Date(),
       remitent: 'Support',
@@ -248,12 +250,12 @@ export class ChatAdminComponent implements OnInit {
   }
 
   //Nombre del remitente
-  getSenderName(remitent: string): string {
+  getSenderName(remitent: string, message: Message): string {
     switch (remitent) {
       case 'Support':
-        return this.supportName;
+        return message.supportName;
       case 'Jammer':
-        return this.jammerName;
+        return message.userName;
       default:
         return 'Unknown';
     }

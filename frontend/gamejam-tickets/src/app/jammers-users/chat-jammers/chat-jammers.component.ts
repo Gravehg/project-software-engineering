@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { NavBarJammerComponent } from '../../shared/components/nav-bar-jammer/nav-bar-jammer.component';
 import { ConfirmationModalComponent } from '../../shared/components/confirmation-modal/confirmation-modal.component';
 import { CommonModule } from '@angular/common';
@@ -38,15 +38,16 @@ export class ChatJammersComponent implements OnInit {
   modalElement = document.getElementById('confirmationModal');
   modal: any;
 
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
   messages: Message[] = [];
   ticket: JammerTicket | undefined;
   errorMessage: string | null = null;
   newMessage = '';
   closureState: string | null = null;
   jammer = '';
-  support = '';
+  support= '';
   jammerName = '';
-  supportName = '';
+  supportName= '';
   chatID = '';
   ticketID: string | null = null;
   isLoading: boolean = true;
@@ -132,7 +133,9 @@ export class ChatJammersComponent implements OnInit {
     const userMessage = {
       idChat: this.chatID,
       idUser: this.jammer,
-      idSupport: this.support,
+      userName: this.jammerName,
+      idSupport: this.support === '' ? null : this.support,
+      supportName: this.supportName,
       text: this.newMessage,
       textDate: new Date(),
       remitent: 'Jammer',
@@ -142,6 +145,9 @@ export class ChatJammersComponent implements OnInit {
         if (response.success) {
           this.messages.push(response.message);
           this.newMessage = '';
+          setTimeout(() => {
+            this.scrollToBottom();
+          });
         } else {
           console.error('Error sending message:', response.msg);
         }
@@ -192,12 +198,12 @@ export class ChatJammersComponent implements OnInit {
   }
 
   //Nombre del remitente
-  getSenderName(remitent: string): string {
+  getSenderName(remitent: string, message: Message): string {
     switch (remitent) {
       case 'Support':
-        return this.supportName;
+        return message.supportName;
       case 'Jammer':
-        return this.jammerName;
+        return message.userName;
       default:
         return 'Unknown';
     }
@@ -260,5 +266,10 @@ export class ChatJammersComponent implements OnInit {
         this.modal.show();
       }
     }
+  }
+
+  scrollToBottom() {
+    const container = this.messageContainer.nativeElement;
+    container.scrollTop = container.scrollHeight;
   }
 }

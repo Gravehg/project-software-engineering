@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
 import { ConfirmationModalComponent } from '../../shared/components/confirmation-modal/confirmation-modal.component';
 import { CommonModule } from '@angular/common';
@@ -32,7 +32,7 @@ export class ChatSuppComponent implements OnInit {
     public chatService: ChatService,
     public route: ActivatedRoute
   ) {}
-
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
   messages: Message[] = [];
   categories: Category[] = [];
   categoriaSeleccionada = '';
@@ -181,7 +181,9 @@ export class ChatSuppComponent implements OnInit {
     const userMessage = {
       idChat: this.chatID,
       idUser: this.jammer,
+      userName: this.jammerName,
       idSupport: this.support,
+      supportName: this.supportName,
       text: this.newMessage,
       textDate: new Date(),
       remitent: 'Support',
@@ -191,6 +193,9 @@ export class ChatSuppComponent implements OnInit {
         if (response.success) {
           this.messages.push(response.message);
           this.newMessage = '';
+          setTimeout(() => {
+            this.scrollToBottom();
+          });
         } else {
           console.error('Error sending message:', response.msg);
         }
@@ -241,12 +246,12 @@ export class ChatSuppComponent implements OnInit {
   }
 
   //Nombre del remitente
-  getSenderName(remitent: string): string {
+  getSenderName(remitent: string, message: Message): string {
     switch (remitent) {
       case 'Support':
-        return this.supportName;
+        return message.supportName;
       case 'Jammer':
-        return this.jammerName;
+        return message.userName;
       default:
         return 'Unknown';
     }
@@ -391,5 +396,10 @@ export class ChatSuppComponent implements OnInit {
         this.router.navigate(['/supp-tickets']);
       }
     });
+  }
+  
+  scrollToBottom() {
+    const container = this.messageContainer.nativeElement;
+    container.scrollTop = container.scrollHeight;
   }
 }

@@ -9,7 +9,7 @@ const { sendEmail } = require("../services/mailer");
 const sendMessage = async (req, res) => {
   try {
     const { idChat, idUser, idSupport, text, remitent } = req.body;
-    if (!idChat || !idUser || !idSupport || !text || !remitent) {
+    if (!idChat || !idUser || !text || !remitent) {
       return res
         .status(400)
         .json({ success: false, msg: "All fields are required" });

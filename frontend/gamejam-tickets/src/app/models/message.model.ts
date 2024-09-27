@@ -1,7 +1,9 @@
 export interface Message{
-    idChat: String;
+    idChat: string;
     idUser: string;
-    idSupport: string;
+    userName: string;
+    idSupport: string | null;
+    supportName:string;
     text: string;
     textDate: Date;
     remitent: string;
