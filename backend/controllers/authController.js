@@ -34,7 +34,7 @@ const login = async (req, res) => {
     console.log("Roles", roles);
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/admin-users/create-support`
+        `http://${process.env.URL}${process.env.APP_PORT}/admin-users/admin-pool`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(

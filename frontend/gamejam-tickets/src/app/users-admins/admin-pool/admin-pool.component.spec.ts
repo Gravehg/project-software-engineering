@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TicketsPoolComponent } from './admin-tickets-pool.component';
+import { AdminPoolComponent } from './admin-pool.component';
 
-describe('TicketsPoolComponent', () => {
-  let component: TicketsPoolComponent;
-  let fixture: ComponentFixture<TicketsPoolComponent>;
+describe('AdminPoolComponent', () => {
+  let component: AdminPoolComponent;
+  let fixture: ComponentFixture<AdminPoolComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TicketsPoolComponent]
+      imports: [AdminPoolComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TicketsPoolComponent);
+    fixture = TestBed.createComponent(AdminPoolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

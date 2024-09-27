@@ -30,9 +30,7 @@ export const routes: Routes = [
   {
     path: 'admin-users',
     loadChildren: () =>
-      import('./users-admins/admin-users.routes').then(
-        (m) => m.ADMIN_USERS
-      ),
+      import('./users-admins/admin-users.routes').then((m) => m.ADMIN_USERS),
     canActivate: [authGuardGuard],
   },
   {
@@ -64,13 +62,6 @@ export const routes: Routes = [
         (m) => m.ADMINTICKETS
       ),
     canActivate: [authGuardGuard],
-  },
-  {
-    path: 'admin-tickets-pool',
-    loadChildren: () =>
-      import('./users-admins/tickets-pool/tickets-pool.routes').then(
-        (m) => m.TICKETSPOOL
-      ),
   },
   {
     path: '**',

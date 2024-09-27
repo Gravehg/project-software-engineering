@@ -49,4 +49,10 @@ export class SupportService {
   assignTicket(ticketId: string): Observable<any> {
     return this.http.post(`${this.supportApiUrl}assign-ticket`, { ticketId });
   }
+
+  getAllTickets(): Observable<SupportTicket[]> {
+    return this.http.get<SupportTicket[]>(
+      `${this.supportApiUrl}get-all-tickets`
+    );
+  }
 }
