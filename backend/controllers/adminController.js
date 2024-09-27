@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Support = require("../models/supportModel");
+const Ticket = require("../models/ticketModel");
 const { format } = require("date-fns");
 
 const createNewSupportWithUser = async (req, res) => {
@@ -12,7 +13,7 @@ const createNewSupportWithUser = async (req, res) => {
     // Crear un nuevo soporte con el id del usuario recién creado
 
     const cateries = req.body.categoris.map((category) => {
-      return category.category
+      return category.category;
     });
 
     const newSupport = new Support({
@@ -26,25 +27,27 @@ const createNewSupportWithUser = async (req, res) => {
     return res.status(200).json({ ok: true });
   } catch (error) {
     // Manejo de errores del servidor
-    return res
-      .status(500)
-      .json({ success: false, msg: "There has been an error", error: error.msg });
+    return res.status(500).json({
+      success: false,
+      msg: "There has been an error",
+      error: error.msg,
+    });
   }
-}
+};
 
 const createNewUserSupport = async (req, res) => {
   try {
     // Crear un nuevo usuario con el correo proporcionado
     const newUser = new User({
-                                email: req.body.email, 
-                                roles: ["Support"],
-                                name: req.body.name,
-                              });
+      email: req.body.email,
+      roles: ["Support"],
+      name: req.body.name,
+    });
     await newUser.save();
 
     // Crear un nuevo soporte con el id del usuario recién creado
     const cateries = req.body.categoris.map((category) => {
-      return category.category
+      return category.category;
     });
 
     const newSupport = new Support({
@@ -68,7 +71,7 @@ const getExistingUsers = async (req, res) => {
   try {
     // Buscar un usuario por el correo proporcionado
     const user = await User.findOne({ email: req.params.email }).exec();
-    
+
     // Si no se encuentra el usuario, devolver error 404
     if (!user) {
       return res
@@ -77,7 +80,7 @@ const getExistingUsers = async (req, res) => {
     }
 
     // Si se encuentra el usuario, devolver ok=true
-    return res.status(200).json({ ok: true});
+    return res.status(200).json({ ok: true });
   } catch (error) {
     // Manejo de errores del servidor
     return res
@@ -101,7 +104,8 @@ const getUsers = async (req, res) => {
     });
 
     return res.status(201).json(formattedUsers);
-  } catch {
+  } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ success: false, msg: "There has been an error" });
@@ -112,7 +116,7 @@ const getExistingSupports = async (req, res) => {
   try {
     // Buscar el usuario por el correo proporcionado
     const user = await User.findOne({ email: req.params.email }).exec();
-    
+
     // Si no se encuentra el usuario, devolver error 404
     if (!user) {
       return res.status(200).json({ success: false, msg: "User not found" });
@@ -126,14 +130,17 @@ const getExistingSupports = async (req, res) => {
       return res.status(200).json({ ok: true });
     } else {
       // Si no tiene el rol, devolver ok=false
-      return res.status(200).json({ ok: false, msg: "User does not have Support role" });
+      return res
+        .status(200)
+        .json({ ok: false, msg: "User does not have Support role" });
     }
   } catch (error) {
     // Manejo de errores de servidor
-    return res.status(500).json({ success: false, msg: "There has been an error" });
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
   }
 };
-
 
 const getUserRole = (user) => {
   if (user.roles.includes("GlobalOrganizer")) {
@@ -144,5 +151,54 @@ const getUserRole = (user) => {
     return "User";
   }
 };
-    
-module.exports = { getExistingUsers, getExistingSupports, createNewUserSupport, createNewSupportWithUser,getUsers };
+
+const getUserAndTickets = async (req, res) => {
+  try {
+    const { findUserId } = req.body;
+    const user = await User.findById(findUserId);
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "User not found" });
+    }
+    const userRole = getUserRole(user);
+    const response = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      creationDate: format(user.creationDate, "dd/MM/yyyy"),
+      role: userRole,
+    };
+    const tickets = await Ticket.find({
+      idUserIssued: findUserId,
+    })
+      .sort({ creationDate: -1 })
+      .exec();
+
+    const ticketsformmated = tickets.map((item) => ({
+      _id: item._id,
+      userName: item.idUserIssued.name,
+      category: item.category,
+      topic: item.topic,
+      creationDate: format(new Date(item.creationDate), "dd/MM/yyyy"),
+      closureState: item.closureState,
+      resolutionState: item.resolutionState,
+    }));
+    return res.status(201).json({
+      user: response,
+      tickets: ticketsformmated,
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
+};
+
+module.exports = {
+  getExistingUsers,
+  getExistingSupports,
+  createNewUserSupport,
+  createNewSupportWithUser,
+  getUsers,
+  getUserAndTickets,
+};
