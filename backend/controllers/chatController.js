@@ -4,12 +4,23 @@ const chats = require('../models/chatModel');
 const getMessages = async (req, res) => {
   try {
     const chatID = req.query.chatID;
-    const messages = await Message.find({
-      idChat: chatID,
-    })
+    const messages = await Message.find({ idChat: chatID })
+      .populate("idUser", "name") 
+      .populate("idSupport", "name") 
       .sort({ textDate: 1 })
       .exec();
-    return res.status(200).json(messages);
+    const formattedMessages = messages.map((msg) => ({
+      idChat: msg.idChat,
+      idUser: msg.idUser._id, 
+      userName: msg.idUser.name, 
+      idSupport: msg.idSupport?._id || null, 
+      supportName: msg.idSupport?.name || null, 
+      text: msg.text, 
+      textDate: msg.textDate, 
+      remitent: msg.remitent,
+    }));
+
+    return res.status(200).json(formattedMessages);
   } catch {
     return res
       .status(500)
