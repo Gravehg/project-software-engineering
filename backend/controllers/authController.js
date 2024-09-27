@@ -31,10 +31,10 @@ const login = async (req, res) => {
       sameSite: "lax",
       maxAge: 1000 * 60 * 30,
     });
-
+    console.log("Roles", roles);
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/admin-tickets`
+        `http://${process.env.URL}${process.env.APP_PORT}/admin-users/create-support`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(
@@ -138,19 +138,91 @@ const validateSupport = async (req, res, next) => {
   }
 };
 
-const validateAdmin = async (req, res, next) => {
+const validateAdmin = (req, res, next) => {
+  const token = req.cookies.sessionToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
   try {
-    const userPayLoad = req.userPayLoad;
-    const user = await User.findById(userPayLoad.userId);
-    if (!user || !user.roles.includes("GlobalOrganizer")) {
-      return res.status(403).json({ success: false, error: "Not authorized as admin" });
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    const rolesToCheck = ["GlobalOrganizer"];
+
+    const hasValidRole = rolesToCheck.some((role) =>
+      decoded.roles.includes(role)
+    );
+
+    if (!hasValidRole) {
+      return res
+        .status(403)
+        .json({ success: false, error: "User not authorized" });
     }
-    req.userPayLoad = { ...userPayLoad, adminInfo: { isAdmin: true } };
+
+    req.userPayLoad = {
+      idUser: decoded.userId,
+      roles: decoded.roles,
+      email: decoded.email,
+    };
     next();
   } catch (error) {
+    return res.status(401).json({ success: false, error: "Invalid token" });
+  }
+};
+
+const validateUser = (req, res, next) => {
+  const token = req.cookies.sessionToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
+
+  try {
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    const rolesToCheck = [
+      "GlobalOrganizer",
+      "LocalOrganizer",
+      "Judge",
+      "Jammer",
+    ];
+
+    const hasValidRole = rolesToCheck.some((role) =>
+      decoded.roles.includes(role)
+    );
+
+    if (!hasValidRole) {
+      return res
+        .status(403)
+        .json({ success: false, error: "User not authorized" });
+    }
+
+    req.userPayLoad = {
+      userId: decoded.userId,
+      roles: decoded.roles,
+      email: decoded.email,
+    };
+    next();
+  } catch (error) {
+    return res.status(401).json({ success: false, error: "Invalid token" });
+  }
+};
+
+const logOut = async (req, res) => {
+  try {
+    const token = req.cookies.sessionToken;
+
+    res.clearCookie("sessionToken");
+
+    if (!token) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "Logged out successfully" });
+    }
     return res
-      .status(500)
-      .json({ success: false, error: "Internal server error, try again" });
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
+  } catch (error) {
+    return res
+      .clearCookie("sessionToken")
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
   }
 };
 
@@ -160,5 +232,7 @@ module.exports = {
   magicLink,
   validateSession,
   validateSupport,
+  validateUser,
   validateAdmin,
+  logOut,
 };

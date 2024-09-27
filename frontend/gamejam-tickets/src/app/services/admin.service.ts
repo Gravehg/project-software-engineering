@@ -1,24 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Category } from '../models/category.model';
-import { SupportTicket } from '../models/supportTicket.model';
+import { UsertTicket } from '../models/userTicket.model';
+import { suppUser } from '../models/suppUser.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   baseApiUrl: string = environment.apiUrl;
-  categoryApiUrl: string = this.baseApiUrl + '/category/';
   adminApiUrl: string = this.baseApiUrl + '/admin/';
+
   constructor(private http: HttpClient) {}
 
-  getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.categoryApiUrl}get-all-categories`);
+  getExistingUsers(email: String): Observable<any> {
+    return this.http.get<any>(`${this.adminApiUrl}get-existing-users/${email}`);
   }
 
-  getAllTickets(): Observable<SupportTicket[]> {
-    return this.http.get<SupportTicket[]>(`${this.adminApiUrl}get-all-tickets`);
+  getExistingSupports(email: String): Observable<any> {
+    return this.http.get<any>(
+      `${this.adminApiUrl}get-existing-supports/${email}`
+    );
+  }
+
+  postUserSupport(info: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.adminApiUrl}create-new-user-support`,
+      info
+    );
+  }
+
+  postIncresAUserToSupport(info: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.adminApiUrl}create-new-support-with-user`,
+      info
+    );
   }
 }

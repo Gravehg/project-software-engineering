@@ -1,0 +1,129 @@
+<app-nav-bar-admin></app-nav-bar-admin>
+<div class="d-flex p-4 justify-content-center align-items-center">
+  <div class="container-fluid p-4 w-100 overflow-hidden">
+    <div class="row gy-4 p-4">
+      <div class="col-12 col-md-3 col-lg-3">
+        <li class="nav-item dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_ROLE_TEXT" | translate }}
+          </button>
+          <ul class="dropdown-menu">
+            @for (role of roles; track role.id) {
+            <li>
+              <a (click)="onFilterRole(role.role)" class="dropdown-item">{{
+                role.role
+              }}</a>
+            </li>
+            } @empty {
+            <li>There are no items.</li>
+            }
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 d-flex">
+        <div class="col-12 col-md-6 col-lg-6">
+          <input
+            class="form-control me-2 rounded"
+            type="search"
+            [(ngModel)]="filterName"
+            [placeholder]="'FILTER_NAME_PLACEHOLDER' | translate"
+            aria-label="Search"
+          />
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <button
+            type="submit"
+            className="btn btn-outline-secondary"
+            (click)="onFilterName()"
+            class="btn btn-outline-primary"
+          >
+            {{ "FILTER_NAME_PLACEHOLDER" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="resetFilters()"
+        >
+          {{ "RESET_FILTERS_BUTTON" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-2 gy-2 p-4">
+      @if(selectedRole){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>
+          {{ selectedRole }}
+        </p>
+      </div>
+      }
+    </div>
+    <div class="row gy-4 mt-4">
+      <!-- Card 1 -->
+      @for(user of filteredUsers; track user._id){
+      <div class="col-12">
+        <div class="card p-4 shadow">
+          <div class="row">
+            <!-- Section 1: Ticket Information -->
+            <div class="col-md-4">
+              <p><strong>ID:</strong> {{ user._id || "" }}</p>
+              <p>
+                <strong>{{ "DATE" | translate }}:</strong>
+                {{ user.creationDate || "" }}
+              </p>
+            </div>
+            <!-- Section 2: Category Information -->
+            <div class="col-md-4 align-self-center">
+              <p><strong>Name:</strong>{{ user.name || "" }}</p>
+              <p>
+                <strong>{{ "USER_EMAIL" | translate }}:</strong>
+                {{ user.email || "" }}
+              </p>
+              <a [routerLink]="['/admin-users/admin-user-tickets', user._id]">
+                {{ "SEE_USER_TICKETS_TEXT" | translate }}
+              </a>
+            </div>
+
+            <div
+              class="col-md-4 p-2 d-flex flex-column justify-content-between align-items-center"
+            >
+              @if(user.role === 'User'){
+              <div class="p-2 badge rounded-pill bg-primary">
+                <p class="card-text">{{ user.role }}</p>
+              </div>
+              }@else if(user.role === 'Support'){
+              <div class="p-2 badge rounded-pill bg-warning">
+                <p class="card-text">{{ user.role }}</p>
+              </div>
+              }@else {
+              <div class="p-2 badge rounded-pill bg-danger">
+                <p class="card-text">{{ user.role }}</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      }@empty {
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6 col-md-12 col-lg-12">
+              <p>{{ "NO_TICKETS_FILTER" | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<app-nav-bar-support></app-nav-bar-support>
+<section class="chat-section">
+  <div class="container d-flex justify-content-between">
+    <!-- Contenedor del chat -->
+    <div class="chat-content">
+      <!-- Aquí va todo tu contenido de chat -->
+      <div class="card">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <span class="ticket-topic">{{ ticket?.topic }}</span>
+          <div class="status-container d-flex align-items-center">
+            <span class="status-label">{{ "TICKET_STATUS" | translate }}</span>
+            <span class="status-text" [ngClass]="getStatusClass()">
+              {{ closureState }}
+            </span>
+            <span class="status-circle" [ngClass]="getCircleClass()"></span>
+          </div>
+        </div>
+
+        <div *ngIf="isLoading" class="loading-spinner">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">{{ "LOADING" | translate }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoading">
+          <div class="message-container-wrapper">
+            <div *ngFor="let msg of messages" class="message-row">
+              <div
+                class="d-flex flex-column"
+                [ngClass]="getMessageAlignment(msg.remitent)"
+              >
+                <div class="message-container p-2">
+                  <div
+                    class="message-bubble"
+                    [ngClass]="getBubbleClasses(msg.remitent)"
+                  >
+                    {{ msg.text }}
+                  </div>
+                  <div
+                    class="message-footer"
+                    [ngClass]="getBubbleClasses(msg.remitent)"
+                  >
+                    <small>{{ getSenderName(msg.remitent) }}</small>
+                    <small class="message-time ml-auto">{{
+                      msg.textDate | date : "HH:mm"
+                    }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="input-group d-flex align-items-center">
+            <input
+              type="text"
+              class="form-control me-2"
+              [(ngModel)]="newMessage"
+              (keydown.enter)="handleMessage()"
+              [placeholder]="'MSG_PLACEHOLDER' | translate"
+            />
+            <button class="btn btn-primary" (click)="handleMessage()">
+              {{ "SEND_BUTTON" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de opciones de chat -->
+    <div class="chat-options">
+      <h3>{{ "TICKET_OPTIONS_TXT" | translate }}</h3>
+
+      <div class="checkbox-container">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="estadoCheckbox"
+            checked
+          />
+          <label class="form-check-label" for="estadoCheckbox">
+            {{ "CLOSE_TICKET_TXT" | translate }}
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="resolucionCheckbox"
+            checked
+          />
+          <label class="form-check-label" for="resolucionCheckbox">
+            {{ "ITS_SOLVED_TXT" | translate }}
+          </label>
+        </div>
+      </div>
+
+      <hr />
+      <h3>{{ "TRANSFER_OPTIONS_TXT" | translate }}</h3>
+
+      <div class="select-container">
+        <label for="categoriesSelect">{{ "CATEGORIES" | translate }}</label>
+        <select
+          class="form-select"
+          id="categoriesSelect"
+          [(ngModel)]="categoriaSeleccionada"
+        >
+          <option *ngFor="let category of categories" [value]="category._id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <button class="btn btn-transferir" (click)="handleTransfer()">
+        {{ "TRANSFER_BUTTON" | translate }}
+      </button>
+    </div>
+  </div>
+</section>

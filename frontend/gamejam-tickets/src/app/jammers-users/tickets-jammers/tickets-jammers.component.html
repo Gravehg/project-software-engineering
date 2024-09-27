@@ -1,2 +1,72 @@
 <app-nav-bar-jammer></app-nav-bar-jammer>
-<p>tickets-jammers works! HELLO WORD</p>
+<div class="ticket-historail-container">
+  <div class="container">
+    <div class="menu-drops-container">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ "CATEGORY" | translate }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          @for (category of categories; track category._id) {
+          <li>
+            <a
+              (click)="onFilterCategory(category.name)"
+              class="dropdown-item"
+              >{{ category.name }}</a
+            >
+          </li>
+          } @empty {
+          <li><a class="dropdown-item" href="#">There are no items.</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="dropdown moving-right">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ "STATUS" | translate }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a (click)="onFilterClosure('Open')" class="dropdown-item">{{
+              "OPEN_FILTER_TEXT" | translate
+            }}</a>
+          </li>
+          <li>
+            <a (click)="onFilterClosure('Closed')" class="dropdown-item">{{
+              "CLOSED_FILTER_TEXT" | translate
+            }}</a>
+          </li>
+          <!-- <li><a class="dropdown-item" href="#">{{  "RESOLVED_FILTER_TEXT" | translate}}</a></li> -->
+        </ul>
+      </div>
+
+      <div class="dropdown moving-right">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="resetFilters()"
+        >
+          {{ "RESET_FILTERS_BUTTON" | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="card-container">
+      <!-- <p>Esto es un id temporal: {{filteredTickets[0].topic}}</p> -->
+      @for (ticket of filteredTickets; track ticket._id) {
+      <app-card class="card" [ticket]="ticket" />
+      }
+    </div>
+  </div>
+</div>

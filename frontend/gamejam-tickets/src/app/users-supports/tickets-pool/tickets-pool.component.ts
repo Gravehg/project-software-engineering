@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupportService } from '../../services/support.service';
 import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
 import { NgStyle } from '@angular/common';
+import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tickets-pool',
@@ -13,15 +15,17 @@ import { NgStyle } from '@angular/common';
   templateUrl: './tickets-pool.component.html',
   styleUrl: './tickets-pool.component.css',
 })
-export class TicketsPoolComponent {
+export class TicketsPoolComponent implements OnInit, OnDestroy {
+  translate: TranslateService = inject(TranslateService);
   categories: Category[] = [];
   tickets: SupportTicket[] = [];
   filteredTickets: SupportTicket[] = [];
   errorMessage: string | null = null;
-  categoryMap: { [key: string]: { name: string; color: string } } = {};
+  categoryMap: { [key: string]: { name: string } } = {};
   selectedCategory: string | null = null;
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
+  ticketSubscription: Subscription | undefined;
 
   constructor(public SupportService: SupportService) {}
 
@@ -30,13 +34,16 @@ export class TicketsPoolComponent {
       next: (res: Category[]) => {
         this.categories = res;
         this.categoryMap = this.categories.reduce((map, category) => {
-          map[category._id] = { name: category.name, color: category.color };
+          map[category._id] = { name: category.name };
           return map;
-        }, {} as { [key: string]: { name: string; color: string } });
+        }, {} as { [key: string]: { name: string } });
       },
       error: (err) => {
-        this.errorMessage = 'Failed to load categories';
-        console.error('Error fetching categories:', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
 
@@ -46,10 +53,19 @@ export class TicketsPoolComponent {
         this.filteredTickets = [...this.tickets];
       },
       error: (err) => {
-        (this.errorMessage = 'Failed to get tickets, try again!'),
-          console.log('Error fetching tickets', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.ticketSubscription) {
+      this.ticketSubscription.unsubscribe();
+    }
   }
 
   onFilterCategory(category: string) {
@@ -86,7 +102,70 @@ export class TicketsPoolComponent {
     this.filteredTickets = [...this.tickets]; // Reset to all tickets
   }
 
-  getCategoryColor(categoryId: string): string {
-    return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
+  refreshTickets() {
+    this.SupportService.getSupportPoolTickets().subscribe({
+      next: (res: SupportTicket[]) => {
+        this.tickets = res;
+        this.filteredTickets = [...this.tickets];
+      },
+      error: (err) => {
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
+      },
+    });
+  }
+
+  triggerError(error: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error,
+    });
+  }
+
+  assignTicket(ticketId: string) {
+    this.SupportService.assignTicket(ticketId).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.triggerSuccess();
+          this.refreshTickets();
+        } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
+        }
+      },
+      error: (err) => {
+        if (err.error.assigned) {
+          this.triggerFailure('FAILURE_TICKET_ASSIGNED');
+          this.refreshTickets();
+        } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
+        }
+      },
+    });
+  }
+
+  triggerSuccess() {
+    const translatedTitle = this.translate.instant('SUCCESS_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant(
+      'SUCCESS_TICKET_ASSIGN_ALERT_TEXT'
+    );
+    Swal.fire({
+      icon: 'success',
+      title: translatedTitle,
+      text: translatedText,
+    });
+  }
+
+  triggerFailure(toTranslateText: string) {
+    const translatedTitle = this.translate.instant('FAILURE_LOGIN_ALERT_TITLE');
+    const translatedText = this.translate.instant(toTranslateText);
+    Swal.fire({
+      icon: 'error',
+      title: translatedTitle,
+      text: translatedText,
+    });
   }
 }

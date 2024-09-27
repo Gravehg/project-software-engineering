@@ -40,4 +40,14 @@ const addCategory = async (req, res) => {
     .json({ success: true, msg: "Created category successfully" });
 };
 
-module.exports = { getCategories, addCategory };
+const getCategoriesLessOne = async (req, res) => {
+  try {
+    const categoryID = req.query.categoryID;
+    const categories = await SupportCategory.find({ _id: { $ne: categoryID } });
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getCategories, addCategory,getCategoriesLessOne };

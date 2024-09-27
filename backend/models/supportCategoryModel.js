@@ -6,10 +6,6 @@ const supportCategorySchema = new Schema({
     type: String,
     required: true,
   },
-  color: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("SupportCategory", supportCategorySchema);

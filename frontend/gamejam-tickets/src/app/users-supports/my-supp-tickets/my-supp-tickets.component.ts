@@ -6,6 +6,7 @@ import { Category } from '../../models/category.model';
 import { SupportTicket } from '../../models/supportTicket.model';
 import { RouterModule } from '@angular/router';
 import { NgStyle } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-my-supp-tickets',
@@ -20,7 +21,7 @@ export class MySuppTicketsComponent implements OnInit {
   tickets: SupportTicket[] = [];
   filteredTickets: SupportTicket[] = [];
   errorMessage: string | null = null;
-  categoryMap: { [key: string]: { name: string; color: string } } = {};
+  categoryMap: { [key: string]: { name: string } } = {};
   selectedCategory: string | null = null;
   selectedClosure: string | null = null;
   selectedResolution: string | null = null;
@@ -30,13 +31,16 @@ export class MySuppTicketsComponent implements OnInit {
       next: (res: Category[]) => {
         this.categories = res;
         this.categoryMap = this.categories.reduce((map, category) => {
-          map[category._id] = { name: category.name, color: category.color };
+          map[category._id] = { name: category.name };
           return map;
-        }, {} as { [key: string]: { name: string; color: string } });
+        }, {} as { [key: string]: { name: string } });
       },
       error: (err) => {
-        this.errorMessage = 'Failed to load categories';
-        console.error('Error fetching categories:', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
 
@@ -46,8 +50,11 @@ export class MySuppTicketsComponent implements OnInit {
         this.filteredTickets = [...this.tickets];
       },
       error: (err) => {
-        (this.errorMessage = 'Failed to get tickets, try again!'),
-          console.log('Error fetching tickets', err);
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
       },
     });
   }
@@ -86,7 +93,11 @@ export class MySuppTicketsComponent implements OnInit {
     this.filteredTickets = [...this.tickets]; // Reset to all tickets
   }
 
-  getCategoryColor(categoryId: string): string {
-    return this.categoryMap[categoryId]?.color || '#ffffff'; // Default to white if color not found
+  triggerError(error: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error,
+    });
   }
 }
