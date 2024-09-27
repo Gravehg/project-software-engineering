@@ -64,5 +64,9 @@
   "SUPPORT_USER_CREATED": "Support user created",
   "SUPPORT_USER_ALREADY_EXISTS": "Support user already exists",
   "FILTER_ROLE_TEXT": "Filter role",
-  "FILTER_NAME_PLACEHOLDER": "Filter name"
+  "FILTER_NAME_PLACEHOLDER": "Filter name",
+  "SEE_USER_TICKETS_TEXT": "See user tickets",
+  "USER_SIGN_TEXT": "User",
+  "TICKET_SIGN_TEXT": "Tickets",
+  "CREATE_SUPPORT_NAVBAR": "Create Support"
 }
