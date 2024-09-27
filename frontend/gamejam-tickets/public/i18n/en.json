@@ -10,6 +10,7 @@
   "LINK_LOGIN_REFERENCE": "You must be registered here first!",
   "TICKET_POOL_NAVBAR": "Ticket pool",
   "MY_TICKET_NAVBAR": "My tickets",
+  "TICKETS_NAVBAR": "Tickets",
   "SIGNOUT_NAVBAR": "Sign out",
   "FILTER_CATEGORY_TEXT": "Filter category",
   "FILTER_CLOSURE_TEXT": "Filter closure state",
@@ -64,5 +65,9 @@
   "SUPPORT_USER_CREATED": "Support user created",
   "SUPPORT_USER_ALREADY_EXISTS": "Support user already exists",
   "FILTER_ROLE_TEXT": "Filter role",
-  "FILTER_NAME_PLACEHOLDER": "Filter name"
+  "FILTER_NAME_PLACEHOLDER": "Filter name",
+  "SEE_USER_TICKETS_TEXT": "See user tickets",
+  "USER_SIGN_TEXT": "User",
+  "TICKET_SIGN_TEXT": "Tickets",
+  "CREATE_SUPPORT_NAVBAR": "Create Support"
 }

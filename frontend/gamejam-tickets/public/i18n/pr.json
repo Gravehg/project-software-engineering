@@ -10,6 +10,7 @@
   "LINK_LOGIN_REFERENCE": "Você deve estar registrado aqui primeiro!",
   "TICKET_POOL_NAVBAR": "Pool de bilhetes",
   "MY_TICKET_NAVBAR": "Meus bilhetes",
+  "TICKETS_NAVBAR": "Bilhetes",
   "SIGNOUT_NAVBAR": "Sair",
   "FILTER_CATEGORY_TEXT": "Filtrar categoria",
   "FILTER_CLOSURE_TEXT": "Filtrar o estado do fechamento",
@@ -64,5 +65,9 @@
   "SUPPORT_USER_CREATED": "Usuário de suporte criado",
   "SUPPORT_USER_ALREADY_EXISTS": "Usuário de suporte já existe",
   "FILTER_ROLE_TEXT": "Filtrar por função",
-  "FILTER_NAME_PLACEHOLDER": "Filtrar por nome"
+  "FILTER_NAME_PLACEHOLDER": "Filtrar por nome",
+  "SEE_USER_TICKETS_TEXT": "Ver tiquetes de usuario",
+  "USER_SIGN_TEXT": "Usuário",
+  "TICKET_SIGN_TEXT": "Tickets",
+  "CREATE_SUPPORT_NAVBAR": "Criar suporte"
 }

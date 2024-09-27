@@ -10,6 +10,7 @@
   "LINK_LOGIN_REFERENCE": "Debes estar registrado aquí primero!",
   "TICKET_POOL_NAVBAR": "Pool de tiquetes",
   "MY_TICKET_NAVBAR": "Mis tiquetes",
+  "TICKETS_NAVBAR": "Tiquetes",
   "SIGNOUT_NAVBAR": "Salir",
   "FILTER_CATEGORY_TEXT": "Filtrar categoría",
   "FILTER_CLOSURE_TEXT": "Filtrar estado de cierre",
@@ -64,5 +65,9 @@
   "SUPPORT_USER_CREATED": "Usuario de soporte creado",
   "SUPPORT_USER_ALREADY_EXISTS": "El usuario de soporte ya existe",
   "FILTER_ROLE_TEXT": "Filtrar rol",
-  "FILTER_NAME_PLACEHOLDER": "Filtrar nombre"
+  "FILTER_NAME_PLACEHOLDER": "Filtrar nombre",
+  "SEE_USER_TICKETS_TEXT": "Ver tiquetes de usuario",
+  "USER_SIGN_TEXT": "Usuario",
+  "TICKET_SIGN_TEXT": "Tiquetes",
+  "CREATE_SUPPORT_NAVBAR": "Crear soporte"
 }

@@ -112,9 +112,37 @@ const assignTicket = async (req, res) => {
   }
 };
 
+const getAllTickets = async (req, res) => {
+  try {
+    const tickets = await Ticket.find({
+      $or: [{ idSupport: { $exists: false } }, { idSupport: null }],
+    })
+      .sort({ creationDate: 1 })
+      .populate("idUserIssued")
+      .exec();
+
+    const ticketsWithUserName = tickets.map((item) => ({
+      _id: item._id,
+      userName: item.idUserIssued.name,
+      category: item.category,
+      topic: item.topic,
+      creationDate: format(new Date(item.creationDate), "dd/MM/yyyy"),
+      closureState: item.closureState,
+      resolutionState: item.resolutionState,
+    }));
+
+    return res.status(200).json(ticketsWithUserName);
+  } catch {
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
+};
+
 module.exports = {
   getAssignedTickets,
   getSupportCategories,
   getSupportTicketPool,
   assignTicket,
+  getAllTickets,
 };

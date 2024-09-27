@@ -88,6 +88,9 @@
                 <strong>{{ "USER_EMAIL" | translate }}:</strong>
                 {{ user.email || "" }}
               </p>
+              <a [routerLink]="['/admin-users/admin-user-tickets', user._id]">
+                {{ "SEE_USER_TICKETS_TEXT" | translate }}
+              </a>
             </div>
 
             <div
