@@ -3,10 +3,14 @@ import { CreateSupportsComponent } from './create-supports/create-supports.compo
 import { NotFoundComponent } from '../error-pages/not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { UsersTicketsComponent } from './users-tickets/users-tickets.component';
+import { AdminTicketsComponent } from './admin-tickets/admin-tickets.component';
+import { AdminPoolComponent } from './admin-pool/admin-pool.component';
 
 export const ADMIN_USERS: Routes = [
+  { path: '', component: AdminPoolComponent },
   { path: 'create-support', component: CreateSupportsComponent },
-  { path: 'admin-pool', component: NotFoundComponent },
+  { path: 'admin-pool', component: AdminPoolComponent },
+  { path: 'admin-tickets', component: AdminTicketsComponent },
   { path: 'users-pool', component: UsersComponent },
   {
     path: 'admin-users/admin-user-tickets/:id',

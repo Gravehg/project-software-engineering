@@ -1,14 +1,13 @@
-<app-nav-bar-support></app-nav-bar-support>
-<section class="chat-section">
-  <div class="container d-flex justify-content-between">
-    <!-- Contenedor del chat -->
-    <div class="chat-content">
-      <!-- Aquí va todo tu contenido de chat -->
-      <div class="card">
+<div class="pageContainer d-flex flex-column justify-content-between ">
+  <app-nav-bar-support></app-nav-bar-support>
+  <div class="container flex-grow-1 d-flex">
+    <div class="chat-content"> 
+      <div class="card flex-grow-1">
         <div
-          class="card-header d-flex justify-content-between align-items-center"
+          class="card-header d-flex flex-grow-1 justify-content-between align-items-center"
         >
           <span class="ticket-topic">{{ ticket?.topic }}</span>
+          <span class="ticket-categoryName">{{ ticket?.categoryName }}</span>
           <div class="status-container d-flex align-items-center">
             <span class="status-label">{{ "TICKET_STATUS" | translate }}</span>
             <span class="status-text" [ngClass]="getStatusClass()">
@@ -25,7 +24,7 @@
         </div>
 
         <div *ngIf="!isLoading">
-          <div class="message-container-wrapper">
+          <div class="message-container-wrapper" #messageContainer>
             <div *ngFor="let msg of messages" class="message-row">
               <div
                 class="d-flex flex-column"
@@ -42,7 +41,7 @@
                     class="message-footer"
                     [ngClass]="getBubbleClasses(msg.remitent)"
                   >
-                    <small>{{ getSenderName(msg.remitent) }}</small>
+                    <small>{{ getSenderName(msg.remitent, msg) }}</small>
                     <small class="message-time ml-auto">{{
                       msg.textDate | date : "HH:mm"
                     }}</small>
@@ -62,6 +61,30 @@
               (keydown.enter)="handleMessage()"
               [placeholder]="'MSG_PLACEHOLDER' | translate"
             />
+            <div class="checkbox-container">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="estadoCheckbox"
+                  checked
+                />
+                <label class="form-check-label" for="estadoCheckbox">
+                  {{ "CLOSE_TICKET_TXT" | translate }}
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="resolucionCheckbox"
+                  checked
+                />
+                <label class="form-check-label" for="resolucionCheckbox">
+                  {{ "ITS_SOLVED_TXT" | translate }}
+                </label>
+              </div>
+            </div>
             <button class="btn btn-primary" (click)="handleMessage()">
               {{ "SEND_BUTTON" | translate }}
             </button>
@@ -72,35 +95,8 @@
 
     <!-- Panel de opciones de chat -->
     <div class="chat-options">
-      <h3>{{ "TICKET_OPTIONS_TXT" | translate }}</h3>
-
-      <div class="checkbox-container">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="estadoCheckbox"
-            checked
-          />
-          <label class="form-check-label" for="estadoCheckbox">
-            {{ "CLOSE_TICKET_TXT" | translate }}
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="resolucionCheckbox"
-            checked
-          />
-          <label class="form-check-label" for="resolucionCheckbox">
-            {{ "ITS_SOLVED_TXT" | translate }}
-          </label>
-        </div>
-      </div>
-
-      <hr />
       <h3>{{ "TRANSFER_OPTIONS_TXT" | translate }}</h3>
+      <hr />
 
       <div class="select-container">
         <label for="categoriesSelect">{{ "CATEGORIES" | translate }}</label>
@@ -120,4 +116,4 @@
       </button>
     </div>
   </div>
-</section>
+</div>

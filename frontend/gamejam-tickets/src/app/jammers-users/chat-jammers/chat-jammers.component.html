@@ -5,8 +5,9 @@
 >
 </app-confirmation-modal>
 
-<app-nav-bar-jammer></app-nav-bar-jammer>
-<section class="chat-section">
+
+<section class="chat-section d-flex flex-grow-1">
+  <app-nav-bar-jammer></app-nav-bar-jammer>
   <div class="container">
     <div class="card">
       <div
@@ -29,7 +30,7 @@
       </div>
 
       <div *ngIf="!isLoading">
-        <div class="message-container-wrapper">
+        <div class="message-container-wrapper" #messageContainer>
           <div *ngFor="let msg of messages" class="message-row">
             <div
               class="d-flex flex-column"
@@ -46,7 +47,7 @@
                   class="message-footer"
                   [ngClass]="getBubbleClasses(msg.remitent)"
                 >
-                  <small>{{ getSenderName(msg.remitent) }}</small>
+                  <small>{{ getSenderName(msg.remitent, msg) }}</small>
                   <small class="message-time ml-auto">{{
                     msg.textDate | date : "HH:mm"
                   }}</small>
@@ -56,6 +57,7 @@
           </div>
         </div>
       </div>
+      
       <div class="card-footer">
         <div class="input-group d-flex align-items-center">
           <input
