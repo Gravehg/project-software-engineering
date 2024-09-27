@@ -30,9 +30,7 @@ export const routes: Routes = [
   {
     path: 'admin-users',
     loadChildren: () =>
-      import('./users-admins/admin-users.routes').then(
-        (m) => m.ADMIN_USERS
-      ),
+      import('./users-admins/admin-users.routes').then((m) => m.ADMIN_USERS),
     canActivate: [authGuardGuard],
   },
   {
@@ -56,6 +54,14 @@ export const routes: Routes = [
   {
     path: 'not-loged-in',
     component: NotLogedInComponent,
+  },
+  {
+    path: 'admin-tickets',
+    loadChildren: () =>
+      import('./users-admins/admin-tickets/admin-tickets.routes').then(
+        (m) => m.ADMINTICKETS
+      ),
+    canActivate: [authGuardGuard],
   },
   {
     path: '**',
