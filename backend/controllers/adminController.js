@@ -194,6 +194,36 @@ const getUserAndTickets = async (req, res) => {
   }
 };
 
+const assignTicket = async (req, res) => {
+  try {
+    const userPayLoad = req.userPayLoad;
+    console.log("Payload", userPayLoad);
+    const ticketId = req.body.ticketId;
+    const ticket = await Ticket.findOne({
+      _id: ticketId,
+      $or: [{ idSupport: { $exists: false } }, { idSupport: null }],
+    });
+
+    if (!ticket) {
+      return res.status(400).json({
+        success: false,
+        msg: "Ticket already assigned to support",
+        assigned: true,
+      });
+    }
+
+    console.log("Ya paso el ticket", ticket);
+    ticket.idSupport = userPayLoad.userId;
+    await ticket.save();
+
+    return res
+      .status(200)
+      .json({ success: true, msg: "The ticket has been assigned correctly" });
+  } catch {
+    res.status(500).json({ success: false, msg: "There has been an error" });
+  }
+};
+
 module.exports = {
   getExistingUsers,
   getExistingSupports,
@@ -201,4 +231,5 @@ module.exports = {
   createNewSupportWithUser,
   getUsers,
   getUserAndTickets,
+  assignTicket,
 };
