@@ -6,6 +6,7 @@ import { Category } from '../../models/category.model';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavBarAdminComponent } from '../../shared/components/nav-bar-admin/nav-bar-admin.component';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-pool',
@@ -26,7 +27,7 @@ export class AdminPoolComponent implements OnInit {
   selectedResolution: string | null = null;
   ticketSubscription: Subscription | undefined;
 
-  constructor(public SupportService: SupportService) {}
+  constructor(public SupportService: SupportService, public adminService: AdminService) {}
   ngOnInit(): void {
     this.SupportService.getCategories().subscribe({
       next: (res: Category[]) => {
@@ -86,7 +87,26 @@ export class AdminPoolComponent implements OnInit {
     });
   }
 
-  assignTicket(ticketId: string) {}
+  assignTicket(ticketId: string) {
+    this.adminService.assignTicket(ticketId).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.triggerSuccess();
+          this.refreshTickets();
+        } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
+        }
+      },
+      error: (err) => {
+        if (err.error.assigned) {
+          this.triggerFailure('FAILURE_TICKET_ASSIGNED');
+          this.refreshTickets();
+        } else {
+          this.triggerFailure('FAILURE_TICKET_ASSIGN_ALERT_TEXT');
+        }
+      },
+    });
+  }
 
   triggerSuccess() {
     const translatedTitle = this.translate.instant('SUCCESS_LOGIN_ALERT_TITLE');
@@ -109,4 +129,6 @@ export class AdminPoolComponent implements OnInit {
       text: translatedText,
     });
   }
+
+  
 }

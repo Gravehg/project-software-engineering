@@ -6,6 +6,7 @@ const {
   createNewSupportWithUser,
   getUsers,
   getUserAndTickets,
+  assignTicket,
 } = require("../controllers/adminController");
 const {
   validateAdmin,
@@ -53,5 +54,11 @@ router.post(
   validateUser,
   createNewSupportWithUser
 );
+
+router.post(
+  "/assign-ticket",
+  validateSession, 
+  validateUser, 
+  assignTicket);
 
 module.exports = router;
