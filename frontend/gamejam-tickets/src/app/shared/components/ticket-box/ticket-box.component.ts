@@ -6,6 +6,7 @@ import { TopicBoxComponent } from '../topic-box/topic-box.component';
 import {TicketService} from '../../../services/ticket.service';
 import {ticket} from '../../../models/ticket.model';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -20,11 +21,12 @@ export class TicketBoxComponent {
   nFatherChildInfoTextBox = '';
   nFatherChildInfoTopicBox = '';
   nFatherChildInfoCheck = '';
-  constructor(public TicketService: TicketService) {}
+  constructor(public TicketService: TicketService, private router: Router) {}
   //Función para optener le información brindada por el text-box
   public receptorFatherTextBox(nString:string){
     console.log("Msg "+nString);
     this.nFatherChildInfoTextBox = nString;
+    
   }
 
   //Función para optener le información brindada por el topic-box
@@ -52,15 +54,18 @@ export class TicketBoxComponent {
         next: (response) => {
           if (response.success) {
             this.triggerSuccess();
-            console.log("send ticket")
+            console.log("send ticket");
+            this.router.navigate(['/jammers-users']);
           } else {
             this.triggerFailure();
             console.error('Error sending message:', response.msg);
+            this.router.navigate(['/jammers-users']);
           }
         },
         error: (error) => {
           this.triggerFailure();
           console.error('Error sending message:', error);
+          this.router.navigate(['/jammers-users']);
         },
       }); 
     }else{
