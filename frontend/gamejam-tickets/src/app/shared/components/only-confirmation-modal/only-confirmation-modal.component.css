@@ -1,0 +1,70 @@
+.modal-dialog {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    min-height: calc(100% - 1rem); /* Ajusta el espacio para centrar correctamente */
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-header {
+    background-color: #dfefff; /* Usando el color del encabezado de la tarjeta */
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .modal-title {
+    color: #333; /* Usando el color de texto del tema */
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  
+  .btn-close {
+    filter: brightness(0) invert(1);
+  }
+  
+  .modal-body {
+    font-size: 1.1rem;
+    color: #555; /* Color del texto del estado */
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #ddd;
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .btn-secondary {
+    border-radius: 20px;
+    padding: 8px 16px;
+    background-color: #ddd; /* Color de fondo similar al del borde de la tarjeta */
+    border-color: #ccc;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #ccc; /* Color de fondo al pasar el ratón */
+    border-color: #bbb;
+  }
+  
+  .btn-primary {
+    border-radius: 20px;
+    padding: 8px 16px;
+    background-color: #257dc0; /* Usando el color de fondo primario */
+    border-color: #007bff;
+    color: #fff;
+    font-size: 1.1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
+    border-color: #0056b3;
+  }

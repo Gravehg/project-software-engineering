@@ -4,10 +4,12 @@ const {
   getSupportCategories,
   getSupportTicketPool,
   assignTicket,
+  getAllTickets,
 } = require("../controllers/supportController");
 const {
   validateSession,
   validateSupport,
+  validateAdmin,
 } = require("../controllers/authController");
 const router = express.Router();
 
@@ -31,6 +33,8 @@ router.get(
   validateSupport,
   getSupportTicketPool
 );
+
+router.get("/get-all-tickets", validateSession, validateAdmin, getAllTickets);
 
 router.post("/assign-ticket", validateSession, validateSupport, assignTicket);
 
