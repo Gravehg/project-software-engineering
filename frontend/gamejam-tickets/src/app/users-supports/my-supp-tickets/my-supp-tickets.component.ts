@@ -79,8 +79,7 @@ export class MySuppTicketsComponent implements OnInit {
       next: (res: SupportTicket[]) => {
         this.tickets = res;
         this.filteredTickets = [...this.tickets];
-        console.log(this.tickets);
-        //this.dateChange(this.fecha);////////////////////////////////////////////////////////////
+
       },
       error: (err) => {
         if (err.error.error) {
@@ -134,13 +133,7 @@ export class MySuppTicketsComponent implements OnInit {
     
       return `${day}/${month}/${year}`;  // Retorna el formato dd/mm/yyyy
     }
-    // preDateChange(event: MatDatepickerInputEvent<any>) {
-    //   const selectedDate = this.normalizeDate(event.value); // Normaliza la fecha seleccionada
-    //   console.log('Fecha seleccionada (normalizada): ', selectedDate);
-    //   //return selectedDate
-    //   this.dateChange(selectedDate);
-    // }
-    //dateChange(selectedDate:Date) {
+
   dateChange(event: MatDatepickerInputEvent<any> ) {
     const selectedDate = this.normalizeDate(event.value); // Normaliza la fecha seleccionada
     console.log('Fecha seleccionada (normalizada): ', selectedDate);
@@ -151,7 +144,7 @@ export class MySuppTicketsComponent implements OnInit {
       console.log('Fecha del ticket (no normalizada): ', ticket.creationDate);//ticketDate);
       
       // Compara las fechas normalizadas
-      const isAfterOrEqual = selectedDate <= ticketDate ;
+      const isAfterOrEqual = selectedDate >= ticketDate ;
       console.log('Comparación: ', selectedDate, '<=', ticketDate, '=>', isAfterOrEqual);
       
       return isAfterOrEqual;
