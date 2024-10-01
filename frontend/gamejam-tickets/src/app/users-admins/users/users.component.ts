@@ -48,13 +48,16 @@ export class UsersComponent implements OnInit {
     this.applyFilters();
   }
 
-  onFilterName() {}
+  onFilterName() {
+    this.applyFilters();
+  }
 
   private applyFilters() {
     this.filteredUsers = this.users.filter((user) => {
       return (
         (!this.selectedRole || user.role === this.selectedRole) &&
-        (!this.filterName || user.name === this.filterName)
+        (!this.filterName ||
+          user.name.toLowerCase().includes(this.filterName.toLowerCase()))
       );
     });
   }

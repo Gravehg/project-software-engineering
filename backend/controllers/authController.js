@@ -29,8 +29,9 @@ const login = async (req, res) => {
     res.cookie("sessionToken", loginToken, {
       httpOnly: false,
       sameSite: "lax",
-      maxAge: 1000 * 60 * 30,
+      maxAge: 1000 * 60 * 60 * 24,
     });
+
     console.log("Roles", roles);
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
