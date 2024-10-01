@@ -126,7 +126,21 @@ export class AdminPoolComponent implements OnInit {
     this.filteredTickets = [...this.tickets]; // Reset to all tickets
   }
 
-  refreshTickets() {}
+  refreshTickets() {
+    this.SupportService.getAllTickets().subscribe({
+      next: (res: SupportTicket[]) => {
+        this.tickets = res;
+        this.filteredTickets = [...this.tickets];
+      },
+      error: (err) => {
+        if (err.error.error) {
+          this.triggerError(err.error.error);
+        } else if (err.error.msg) {
+          this.triggerError(err.error.msg);
+        }
+      },
+    });
+  }
 
   triggerError(error: string) {
     Swal.fire({
