@@ -83,12 +83,19 @@
         </li>
       </div>
       <!---->
-      <div class="col-12 col-md-2 col-lg-2">
+      <div class="col-12 col-md-2 col-lg-2 d-flex">
         <mat-form-field>
           <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker" (dateChange)="dateChange($event)">
+          <input
+            matInput
+            [matDatepicker]="picker"
+            (dateChange)="dateChange($event)"
+          />
           <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
