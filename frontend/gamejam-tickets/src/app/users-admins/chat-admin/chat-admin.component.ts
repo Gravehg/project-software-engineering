@@ -194,7 +194,7 @@ export class ChatAdminComponent implements OnInit {
     this.chatService.sendMessage(userMessage).subscribe({
       next: (response) => {
         if (response.success) {
-          this.messages.push(response.message);
+          this.messages.push(userMessage);
           this.newMessage = '';
           setTimeout(() => {
             this.scrollToBottom();
