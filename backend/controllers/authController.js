@@ -227,6 +227,42 @@ const logOut = async (req, res) => {
   }
 };
 
+/*ATTENTION, THIS IS FOR DEV*/
+const getLoginLink = async (req, res) => {
+  try {
+    if (process.env.TARGET == "DEV") {
+      const email = req.body.email;
+      const user = await User.findOne({ email });
+
+      if (!user)
+        return res
+          .status(401)
+          .json({ success: false, msg: "You must be registered first!" });
+
+      const token = JWT.sign(
+        { userId: user._id, roles: user.roles, email: user.email },
+        process.env.JWT_SIGN,
+        {
+          expiresIn: 3600,
+        }
+      );
+      const link = `http://${process.env.URL}${process.env.APP_PORT}/api/auth/login/${token}`;
+      console.log(link);
+      const subject = "Login in GameJam Support Platform";
+      const message = `Hi, click on this link to continue to the app:`;
+      await sendEmail(email, subject, message, link);
+      res.status(200).json({
+        success: true,
+        msg: `Magic Link sent to user's email`,
+        email,
+        link,
+      });
+    }
+  } catch {
+    res.status(500).json({ success: false, msg: "There has been an error" });
+  }
+};
+
 module.exports = {
   login,
   verifyToken,
@@ -236,4 +272,5 @@ module.exports = {
   validateUser,
   validateAdmin,
   logOut,
+  getLoginLink,
 };
