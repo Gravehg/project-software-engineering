@@ -28,19 +28,22 @@ const sendMessage = async (req, res) => {
     const user = await User.findOne({ _id: idUser });
     const ticket = await Ticket.findById(chat.idTicket);
 
-    if (remitent === "Support") {
-      const subject = `Ticket ${chat.idTicket}`;
-      const message = "You have a new answer on your ticket!";
-      const link = `http://${process.env.URL}${process.env.APP_PORT}/jammers-users/chat-jammer/${chat.idTicket}`;
-      await sendEmail(user.email, subject, message, link);
-    } else {
-      if (ticket && ticket.idSupport) {
-        const supp = await Support.findOne({ _id: ticket.idSupport });
-        const userSup = await User.findById(supp.idUser);
+    /*ATTENTION THIS IS FOR DEVELOPING PURPOSES */
+    if (process.env.TARGET != "DEV") {
+      if (remitent === "Support") {
         const subject = `Ticket ${chat.idTicket}`;
         const message = "You have a new answer on your ticket!";
-        const link = `http://${process.env.URL}${process.env.APP_PORT}/ticket-chat/${chat.idTicket}`;
-        await sendEmail(userSup.email, subject, message, link);
+        const link = `http://${process.env.URL}${process.env.APP_PORT}/jammers-users/chat-jammer/${chat.idTicket}`;
+        await sendEmail(user.email, subject, message, link);
+      } else {
+        if (ticket && ticket.idSupport) {
+          const supp = await Support.findOne({ _id: ticket.idSupport });
+          const userSup = await User.findById(supp.idUser);
+          const subject = `Ticket ${chat.idTicket}`;
+          const message = "You have a new answer on your ticket!";
+          const link = `http://${process.env.URL}${process.env.APP_PORT}/ticket-chat/${chat.idTicket}`;
+          await sendEmail(userSup.email, subject, message, link);
+        }
       }
     }
 
