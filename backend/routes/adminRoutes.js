@@ -57,8 +57,10 @@ router.post(
 
 router.post(
   "/assign-ticket",
-  validateSession, 
-  validateUser, 
-  assignTicket);
+  validateSession,
+  validateUser,
+  validateSupport,
+  assignTicket
+);
 
 module.exports = router;

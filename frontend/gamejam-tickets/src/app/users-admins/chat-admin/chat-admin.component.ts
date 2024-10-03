@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavBarSupportComponent } from '../../shared/components/nav-bar-support/nav-bar-support.component';
+import { NavBarAdminComponent } from '../../shared/components/nav-bar-admin/nav-bar-admin.component';
 import { ConfirmationModalComponent } from '../../shared/components/confirmation-modal/confirmation-modal.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,8 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-chat-admin',
   standalone: true,
   imports: [
-    NavBarSupportComponent,
     CommonModule,
+    NavBarAdminComponent,
     FormsModule,
     ConfirmationModalComponent,
     TranslateModule,
@@ -199,7 +199,6 @@ export class ChatAdminComponent implements OnInit {
           setTimeout(() => {
             this.scrollToBottom();
           });
-
         } else {
           console.error('Error sending message:', response.msg);
         }
