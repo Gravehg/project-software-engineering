@@ -248,9 +248,6 @@ const getLoginLink = async (req, res) => {
       );
       const link = `http://${process.env.URL}${process.env.APP_PORT}/api/auth/login/${token}`;
       console.log(link);
-      const subject = "Login in GameJam Support Platform";
-      const message = `Hi, click on this link to continue to the app:`;
-      await sendEmail(email, subject, message, link);
       res.status(200).json({
         success: true,
         msg: `Magic Link sent to user's email`,

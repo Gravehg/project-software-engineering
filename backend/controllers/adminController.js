@@ -167,11 +167,20 @@ const getUserAndTickets = async (req, res) => {
       creationDate: format(user.creationDate, "dd/MM/yyyy"),
       role: userRole,
     };
-    const tickets = await Ticket.find({
-      idUserIssued: findUserId,
-    })
-      .sort({ creationDate: -1 })
-      .exec();
+
+    const isSupp = await Support.findOne({
+      idUser: findUserId,
+    });
+
+    let query = {};
+
+    if (isSupp) {
+      query = { idSupport: isSupp._id };
+    } else {
+      query = { idUserIssued: findUserId };
+    }
+
+    const tickets = await Ticket.find(query).sort({ creationDate: -1 }).exec();
 
     const ticketsformmated = tickets.map((item) => ({
       _id: item._id,
@@ -197,7 +206,7 @@ const getUserAndTickets = async (req, res) => {
 const assignTicket = async (req, res) => {
   try {
     const userPayLoad = req.userPayLoad;
-    console.log("Payload", userPayLoad);
+    const supportPayLoad = userPayLoad.supportInfo;
     const ticketId = req.body.ticketId;
     const ticket = await Ticket.findOne({
       _id: ticketId,
@@ -212,8 +221,7 @@ const assignTicket = async (req, res) => {
       });
     }
 
-    console.log("Ya paso el ticket", ticket);
-    ticket.idSupport = userPayLoad.userId;
+    ticket.idSupport = supportPayLoad.id;
     await ticket.save();
 
     return res
