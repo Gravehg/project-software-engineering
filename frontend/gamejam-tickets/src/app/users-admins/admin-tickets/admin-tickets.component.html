@@ -2,7 +2,7 @@
 <div class="d-flex p-4 justify-content-center align-items-center">
   <div class="container-fluid p-4 w-100 overflow-hidden">
     <div class="row gy-4 p-4">
-      <div class="col-12 col-md-3 col-lg-3">
+      <div class="col-12 col-md-3 col-lg-2">
         <li class="nav-item dropdown">
           <button
             class="btn btn-secondary dropdown-toggle"
@@ -83,12 +83,19 @@
         </li>
       </div>
       <!---->
-      <div class="col-12 col-md-2 col-lg-2">
+      <div class="col-12 col-md-2 col-lg-2 d-flex">
         <mat-form-field>
           <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker" (dateChange)="dateChange($event)">
+          <input
+            matInput
+            [matDatepicker]="picker"
+            (dateChange)="dateChange($event)"
+          />
           <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
@@ -129,7 +136,7 @@
       <div class="col-12">
         <div
           class="card p-4 shadow"
-          [routerLink]="['/ticket-chat', ticket._id]"
+          [routerLink]="['/ticket-admin-chat', ticket._id]"
         >
           <div class="row">
             <!-- Section 1: Ticket Information -->
