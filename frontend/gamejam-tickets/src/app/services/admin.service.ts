@@ -15,6 +15,12 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
+  getSupportTicketsByEmial(email: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.adminApiUrl}get-support-tickets-by-email/${email}`
+    );
+  }
+
   getExistingUsers(email: String): Observable<any> {
     return this.http.get<any>(`${this.adminApiUrl}get-existing-users/${email}`);
   }

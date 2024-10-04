@@ -3,6 +3,30 @@ const Support = require("../models/supportModel");
 const Ticket = require("../models/ticketModel");
 const { format } = require("date-fns");
 
+const getSupportTicketsByEmial = async (req, res) => {
+  try {
+    const email = req.params.email;
+    console.log('email', email);
+    const user = await User.findOne({ email: email });
+    console.log('user', user);
+    if (user) {
+      const tickets = await Ticket.find({ idSupport: user._id });
+      console.log('tickets', tickets);
+      if (!tickets) {
+        return res.status(404).json({ success: false, msg: "No tickets found" });
+      }
+      return res.status(200).json(tickets);
+    }
+    return res.status(404).json({ success: false, msg: "User not found" });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "There has been an error",
+      error: error.msg,
+    });
+  }
+};
+
 const createNewSupportWithUser = async (req, res) => {
   try {
     // Busca el usuario con el correo proporcionado
@@ -240,4 +264,5 @@ module.exports = {
   getUsers,
   getUserAndTickets,
   assignTicket,
+  getSupportTicketsByEmial,
 };
