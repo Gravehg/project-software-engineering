@@ -146,8 +146,8 @@
       @for(ticket of filteredTickets; track ticket._id){
       <div class="col-12">
         <div
-          class="card p-4 shadow"
-          [routerLink]="['/ticket-admin-chat', ticket._id]"
+          class="card p-4 shadow cursor:pointer"
+          [routerLink]="['chat-ticket', ticket._id]"
         >
           <div class="row">
             <!-- Section 1: Ticket Information -->
