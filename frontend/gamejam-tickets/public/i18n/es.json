@@ -69,5 +69,6 @@
   "SEE_USER_TICKETS_TEXT": "Ver tiquetes de usuario",
   "USER_SIGN_TEXT": "Usuario",
   "TICKET_SIGN_TEXT": "Tiquetes",
-  "CREATE_SUPPORT_NAVBAR": "Crear soporte"
+  "CREATE_SUPPORT_NAVBAR": "Crear soporte",
+  "VIEW_TICKETS_SUPPORT_NAVBAR": "Ver tiquetes de soporte"
 }

@@ -15,7 +15,7 @@ export const ADMIN_USERS: Routes = [
   { path: 'admin-tickets', component: AdminTicketsComponent },
   { path: 'users-pool', component: UsersComponent },
   { path: 'tickets-by-support', component: TicketsBySupportComponent },
-  { path: 'chat-ticket/:id', component: ChatTicketComponent },
+  { path: 'tickets-by-support/chat-ticket/:id', component: ChatTicketComponent },
   {
     path: 'admin-users/admin-user-tickets/:id',
     component: UsersTicketsComponent,
