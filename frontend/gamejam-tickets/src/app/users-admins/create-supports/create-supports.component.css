@@ -1,0 +1,17 @@
+.custom-main-container {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center; */
+    height: 100vh;
+    /* width: 100%; */
+    background-color: #F2F6FF; /* Color de fondo del contenedor principal */
+}
+
+.custom-form-container {
+    width: 50%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}

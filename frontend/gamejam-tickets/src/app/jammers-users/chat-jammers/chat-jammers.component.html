@@ -1,57 +1,77 @@
 <app-confirmation-modal
   [title]="modalTitle"
   [message]="modalMessage"
-  (confirmed)="handleConfirmation()">
+  (confirmed)="handleConfirmation()"
+>
 </app-confirmation-modal>
 
-<app-nav-bar-jammer></app-nav-bar-jammer>
-<section class="chat-section" >
 
+<section class="chat-section d-flex flex-grow-1">
+  <app-nav-bar-jammer></app-nav-bar-jammer>
   <div class="container">
-
     <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
         <span class="ticket-topic">{{ ticket?.topic }}</span>
         <div class="status-container d-flex align-items-center">
-          <span class="status-label">Ticket Status:</span>
+          <span class="status-label">{{ "TICKET_STATUS" | translate }}</span>
           <span class="status-text" [ngClass]="getStatusClass()">
             {{ closureState }}
           </span>
           <span class="status-circle" [ngClass]="getCircleClass()"></span>
         </div>
-      </div>  
+      </div>
 
       <div *ngIf="isLoading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ "LOADING" | translate }}</span>
         </div>
       </div>
 
       <div *ngIf="!isLoading">
-        <div  class="message-container-wrapper">
+        <div class="message-container-wrapper" #messageContainer>
           <div *ngFor="let msg of messages" class="message-row">
-            <div class="d-flex flex-column" [ngClass]="getMessageAlignment(msg.remitent)">
+            <div
+              class="d-flex flex-column"
+              [ngClass]="getMessageAlignment(msg.remitent)"
+            >
               <div class="message-container p-2">
-                <div class="message-bubble" [ngClass]="getBubbleClasses(msg.remitent)">
+                <div
+                  class="message-bubble"
+                  [ngClass]="getBubbleClasses(msg.remitent)"
+                >
                   {{ msg.text }}
                 </div>
-                <div class="message-footer" [ngClass]="getBubbleClasses(msg.remitent)">
-                  <small>{{ getSenderName(msg.remitent) }}</small>
-                  <small class="message-time ml-auto">{{ msg.textDate | date:'HH:mm' }}</small>
+                <div
+                  class="message-footer"
+                  [ngClass]="getBubbleClasses(msg.remitent)"
+                >
+                  <small>{{ getSenderName(msg.remitent, msg) }}</small>
+                  <small class="message-time ml-auto">{{
+                    msg.textDate | date : "HH:mm"
+                  }}</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
       <div class="card-footer">
         <div class="input-group d-flex align-items-center">
-          <input type="text" class="form-control me-2" [(ngModel)]="newMessage" (keydown.enter)="handleMessage()" 
-                 placeholder="Escribe un mensaje...">
-          <button class="btn btn-primary" (click)="handleMessage()">Send</button>
+          <input
+            type="text"
+            class="form-control me-2"
+            [(ngModel)]="newMessage"
+            (keydown.enter)="handleMessage()"
+            [placeholder]="'MSG_PLACEHOLDER' | translate"
+          />
+          <button class="btn btn-primary" (click)="handleMessage()">
+            {{ "SEND_BUTTON" | translate }}
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
-

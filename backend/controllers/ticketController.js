@@ -15,7 +15,7 @@ const addTicket = async (req, res) => {
       creationDate: new Date(),
     });
     newTicket.save().then((nTicket) => {
-      addNewChat(nTicket._id, userID, "" /*'idSupport'*/, req.body.text);
+      addNewChat(nTicket._id, userID, req.body.text);
     });
     return res
       .status(201)
@@ -27,24 +27,22 @@ const addTicket = async (req, res) => {
   }
 };
 //Función encargada de agregar un chat nuevo
-function addNewChat(idTicket, idUserIssued, idSupport, idText) {
+function addNewChat(idTicket, idUserIssued, idText) {
   const newChat = new Chat({
     idTicket: idTicket,
   });
   newChat.save().then((nChat) => {
-    addMessage(nChat._id, idUserIssued, idSupport, idText);
-    console.log("mensaje", idText);
+    addMessage(nChat._id, idUserIssued, idText);
   });
 }
 //Funcion encargada de agregar cualquier mensaje
-function addMessage(nIdChat, nIdUser, nIdSupport, idText) {
+function addMessage(nIdChat, nIdUser, idText) {
   const newMessage = new Message({
     idChat: nIdChat,
     idUser: nIdUser,
-    idSupport: nIdSupport,
     text: idText,
     remitent: "Jammer",
-    dateHour: new Date(),
+    textDate: new Date(),
   });
   newMessage.save();
 }
@@ -63,15 +61,14 @@ const getTicketById = async (req, res) => {
       _id: ticket._id,
       idUserIssued: ticket.idUserIssued._id,
       userName: ticket.idUserIssued.name,
-      idSupport: ticket.idSupport._id,
-      supportName: ticket.idSupport.name,
+      idSupport: ticket.idSupport ? ticket.idSupport._id : null,
+      supportName: ticket.idSupport ? ticket.idSupport.name : null,
       resolutionState: ticket.resolutionState,
       closureState: ticket.closureState,
       topic: ticket.topic,
     };
     return res.status(200).json({ success: true, ticket: ticketData });
   } catch (error) {
-    console.error("Error al obtener el ticket:", error);
     return res.status(500).json({
       success: false,
       msg: "There have been an error while trying to get the Ticket",
@@ -108,4 +105,136 @@ const updateClosureState = async (req, res) => {
     });
   }
 };
-module.exports = { getTicketById, updateClosureState, addTicket };
+
+const updateResolutionState = async (req, res) => {
+  try {
+    const { ticketID, newResolutionState } = req.body;
+    if (!ticketID || !newResolutionState) {
+      return res.status(400).json({
+        success: false,
+        msg: "ticketID and newResolutionState are required",
+      });
+    }
+    const result = await Ticket.updateOne(
+      { _id: ticketID },
+      { $set: { resolutionState: newResolutionState } }
+    );
+
+    if (result.modifiedCount > 0) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "resolutionState updated" });
+    } else {
+      return res.status(404).json({ success: false, msg: "Ticket not found" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar el estado:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while changing resolutionState",
+    });
+  }
+};
+
+const updateAssignedSupp = async (req, res) => {
+  try {
+    const { ticketID } = req.body;
+    if (!ticketID) {
+      return res.status(400).json({
+        success: false,
+        msg: "ticketID is required",
+      });
+    }
+    const result = await Ticket.updateOne(
+      { _id: ticketID },
+      { $set: { idSupport: null } }
+    );
+
+    if (result.modifiedCount > 0) {
+      return res.status(200).json({ success: true, msg: "idSupport updated" });
+    } else {
+      return res.status(404).json({ success: false, msg: "Ticket not found" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar el estado:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while changing idSupport",
+    });
+  }
+};
+
+const getSuppTicketById = async (req, res) => {
+  try {
+    const ticketID = req.query.ticketID;
+    const ticket = await Ticket.findById(ticketID)
+      .populate("idUserIssued")
+      .populate("idSupport")
+      .populate("category")
+      .exec();
+    if (!ticket) {
+      return res.status(404).json({ success: false, msg: "Ticket not found." });
+    }
+    const ticketData = {
+      _id: ticket._id,
+      idUserIssued: ticket.idUserIssued._id,
+      userName: ticket.idUserIssued.name,
+      idSupport: ticket.idSupport ? ticket.idSupport._id : "Not assigned",
+      supportName: ticket.idSupport ? ticket.idSupport.name : "Not assigned",
+      idCategory: ticket.category._id,
+      categoryName: ticket.category.name,
+      resolutionState: ticket.resolutionState,
+      closureState: ticket.closureState,
+      topic: ticket.topic,
+    };
+    return res.status(200).json({ success: true, ticket: ticketData });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while trying to get the Ticket",error
+    });
+  }
+};
+
+const updateCategory = async (req, res) => {
+  try {
+    const { ticketID, newCategory } = req.body;
+    if (!ticketID || !newCategory) {
+      return res.status(400).json({
+        success: false,
+        msg: "ticketID and new category are required",
+      });
+    }
+    const result = await Ticket.updateOne(
+      { _id: ticketID },
+      { $set: { category: newCategory } }
+    );
+    if (result.modifiedCount > 0) {
+      return res.status(200).json({ success: true, msg: "category updated" });
+    } else {
+      return res.status(404).json({ success: false, msg: "Ticket not found" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar category:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "There have been an error while changing category",
+    });
+  }
+};
+
+
+
+
+
+
+
+module.exports = {
+  getTicketById,
+  updateClosureState,
+  addTicket,
+  updateResolutionState,
+  updateAssignedSupp,
+  getSuppTicketById,
+  updateCategory,
+};

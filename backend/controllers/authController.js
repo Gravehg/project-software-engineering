@@ -29,12 +29,13 @@ const login = async (req, res) => {
     res.cookie("sessionToken", loginToken, {
       httpOnly: false,
       sameSite: "lax",
-      maxAge: 1000 * 60 * 30,
+      maxAge: 1000 * 60 * 60 * 24,
     });
 
+    console.log("Roles", roles);
     if (roles.includes("GlobalOrganizer")) {
       return res.redirect(
-        `http://${process.env.URL}${process.env.APP_PORT}/tickets-pool`
+        `http://${process.env.URL}${process.env.APP_PORT}/admin-users/admin-pool`
       );
     } else if (roles.includes("Support")) {
       return res.redirect(
@@ -138,6 +139,36 @@ const validateSupport = async (req, res, next) => {
   }
 };
 
+const validateAdmin = (req, res, next) => {
+  const token = req.cookies.sessionToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Session not found" });
+  }
+  try {
+    const decoded = JWT.verify(token, process.env.JWT_SIGN);
+    const rolesToCheck = ["GlobalOrganizer"];
+
+    const hasValidRole = rolesToCheck.some((role) =>
+      decoded.roles.includes(role)
+    );
+
+    if (!hasValidRole) {
+      return res
+        .status(403)
+        .json({ success: false, error: "User not authorized" });
+    }
+
+    req.userPayLoad = {
+      idUser: decoded.userId,
+      roles: decoded.roles,
+      email: decoded.email,
+    };
+    next();
+  } catch (error) {
+    return res.status(401).json({ success: false, error: "Invalid token" });
+  }
+};
+
 const validateUser = (req, res, next) => {
   const token = req.cookies.sessionToken;
   if (!token) {
@@ -146,7 +177,12 @@ const validateUser = (req, res, next) => {
 
   try {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
-    const rolesToCheck = ["LocalOrganizer", "Judge", "Jammer"];
+    const rolesToCheck = [
+      "GlobalOrganizer",
+      "LocalOrganizer",
+      "Judge",
+      "Jammer",
+    ];
 
     const hasValidRole = rolesToCheck.some((role) =>
       decoded.roles.includes(role)
@@ -169,6 +205,61 @@ const validateUser = (req, res, next) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    const token = req.cookies.sessionToken;
+
+    res.clearCookie("sessionToken");
+
+    if (!token) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "Logged out successfully" });
+    }
+    return res
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
+  } catch (error) {
+    return res
+      .clearCookie("sessionToken")
+      .status(200)
+      .json({ success: true, msg: "Logged out successfully" });
+  }
+};
+
+/*ATTENTION, THIS IS FOR DEV*/
+const getLoginLink = async (req, res) => {
+  try {
+    if (process.env.TARGET == "DEV") {
+      const email = req.body.email;
+      const user = await User.findOne({ email });
+
+      if (!user)
+        return res
+          .status(401)
+          .json({ success: false, msg: "You must be registered first!" });
+
+      const token = JWT.sign(
+        { userId: user._id, roles: user.roles, email: user.email },
+        process.env.JWT_SIGN,
+        {
+          expiresIn: 3600,
+        }
+      );
+      const link = `http://${process.env.URL}${process.env.APP_PORT}/api/auth/login/${token}`;
+      console.log(link);
+      res.status(200).json({
+        success: true,
+        msg: `Magic Link sent to user's email`,
+        email,
+        link,
+      });
+    }
+  } catch {
+    res.status(500).json({ success: false, msg: "There has been an error" });
+  }
+};
+
 module.exports = {
   login,
   verifyToken,
@@ -176,4 +267,7 @@ module.exports = {
   validateSession,
   validateSupport,
   validateUser,
+  validateAdmin,
+  logOut,
+  getLoginLink,
 };

@@ -2,17 +2,17 @@
 <div class="d-flex p-4 justify-content-center align-items-center">
   <div class="container-fluid p-4 w-100 overflow-hidden">
     <div class="row gy-4 p-4">
-      <div class="col-12 col-md-3 col-lg-3">
+      <div class="col-12 col-md-2 col-lg-2">
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             {{ "FILTER_CATEGORY_TEXT" | translate }}
-          </a>
+          </button>
           <ul class="dropdown-menu">
             @for (category of categories; track category._id) {
             <li>
@@ -28,17 +28,17 @@
           </ul>
         </li>
       </div>
-      <div class="col-12 col-md-3 col-lg-3">
+      <div class="col-12 col-md-2 col-lg-2">
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             {{ "FILTER_CLOSURE_TEXT" | translate }}
-          </a>
+          </button>
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" (click)="onFilterClosure('Open')">{{
@@ -53,17 +53,19 @@
           </ul>
         </li>
       </div>
-      <div class="col-12 col-md-3 col-lg-3">
+      <div class="col-12 col-md-2 col-lg-2">
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             {{ "FILTER_RESOLUTION_TEXT" | translate }}
-          </a>
+          </button>
+          <!---->
+          <!---->
           <ul class="dropdown-menu">
             <li>
               <a
@@ -82,7 +84,25 @@
           </ul>
         </li>
       </div>
-      <div class="col-12 col-md-3 col-lg-3">
+      <!---->
+      <div class="col-12 col-md-2 col-lg-2 d-flex">
+        <mat-form-field>
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            (dateChange)="dateChange($event)"
+          />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <!---->
+      <div class="col-12 col-md-2 col-lg-2">
         <button
           type="button"
           class="btn btn-outline-primary"
@@ -123,46 +143,49 @@
           <div class="row">
             <!-- Section 1: Ticket Information -->
             <div class="col-md-4">
-              <h5 class="card-title">{{ ticket._id }}</h5>
-              <p class="card-text">{{ ticket.userName }}</p>
-              <p class="card-text">{{ ticket.creationDate }}</p>
+              <p><strong>ID:</strong> {{ ticket._id || "" }}</p>
+              <p>
+                <strong>{{ "USER_NAME" | translate }}</strong>
+                {{ ticket.userName || "" }}
+              </p>
+              <p>
+                <strong>{{ "DATE" | translate }}:</strong>
+                {{ ticket.creationDate || "" }}
+              </p>
             </div>
             <!-- Section 2: Category Information -->
             <div class="col-md-4 align-self-center">
-              <h5 class="card-title">{{ ticket.topic }}</h5>
+              <p>
+                <strong>{{ "TOPIC" | translate }}:</strong>
+                {{ ticket.topic || "" }}
+              </p>
             </div>
             <!-- Section 3: Status Information -->
-            <div class="col-md-4 p-2">
-              <div
-                class="p-2 info-container shadow"
-                [ngStyle]="{
-                  'background-color':
-                    ticket.closureState === 'Open'
-                      ? '#005927'
-                      : '#a1052e',
-                }"
-              >
+            <div
+              class="col-md-3 p-2 d-flex flex-column justify-content-between align-items-center"
+            >
+              @if(ticket.closureState === 'Open'){
+              <div class="p-2 badge rounded-pill bg-primary">
                 <p class="card-text">{{ ticket.closureState }}</p>
               </div>
-              <div
-                class="p-2 info-container shadow mt-2"
-                [ngStyle]="{
-                  'background-color':
-                    ticket.resolutionState === 'Resolved'
-                      ? '#005927'
-                      : '#a1052e',
-                }"
-              >
+              }@else{
+              <div class="p-2 badge rounded-pill bg-danger">
+                <p class="card-text">{{ ticket.closureState }}</p>
+              </div>
+              } @if(ticket.resolutionState === 'Resolved'){
+              <div class="badge rounded-pill bg-primary">
                 <p class="card-text">
                   {{ ticket.resolutionState }}
                 </p>
               </div>
-              <div
-                class="p-2 info-container shadow mt-2"
-                [ngStyle]="{
-                  'background-color': getCategoryColor(ticket.category),
-                }"
-              >
+              }@else {
+              <div class="badge rounded-pill bg-danger">
+                <p class="card-text">
+                  {{ ticket.resolutionState }}
+                </p>
+              </div>
+              }
+              <div class="badge rounded-pill bg-dark">
                 <p class="card-text category-text">
                   {{ categoryMap[ticket.category].name }}
                 </p>

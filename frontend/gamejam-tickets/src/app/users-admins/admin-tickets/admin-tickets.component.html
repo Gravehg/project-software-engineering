@@ -1,0 +1,208 @@
+<app-nav-bar-admin></app-nav-bar-admin>
+<div class="d-flex p-4 justify-content-center align-items-center">
+  <div class="container-fluid p-4 w-100 overflow-hidden">
+    <div class="row gy-4 p-4">
+      <div class="col-12 col-md-3 col-lg-2">
+        <li class="nav-item dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_CATEGORY_TEXT" | translate }}
+          </button>
+          <ul class="dropdown-menu">
+            @for (category of categories; track category._id) {
+            <li>
+              <a
+                (click)="onFilterCategory(category._id)"
+                class="dropdown-item"
+                >{{ category.name }}</a
+              >
+            </li>
+            } @empty {
+            <li>There are no items.</li>
+            }
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+        <li class="nav-item dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_CLOSURE_TEXT" | translate }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="onFilterClosure('Open')">{{
+                "OPEN_FILTER_TEXT" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="onFilterClosure('Closed')">{{
+                "CLOSED_FILTER_TEXT" | translate
+              }}</a>
+            </li>
+          </ul>
+        </li>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+        <li class="nav-item dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "FILTER_RESOLUTION_TEXT" | translate }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="onFilterResolution('Resolved')"
+                >{{ "RESOLVED_FILTER_TEXT" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="onFilterResolution('Not resolved')"
+                >{{ "NOT_RESOLVED_FILTER_TEXT" | translate }}</a
+              >
+            </li>
+          </ul>
+        </li>
+      </div>
+      <!---->
+      <div class="col-12 col-md-2 col-lg-2 d-flex">
+        <mat-form-field>
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            (dateChange)="dateChange($event)"
+          />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <!---->
+      <div class="col-12 col-md-2 col-lg-2">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="resetFilters()"
+        >
+          {{ "RESET_FILTERS_BUTTON" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-2 gy-2 p-4">
+      @if(selectedCategory){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>
+          {{ categoryMap[selectedCategory].name }}
+        </p>
+      </div>
+      } @if(selectedClosure){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>{{ selectedClosure }}</p>
+      </div>
+      } @if(selectedResolution){
+      <div class="col-12 col-md-3 col-lg-3">
+        <p>
+          {{ selectedResolution }}
+        </p>
+      </div>
+      }
+    </div>
+    <div class="row gy-4 mt-4">
+      <!-- Card 1 -->
+      @for(ticket of filteredTickets; track ticket._id){
+      <div class="col-12">
+        <div
+          class="card p-4 shadow"
+          [routerLink]="['/ticket-admin-chat', ticket._id]"
+        >
+          <div class="row">
+            <!-- Section 1: Ticket Information -->
+            <div class="col-md-4">
+              <p><strong>ID:</strong> {{ ticket._id || "" }}</p>
+              <p>
+                <strong>{{ "USER_NAME" | translate }}</strong>
+                {{ ticket.userName || "" }}
+              </p>
+              <p>
+                <strong>{{ "DATE" | translate }}:</strong>
+                {{ ticket.creationDate || "" }}
+              </p>
+            </div>
+            <!-- Section 2: Category Information -->
+            <div class="col-md-4 align-self-center">
+              <p>
+                <strong>{{ "TOPIC" | translate }}:</strong>
+                {{ ticket.topic || "" }}
+              </p>
+            </div>
+            <!-- Section 3: Status Information -->
+            <div
+              class="col-md-3 p-2 d-flex flex-column justify-content-between align-items-center"
+            >
+              @if(ticket.closureState === 'Open'){
+              <div class="p-2 badge rounded-pill bg-primary">
+                <p class="card-text">{{ ticket.closureState }}</p>
+              </div>
+              }@else{
+              <div class="p-2 badge rounded-pill bg-danger">
+                <p class="card-text">{{ ticket.closureState }}</p>
+              </div>
+              } @if(ticket.resolutionState === 'Resolved'){
+              <div class="badge rounded-pill bg-primary">
+                <p class="card-text">
+                  {{ ticket.resolutionState }}
+                </p>
+              </div>
+              }@else {
+              <div class="badge rounded-pill bg-danger">
+                <p class="card-text">
+                  {{ ticket.resolutionState }}
+                </p>
+              </div>
+              }
+              <div class="badge rounded-pill bg-dark">
+                <p class="card-text category-text">
+                  {{ categoryMap[ticket.category].name }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }@empty {
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6 col-md-12 col-lg-12">
+              <p>{{ "NO_TICKETS_FILTER" | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

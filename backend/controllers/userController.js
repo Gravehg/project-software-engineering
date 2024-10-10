@@ -1,6 +1,6 @@
 const Ticket = require("../models/ticketModel");
 const User = require("../models/userModel");
-const { format } = require('date-fns');
+const { format } = require("date-fns");
 
 const comprobateTicketSupport = async (req, res) => {
   try {
@@ -46,7 +46,7 @@ const getUserTickets = async (req, res) => {
     // Convertir los tickets al formato que coincida con la interfaz UsertTicket
     const formattedTickets = tickets.map((ticket) => {
       // Formatear la fecha al formato deseado
-      const formattedDate = format(new Date(ticket.creationDate), 'dd/MM/yyyy');
+      const formattedDate = format(new Date(ticket.creationDate), "dd/MM/yyyy");
 
       return {
         _id: ticket._id.toString(),
@@ -58,7 +58,7 @@ const getUserTickets = async (req, res) => {
         topic: ticket.topic,
         creationDate: ticket.creationDate.toISOString(),
         email: ticket.idUserIssued.email,
-        date: formattedDate,  // Fecha en formato 'dd/MM/yyyy'
+        date: formattedDate, // Fecha en formato 'dd/MM/yyyy'
       };
     });
     return res.status(200).json(formattedTickets);

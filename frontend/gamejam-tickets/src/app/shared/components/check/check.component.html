@@ -1,15 +1,15 @@
-<div class="form-check-group">
-  
-    @for (category of categories; track category._id){
-    <div class="form-check mb-2" >
-    <input class="form-check-input me-2"  
-      type="checkbox" 
-      [checked]="isChecked(category._id)" 
-        (change)="toggleSelection(category._id)" 
-      >
-        <label class="form-check-label">
-          {{ category.name }}
-        </label>
-      </div>
-      }
+<div class="form-check-group d-flex flex-column">
+  @for (category of categories; track category._id){
+  <div class="form-check mb-2">
+    <input
+      class="form-check-input me-2"
+      type="radio"
+      [checked]="isChecked(category._id)"
+      (change)="toggleSelection(category._id)"
+    />
+    <label class="form-check-label">
+      {{ category.name }}
+    </label>
+  </div>
+  }
 </div>

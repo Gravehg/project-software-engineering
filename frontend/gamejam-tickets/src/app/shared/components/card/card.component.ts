@@ -1,16 +1,17 @@
-import { Component, inject, Input, NgModule  } from '@angular/core';
+import { Component, inject, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UsertTicket } from '../../../models/userTicket.model';
 import { UserService } from '../../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [TranslateModule, CommonModule],
+  imports: [TranslateModule, CommonModule, RouterModule],
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.css',
 })
 export class CardComponent {
   translate: TranslateService = inject(TranslateService);

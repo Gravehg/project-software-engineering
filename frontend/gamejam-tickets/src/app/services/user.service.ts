@@ -44,5 +44,7 @@ export class UserService {
 
   comprobateTicketSupport(idTicket: string): Observable<any> {
     return this.http.get(`${this.supportApiUrl}comprobate-ticket-support/` + idTicket);
+  // logout(): Observable<any> {
+  //   return this.http.get(`${this.authApiUrl}log-out`);
   }
 }
