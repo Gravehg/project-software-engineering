@@ -42,18 +42,19 @@ const createNewUserSupport = async (req, res) => {
       email: req.body.email,
       roles: ["Support"],
       name: req.body.name,
+      creationDate: new Date(),
     });
     await newUser.save();
 
     // Crear un nuevo soporte con el id del usuario recién creado
-    const cateries = req.body.categoris.map((category) => {
+    const categories = req.body.categories.map((category) => {
       return category.category;
     });
 
     const newSupport = new Support({
       idUser: newUser._id,
       name: newUser.name,
-      supportCategories: cateries,
+      supportCategories: categories,
     });
     await newSupport.save();
 
@@ -61,6 +62,7 @@ const createNewUserSupport = async (req, res) => {
     return res.status(200).json({ ok: true });
   } catch (error) {
     // Manejo de errores del servidor
+    console.log(error);
     return res
       .status(500)
       .json({ success: false, msg: "There has been an error" });

@@ -1,6 +1,8 @@
 <div class="custom-main-container">
   <app-nav-bar-admin></app-nav-bar-admin>
-  <h1>{{ "CREATE_SUPPORT" | translate }}</h1>
+  <h1 class="p-4 mt-2 mb-2">
+    {{ "CREATE_SUPPORT" | translate }}
+  </h1>
   <div class="custom-form-container">
     <form #userForm="ngForm" (ngSubmit)="submitSupport(userForm)">
       <div class="mb-3">
@@ -56,38 +58,21 @@
         </div>
       </div>
 
-      <div class="mb-3 form-check">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="exampleCheck1"
-          [(ngModel)]="isUser"
-          name="isUser"
-        />
-        <label class="form-check-label" for="exampleCheck1">{{
-          "UP_GRADE_USER" | translate
-        }}</label>
-      </div>
-
       <span>{{ "CATEGORIES" | translate }}</span>
       <div
         class="mb-3 form-check"
-        *ngFor="let category of categoris; index as i"
+        *ngFor="let category of categories; index as i"
       >
         <input
           type="checkbox"
           class="form-check-input"
           name="{{ category.name }}"
-          [(ngModel)]="supportDetails.categoris[i].value"
+          [(ngModel)]="supportDetails.categories[i].value"
           value="{{ category._id }}"
         />
         <label class="form-check-label" for="exampleCheck1">{{
           category.name
         }}</label>
-        <!-- @for (category of categoris; track category._id) {
-          <input type="checkbox" class="form-check-input" name="role">
-          <label class="form-check-label" for="exampleCheck1">{{ category.name }}</label>
-        } -->
       </div>
 
       <button type="submit" class="btn btn-primary">
