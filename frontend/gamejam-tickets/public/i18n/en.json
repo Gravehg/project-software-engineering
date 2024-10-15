@@ -38,6 +38,7 @@
   "SUBMIT": "Submit",
   "TOPIC": "Topic",
   "MESSAGE": "Message",
+  "READ_MORE": "Read more",
   "NOT_FOUND_TEXT": "The page that you are looking for could not be found!",
   "GO_TO_LOGIN_TEXT": "Go to login page",
   "NOT_LOGED_TEXT": "You are not loged in or your session has expired",
@@ -69,5 +70,6 @@
   "SEE_USER_TICKETS_TEXT": "See user tickets",
   "USER_SIGN_TEXT": "User",
   "TICKET_SIGN_TEXT": "Tickets",
-  "CREATE_SUPPORT_NAVBAR": "Create Support"
+  "CREATE_SUPPORT_NAVBAR": "Create Support",
+  "VIEW_TICKETS_SUPPORT_NAVBAR": "View Support's Tickets"
 }

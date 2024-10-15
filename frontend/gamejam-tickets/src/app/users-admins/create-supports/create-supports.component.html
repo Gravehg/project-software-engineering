@@ -1,83 +1,85 @@
-<div class="custom-main-container">
+<div class="custom-main-container d-flex flex-column justify-content-start">
   <app-nav-bar-admin></app-nav-bar-admin>
-  <h1 class="p-4 mt-2 mb-2">
-    {{ "CREATE_SUPPORT" | translate }}
-  </h1>
-  <div class="custom-form-container">
-    <form #userForm="ngForm" (ngSubmit)="submitSupport(userForm)">
-      <div class="mb-3">
-        <label for="InputEmail1" class="form-label">{{
-          "EMAIL_ADDRESS" | translate
-        }}</label>
-        <input
-          type="email"
-          class="form-control"
-          id="InputEmail1"
-          aria-describedby="emailHelp"
-          name="email"
-          [(ngModel)]="supportDetails.email"
-          #email="ngModel"
-          required
-        />
+  <div class="d-flex flex-column justify-content-between align-items-center">
+    <h1 class="p-4 mt-2 mb-2">
+      {{ "CREATE_SUPPORT" | translate }}
+    </h1>
+    <div class="custom-form-container">
+      <form #userForm="ngForm" (ngSubmit)="submitSupport(userForm)">
+        <div class="mb-3">
+          <label for="InputEmail1" class="form-label">{{
+            "EMAIL_ADDRESS" | translate
+          }}</label>
+          <input
+            type="email"
+            class="form-control"
+            id="InputEmail1"
+            aria-describedby="emailHelp"
+            name="email"
+            [(ngModel)]="supportDetails.email"
+            #email="ngModel"
+            required
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors?.['required']">
+              {{ "EMAIL_REQUIRED" | translate }}
+            </div>
+            <div *ngIf="email.errors?.['email']">
+              {{ "EMAIL_INVALID" | translate }}
+            </div>
+          </div>
+          <div id="emailHelp" class="form-text">
+            {{ "WELL_NEVER_SHARE" | translate }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">{{
+            "USER_NAME" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            name="username"
+            [(ngModel)]="supportDetails.name"
+            #username="ngModel"
+            required
+          />
+          <div
+            *ngIf="username.invalid && (username.dirty || username.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="username.errors?.['required']">
+              {{ "USER_NAME_REQUIRED" | translate }}
+            </div>
+          </div>
+        </div>
+
+        <span>{{ "CATEGORIES" | translate }}</span>
         <div
-          *ngIf="email.invalid && (email.dirty || email.touched)"
-          class="alert alert-danger"
+          class="mb-3 form-check"
+          *ngFor="let category of categories; index as i"
         >
-          <div *ngIf="email.errors?.['required']">
-            {{ "EMAIL_REQUIRED" | translate }}
-          </div>
-          <div *ngIf="email.errors?.['email']">
-            {{ "EMAIL_INVALID" | translate }}
-          </div>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="{{ category.name }}"
+            [(ngModel)]="supportDetails.categories[i].value"
+            value="{{ category._id }}"
+          />
+          <label class="form-check-label" for="exampleCheck1">{{
+            category.name
+          }}</label>
         </div>
-        <div id="emailHelp" class="form-text">
-          {{ "WELL_NEVER_SHARE" | translate }}
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">{{
-          "USER_NAME" | translate
-        }}</label>
-        <input
-          type="text"
-          class="form-control"
-          id="exampleInputPassword1"
-          name="username"
-          [(ngModel)]="supportDetails.name"
-          #username="ngModel"
-          required
-        />
-        <div
-          *ngIf="username.invalid && (username.dirty || username.touched)"
-          class="alert alert-danger"
-        >
-          <div *ngIf="username.errors?.['required']">
-            {{ "USER_NAME_REQUIRED" | translate }}
-          </div>
-        </div>
-      </div>
-
-      <span>{{ "CATEGORIES" | translate }}</span>
-      <div
-        class="mb-3 form-check"
-        *ngFor="let category of categories; index as i"
-      >
-        <input
-          type="checkbox"
-          class="form-check-input"
-          name="{{ category.name }}"
-          [(ngModel)]="supportDetails.categories[i].value"
-          value="{{ category._id }}"
-        />
-        <label class="form-check-label" for="exampleCheck1">{{
-          category.name
-        }}</label>
-      </div>
-
-      <button type="submit" class="btn btn-primary">
-        {{ "CREATE_BUTTON" | translate }}
-      </button>
-    </form>
+        <button type="submit" class="btn btn-primary">
+          {{ "CREATE_BUTTON" | translate }}
+        </button>
+      </form>
+    </div>
   </div>
 </div>

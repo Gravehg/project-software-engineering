@@ -1,0 +1,57 @@
+<div class="pageContainer d-flex flex-column justify-content-between">
+    <app-nav-bar-admin></app-nav-bar-admin>
+    <div class="container flex-grow-1 d-flex">
+      <div class="chat-content">
+        <div class="card flex-grow-1">
+          <div
+            class="card-header d-flex flex-grow-1 justify-content-between align-items-center"
+          >
+            <span class="ticket-topic">{{ ticket?.topic }}</span>
+            <span class="ticket-categoryName">{{ ticket?.categoryName }}</span>
+            <div class="status-container d-flex align-items-center">
+              <span class="status-label">{{ "TICKET_STATUS" | translate }}</span>
+              <span class="status-text" [ngClass]="getStatusClass()">
+                {{ closureState }}
+              </span>
+              <span class="status-circle" [ngClass]="getCircleClass()"></span>
+            </div>
+          </div>
+  
+          <div *ngIf="isLoading" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">{{ "LOADING" | translate }}</span>
+            </div>
+          </div>
+  
+          <div *ngIf="!isLoading">
+            <div class="message-container-wrapper" #messageContainer>
+              <div *ngFor="let msg of messages" class="message-row">
+                <div
+                  class="d-flex flex-column"
+                  [ngClass]="getMessageAlignment(msg.remitent)"
+                >
+                  <div class="message-container p-2">
+                    <div
+                      class="message-bubble"
+                      [ngClass]="getBubbleClasses(msg.remitent)"
+                    >
+                      {{ msg.text }}
+                    </div>
+                    <div
+                      class="message-footer"
+                      [ngClass]="getBubbleClasses(msg.remitent)"
+                    >
+                      <small>{{ getSenderName(msg.remitent, msg) }}</small>
+                      <small class="message-time ml-auto">{{
+                        msg.textDate | date : "HH:mm"
+                      }}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  

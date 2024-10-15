@@ -2,6 +2,31 @@ const Ticket = require("../models/ticketModel");
 const User = require("../models/userModel");
 const { format } = require("date-fns");
 
+const comprobateTicketSupport = async (req, res) => {
+  try {
+    const { ticketId } = req.params; // Obtener el ID del ticket desde los parámetros de la URL
+
+    // Buscar el ticket en la base de datos por su ID
+    const ticket = await Ticket.findById(ticketId);
+    console.log("Ticket: ", ticket);
+    if (!ticket) {
+      // Si el ticket no existe, devuelve un 404 (no encontrado)
+      return res.status(404).json({ success: false, message: 'Ticket not found' });
+    }
+
+    // Comprobar si el campo idSupport es null
+    const isSupportNull = !(ticket.idSupport === null);
+
+    // Devolver true o false dependiendo del valor de idSupport
+    return res.status(200).json({ success: true, isSupportNull });
+  } catch (error) {
+    // Manejar cualquier error que ocurra durante la ejecución
+    console.error('Error in comprobateTicketSupport:', error);
+    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+
 const getUserTickets = async (req, res) => {
   try {
     const userPayLoad = req.userPayLoad;
@@ -55,4 +80,4 @@ const getUserCategories = (req, res) => {
   return res.status(201).json(r_categories);
 };
 
-module.exports = { getUserTickets, getUserCategories };
+module.exports = { getUserTickets, getUserCategories, comprobateTicketSupport };

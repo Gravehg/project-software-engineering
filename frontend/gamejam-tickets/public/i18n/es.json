@@ -38,6 +38,7 @@
   "SUBMIT": "Enviar",
   "TOPIC": "Asunto",
   "MESSAGE": "Mensaje",
+  "READ_MORE": "Leer más",
   "NOT_FOUND_TEXT": "La página que estás buscando no pudo ser encontrada!",
   "GO_TO_LOGIN_TEXT": "Ir a la página de login",
   "NOT_LOGED_TEXT": "No estás logeado o tu sesión expiró",
@@ -69,5 +70,6 @@
   "SEE_USER_TICKETS_TEXT": "Ver tiquetes de usuario",
   "USER_SIGN_TEXT": "Usuario",
   "TICKET_SIGN_TEXT": "Tiquetes",
-  "CREATE_SUPPORT_NAVBAR": "Crear soporte"
+  "CREATE_SUPPORT_NAVBAR": "Crear soporte",
+  "VIEW_TICKETS_SUPPORT_NAVBAR": "Ver tiquetes de soporte"
 }

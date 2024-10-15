@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateModule } from '@ngx-translate/core';
 
+
 @Component({
-  selector: 'app-chat-admin',
+  selector: 'app-chat-ticket',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,10 +24,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ConfirmationModalComponent,
     TranslateModule,
   ],
-  templateUrl: './chat-admin.component.html',
-  styleUrl: './chat-admin.component.css',
+  templateUrl: './chat-ticket.component.html',
+  styleUrl: './chat-ticket.component.css'
 })
-export class ChatAdminComponent implements OnInit {
+export class ChatTicketComponent  implements OnInit {
   constructor(
     private router: Router,
     public chatService: ChatService,

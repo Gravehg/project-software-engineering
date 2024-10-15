@@ -35,10 +35,14 @@
 }
 
 .read-more {
-  color: #007bff;
-  height: 50%;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-self: center;
-  display: flex;
+    color: #007bff;
+    height: 50%;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    display: flex;
+}
+
+.pointer {
+    cursor: pointer;
 }
