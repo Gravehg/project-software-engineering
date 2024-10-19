@@ -1,9 +1,37 @@
-import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-
+import { Alert, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { mobileLogin } from "../services/mobileLogInService";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
+
 export default function LoginScreen() {
+  const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState('');
+
+
+  const handleLogin = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please write a full email address');
+      return;
+    }
+    try {
+      const data = await mobileLogin(email);
+      if (!data.success) {
+        Alert.alert("Error", data.msg);
+      } else {
+        console.log(data.user.roles[0]);
+        setUserType(data.user.roles[0]);
+        Alert.alert("Success", "Inicio de sesión"); //mandar a la sig pagina
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+
+
   return (
     <ThemedView style={styles.container}>
       <Image
@@ -15,7 +43,7 @@ export default function LoginScreen() {
         Welcome Back!
       </ThemedText>
       <ThemedText type="subtitle" style={styles.subtitle}>
-        Please sign in with your email
+        Please log in with your email
       </ThemedText>
 
       <TextInput
@@ -24,11 +52,12 @@ export default function LoginScreen() {
         placeholderTextColor="#a4a5a9"
         keyboardType="email-address"
         autoCapitalize="none"
+        onChangeText={setEmail}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
-          Sign In
+          Log In
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
