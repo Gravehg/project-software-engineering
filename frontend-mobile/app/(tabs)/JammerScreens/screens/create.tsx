@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
-import { createTicket } from "../../services/createTicketService";
+import { createTicket } from "../../../services/createTicketService";
 
 export default function CreateTicketScreen() {
   const [category, setCategory] = useState("");

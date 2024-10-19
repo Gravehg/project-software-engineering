@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { mobileLogin } from "../services/mobileLogInService";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Link, Redirect, router } from "expo-router";
 
 
 export default function LoginScreen() {
@@ -20,17 +21,16 @@ export default function LoginScreen() {
       if (!data.success) {
         Alert.alert("Error", data.msg);
       } else {
+
+        // aqui se agregan los if para saber si es jammer o supp
         console.log(data.user.roles[0]);
         setUserType(data.user.roles[0]);
-        Alert.alert("Success", "Inicio de sesión"); //mandar a la sig pagina
+        router.replace("./JammerScreens")
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
-
-
 
   return (
     <ThemedView style={styles.container}>
