@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   SafeAreaView,
   Text,
@@ -8,6 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  StatusBar,
 } from "react-native";
 import {
   getTicketById,
@@ -15,6 +17,7 @@ import {
   getMessagesByChatID,
   sendMessage,
   updateClosureState,
+  updateSupp,
 } from "@/app/services/chatService";
 
 type Ticket = {
@@ -50,7 +53,11 @@ export default function ChatScreen() {
   const [jammerName, setJammerName] = useState<string>("");
   const [support, setSupport] = useState<string | null>("");
   const [supportName, setSupportName] = useState<string | null>("");
-  const [closureState, setClosureState] = useState<string | null>(null); // closureState inicialmente null
+  const [closureState, setClosureState] = useState<string | null>(null); 
+  const { jammerChat } = useLocalSearchParams<{jammerChat: string}>()
+  const flatListRef = useRef<FlatList<Message>>(null);
+  const router = useRouter();
+  
 
   // Función para gestionar el envío de mensajes
   const sendMessageHandler = async () => {
@@ -68,6 +75,8 @@ export default function ChatScreen() {
             onPress: async () => {
               await sendMessageHandler_aux();
               await updateTicketClosureState("Open");
+              await updateAssignedSupp();
+              router.back();
             },
           },
         ]
@@ -77,7 +86,7 @@ export default function ChatScreen() {
     }
   };
 
-  // Función para actualizar el estado de cierre del ticket
+  
   const updateTicketClosureState = async (newClosureState: string) => {
     if (ticket) {
       try {
@@ -92,6 +101,22 @@ export default function ChatScreen() {
       }
     }
   };
+
+  const updateAssignedSupp = async () => {
+    if (ticket) {
+      try {
+        const response = await updateSupp(ticket._id);
+        if (response.success) {
+          setClosureState("Open");
+        } else {
+          console.error("Error updating closure state:", response.msg);
+        }
+      } catch (error) {
+        console.error("Error updating closure state:", error);
+      }
+    }
+  };
+
 
   const sendMessageHandler_aux = async () => {
     const userMessage = {
@@ -109,9 +134,7 @@ export default function ChatScreen() {
       if (response.success) {
         setMessages((prevMessages) => [...prevMessages, userMessage]);
         setNewMessage("");
-
-
-
+        flatListRef.current?.scrollToEnd({ animated: true });
       } else {
         console.error("Error sending message:", response.msg);
       }
@@ -132,7 +155,7 @@ export default function ChatScreen() {
       hour: "2-digit",
       minute: "2-digit",
     });
-
+    flatListRef.current?.scrollToEnd({ animated: true });
     return (
       <View
         style={[
@@ -149,13 +172,13 @@ export default function ChatScreen() {
     );
   };
 
-  // Cargamos los datos del ticket y el chat
+  
   useEffect(() => {
-    const fetchTicketAndChat = async () => {
+    const initializeData = async () => {
       try {
-        setLoading(true); // Indicamos que estamos cargando
-        const ticketData = await getTicketById("66f62b21ddedbc7b91d6f1a0");
-        const chatData = await getChatID("66f62b21ddedbc7b91d6f1a0");
+        setLoading(true); 
+        const ticketData = await getTicketById(jammerChat);
+        const chatData = await getChatID(jammerChat);
 
         setTicket(ticketData.ticket);
         setChatID(chatData.chatID);
@@ -163,6 +186,7 @@ export default function ChatScreen() {
         if (chatData) {
           const messagesData = await getMessagesByChatID(chatData.chatID);
           setMessages(messagesData);
+          
         }
 
         if (ticketData.ticket) {
@@ -170,20 +194,20 @@ export default function ChatScreen() {
           setJammerName(ticketData.ticket.userName);
           setSupport(ticketData.ticket.idSupport);
           setSupportName(ticketData.ticket.supportName);
-          setClosureState(ticketData.ticket.closureState); // Actualizamos closureState
+          setClosureState(ticketData.ticket.closureState); 
         }
       } catch (err) {
         setError("Error fetching ticket or chat data");
         console.error(err);
       } finally {
-        setLoading(false); // Carga completa
+        setLoading(false); 
       }
     };
 
-    fetchTicketAndChat();
+    initializeData();
   }, []);
 
-  // Mostramos un indicador de carga si aún estamos esperando closureState
+ 
   if (loading || closureState === null) {
     return (
       <SafeAreaView style={styles.container}>
@@ -194,6 +218,7 @@ export default function ChatScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#257dc0" />
       {error ? (
         <View style={styles.ticketInfo}>
           <Text>Error: {error}</Text>
@@ -214,11 +239,13 @@ export default function ChatScreen() {
       ) : null}
 
       <FlatList
+        ref={flatListRef} 
         data={messages}
         renderItem={renderMessage}
         keyExtractor={(item, index) => index.toString()}
         style={styles.chatContainer}
       />
+      
 
       <View style={styles.inputContainer}>
         <TextInput
