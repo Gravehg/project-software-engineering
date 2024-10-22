@@ -6,6 +6,7 @@ const {
   verifyToken,
   logOut,
   getLoginLink,
+  loginMobile,
 } = require("../controllers/authController");
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post("/magic-link", magicLink);
 router.get("/is-logged", verifyToken);
 router.get("/log-out", logOut);
 router.post("/mobileLogin", mobileLogin);
+router.post("/login-mobile", loginMobile);
 
 /*ATTENTION, THIS IS ONLY FOR NOW*/
 if (process.env.TARGET == "DEV") {

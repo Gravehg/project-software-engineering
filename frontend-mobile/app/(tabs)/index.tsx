@@ -1,19 +1,31 @@
-import { Alert, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import React, { useState } from 'react';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import { mobileLogin } from "../services/mobileLogInService";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link, Redirect, router } from "expo-router";
-
+import { useAuth } from "@/hooks/context/AuthContext";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
-  const [userType, setUserType] = useState('');
+  const { onLogin } = useAuth();
 
+  const login = async () => {
+    const result = await onLogin!(email);
+    if (result && result.error) {
+      alert(result.msg);
+    }
+  };
 
-  const handleLogin = async () => {
+  /*const handleLogin = async () => {
     if (!email) {
-      Alert.alert('Error', 'Please write a full email address');
+      Alert.alert("Error", "Please write a full email address");
       return;
     }
     try {
@@ -21,16 +33,15 @@ export default function LoginScreen() {
       if (!data.success) {
         Alert.alert("Error", data.msg);
       } else {
-
         // aqui se agregan los if para saber si es jammer o supp
         console.log(data.user.roles[0]);
         setUserType(data.user.roles[0]);
-        router.replace("./JammerScreens")
+        router.replace("./JammerScreens");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-  };
+  };*/
 
   return (
     <ThemedView style={styles.container}>
@@ -55,7 +66,7 @@ export default function LoginScreen() {
         onChangeText={setEmail}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={login}>
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
           Log In
         </ThemedText>
