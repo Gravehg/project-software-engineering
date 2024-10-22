@@ -22,7 +22,6 @@ export default function LoginScreen() {
         Alert.alert("Error", data.msg);
       } else {
 
-        // aqui se agregan los if para saber si es jammer o supp
         console.log(data.user.roles[0]);
         setUserType(data.user.roles[0]);
         router.replace("./JammerScreens")

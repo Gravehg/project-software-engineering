@@ -9,8 +9,8 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs screenOptions={{tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,headerShown: false,}}>
-      <Tabs.Screen name="screens/explore"
+    <Tabs screenOptions={{tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,headerShown: true, headerTitleAlign: 'center',}}>
+      <Tabs.Screen  name="screens/explore"
         options={{ title: 'Explore', tabBarIcon: ({ color, focused }) => (<TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
           ),
         }}
@@ -20,7 +20,13 @@ export default function TabLayout() {
           ),
         }}
       />
-      
+      <Tabs.Screen
+        name="screens/chat" options={{title: 'Prueba chat', tabBarIcon: ({ color, focused }) => (<TabBarIcon name={focused ? 'create' : 'create-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
+
+
