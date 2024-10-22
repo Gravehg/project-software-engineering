@@ -14,6 +14,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { createTicket } from "../../../services/createTicketService";
 
+
 export default function CreateTicketScreen() {
   const [category, setCategory] = useState("");
   const [topic, setTopic] = useState("");
@@ -85,17 +86,6 @@ export default function CreateTicketScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <StatusBar barStyle="light-content" backgroundColor="#257dc0" />
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => handleBackPress()}
-          style={styles.backButton}
-        >
-          <Text style={styles.backButtonText}>‹ Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Create Ticket</Text>
-      </View>
 
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.formContainer}>

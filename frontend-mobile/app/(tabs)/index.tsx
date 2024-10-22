@@ -23,26 +23,6 @@ export default function LoginScreen() {
     }
   };
 
-  /*const handleLogin = async () => {
-    if (!email) {
-      Alert.alert("Error", "Please write a full email address");
-      return;
-    }
-    try {
-      const data = await mobileLogin(email);
-      if (!data.success) {
-        Alert.alert("Error", data.msg);
-      } else {
-        // aqui se agregan los if para saber si es jammer o supp
-        console.log(data.user.roles[0]);
-        setUserType(data.user.roles[0]);
-        router.replace("./JammerScreens");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };*/
-
   return (
     <ThemedView style={styles.container}>
       <Image

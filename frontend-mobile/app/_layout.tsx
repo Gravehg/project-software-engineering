@@ -13,7 +13,6 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { useAuth, AuthProvider } from "@/hooks/context/AuthContext";
 import { Button } from "react-native";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
