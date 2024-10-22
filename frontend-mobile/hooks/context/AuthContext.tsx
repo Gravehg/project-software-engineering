@@ -14,7 +14,7 @@ interface AuthProps {
 
 const TOKEN_KEY = "my_jwt";
 const ROLE_KEY = "role";
-export const API_URL = process.env.API_URL;
+export const API_URL = process.env.EXPO_PUBLIC_BASE_URL;
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -46,7 +46,11 @@ export const AuthProvider = ({ children }: any) => {
 
   const login = async (email: string) => {
     try {
-      const result = await axios.post(`${API_URL}/login-mobile`, { email });
+      const result = await axios.post(`${API_URL}/auth/login-mobile`, {
+        email,
+      });
+
+      console.log(result);
 
       setAuthState({
         token: result.data.token,
