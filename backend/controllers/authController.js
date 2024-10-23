@@ -263,23 +263,54 @@ const getLoginLink = async (req, res) => {
 async function mobileLogin(req, res) {
   const { email } = req.body;
   try {
-    const user = await User.findOne({ email }).select('_id roles email').lean();
+    const user = await User.findOne({ email }).select("_id roles email").lean();
     if (!user) {
       return res.status(404).json({ success: false, msg: "User not found" });
     }
-    if (user.roles.includes('Support')) {
-      const supportInfo = await Support.findOne({ userId: user.userId }).populate('supportCategories');
+    if (user.roles.includes("Support")) {
+      const supportInfo = await Support.findOne({
+        userId: user.userId,
+      }).populate("supportCategories");
       user.supportCategories = supportInfo ? supportInfo.supportCategories : [];
     }
     return res.status(200).json({ success: true, user: user });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ success: false, msg: "Internet server error" });
+    return res
+      .status(500)
+      .json({ success: false, msg: "Internet server error" });
   }
 }
 
+async function loginMobile(req, res) {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    const token = JWT.sign(
+      { userId: user._id, roles: user.roles, email: user.email },
+      process.env.JWT_SIGN,
+      {
+        expiresIn: 3600,
+      }
+    );
+    const userRole = getUserRole(user);
+    return res.status(201).json({ token: token, role: userRole });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ success: false, msg: "Internal server error" });
+  }
+}
 
-
+const getUserRole = (user) => {
+  if (user.roles.includes("GlobalOrganizer")) {
+    return "Global Organizer";
+  } else if (user.roles.includes("Support")) {
+    return "Support";
+  } else {
+    return "User";
+  }
+};
 
 module.exports = {
   mobileLogin,
@@ -292,4 +323,5 @@ module.exports = {
   validateAdmin,
   logOut,
   getLoginLink,
+  loginMobile,
 };
