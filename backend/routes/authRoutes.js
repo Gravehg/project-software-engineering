@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   login,
+  mobileLogin,
   magicLink,
   verifyToken,
   logOut,
@@ -12,6 +13,7 @@ router.get("/login/:token", login);
 router.post("/magic-link", magicLink);
 router.get("/is-logged", verifyToken);
 router.get("/log-out", logOut);
+router.post("/mobileLogin", mobileLogin);
 
 /*ATTENTION, THIS IS ONLY FOR NOW*/
 if (process.env.TARGET == "DEV") {
