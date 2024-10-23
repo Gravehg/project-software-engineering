@@ -260,7 +260,29 @@ const getLoginLink = async (req, res) => {
   }
 };
 
+async function mobileLogin(req, res) {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email }).select('_id roles email').lean();
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "User not found" });
+    }
+    if (user.roles.includes('Support')) {
+      const supportInfo = await Support.findOne({ userId: user.userId }).populate('supportCategories');
+      user.supportCategories = supportInfo ? supportInfo.supportCategories : [];
+    }
+    return res.status(200).json({ success: true, user: user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, msg: "Internet server error" });
+  }
+}
+
+
+
+
 module.exports = {
+  mobileLogin,
   login,
   verifyToken,
   magicLink,

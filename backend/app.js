@@ -1,7 +1,9 @@
 const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require("cors"); // Agrega esto
 const app = express();
+
 const authRoutes = require("./routes/authRoutes");
 const categoryRoutes = require("./routes/supportCategoryRoutes");
 const supportRoutes = require("./routes/supportRoutes");
@@ -16,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public/browser")));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors()); // Esto permite todas las solicitudes de todos los orígenes
 
 app.use("/api/auth/", authRoutes);
 app.use("/api/category/", categoryRoutes);
