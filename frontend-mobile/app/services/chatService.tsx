@@ -71,3 +71,16 @@ export const updateClosureState = async (ticketID:string, newClosureState:string
   }
 };
 
+export const updateSupp = async (ticketID:string) => {
+  try {
+    const response = await axios.put(`${ticket_URL}updateAssignedSupp`, {
+      ticketID,
+    });
+    return response.data; 
+  } catch (error) {
+    console.error("Error updating support assigned:", error);
+    throw error; 
+  }
+};
+
+

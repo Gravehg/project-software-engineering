@@ -10,13 +10,12 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { useAuth, AuthProvider } from "@/hooks/context/AuthContext";
-import { Button } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -37,6 +36,35 @@ export default function RootLayout() {
         <Layout></Layout>
       </ThemeProvider>
     </AuthProvider>
+=======
+
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen
+          name="(tabs)/index"
+          options={{ headerShown: false, navigationBarHidden: true }}
+        />
+        <Stack.Screen
+          name="(tabs)/JammerScreens"
+          options={{ headerShown: false, navigationBarHidden: true }}
+        />
+        <Stack.Screen
+          name="hiddenScreens/[jammerChat]"
+          options={{
+            headerShown: true,
+            navigationBarHidden: true,
+            headerTitle: "Chat",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="+not-found"
+          options={{ headerShown: false, navigationBarHidden: true }}
+        />
+      </Stack>
+    </ThemeProvider>
+
   );
 }
 
