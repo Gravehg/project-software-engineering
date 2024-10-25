@@ -1,46 +1,43 @@
+import { AuthProvider } from "@/hooks/context/AuthContext";
 import {
+  ThemeProvider,
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
-
+import { Slot } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null; // Prevents rendering until fonts are loaded
+  }
+
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)/index"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-        <Stack.Screen
-          name="(tabs)/JammerScreens"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-        <Stack.Screen
-          name="hiddenScreens/[jammerChat]"
-          options={{
-            headerShown: true,
-            navigationBarHidden: true,
-            headerTitle: "Chat",
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="+not-found"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-      </Stack>
-    </ThemeProvider>
+    <>
+      <AuthProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Slot />
+        </ThemeProvider>
+      </AuthProvider>
+    </>
   );
 }

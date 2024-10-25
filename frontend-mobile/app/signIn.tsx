@@ -1,33 +1,27 @@
-import { Alert, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import React, { useState } from 'react';
-import { mobileLogin } from "../services/mobileLogInService";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
+import { mobileLogin } from "./services/mobileLogInService";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link, Redirect, router } from "expo-router";
+import { useAuth } from "@/hooks/context/AuthContext";
 
-
-export default function LoginScreen() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
-  const [userType, setUserType] = useState('');
-
+  const { onLogin } = useAuth();
 
   const handleLogin = async () => {
-    if (!email) {
-      Alert.alert('Error', 'Please write a full email address');
-      return;
-    }
-    try {
-      const data = await mobileLogin(email);
-      if (!data.success) {
-        Alert.alert("Error", data.msg);
-      } else {
-
-        console.log(data.user.roles[0]);
-        setUserType(data.user.roles[0]);
-        router.replace("./JammerScreens")
-      }
-    } catch (error) {
-      console.error("Error:", error);
+    const result = await onLogin(email);
+    if (result && result.error) {
+      alert(result.msg);
+    } else {
+      router.replace("/");
     }
   };
 
