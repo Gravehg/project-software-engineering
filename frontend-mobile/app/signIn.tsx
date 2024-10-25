@@ -6,20 +6,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { mobileLogin } from "../services/mobileLogInService";
+import { mobileLogin } from "./services/mobileLogInService";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link, Redirect, router } from "expo-router";
 import { useAuth } from "@/hooks/context/AuthContext";
 
-export default function LoginScreen() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const { onLogin } = useAuth();
 
-  const login = async () => {
-    const result = await onLogin!(email);
+  const handleLogin = async () => {
+    const result = await onLogin(email);
     if (result && result.error) {
       alert(result.msg);
+    } else {
+      router.replace("/");
     }
   };
 
@@ -46,7 +48,7 @@ export default function LoginScreen() {
         onChangeText={setEmail}
       />
 
-      <TouchableOpacity style={styles.button} onPress={login}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
           Log In
         </ThemedText>

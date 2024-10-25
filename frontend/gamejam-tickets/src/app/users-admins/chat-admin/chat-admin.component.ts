@@ -391,12 +391,12 @@ export class ChatAdminComponent implements OnInit {
       confirmButtonText: 'OK',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/supp-tickets']);
+        this.router.navigate(['/admin-tickets']);
       } else if (
         result.dismiss === Swal.DismissReason.backdrop ||
         result.dismiss === Swal.DismissReason.esc
       ) {
-        this.router.navigate(['/supp-tickets']);
+        this.router.navigate(['/admin-tickets']);
       }
     });
   }

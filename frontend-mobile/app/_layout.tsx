@@ -1,15 +1,14 @@
+import { AuthProvider } from "@/hooks/context/AuthContext";
 import {
+  ThemeProvider,
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
-
+import { Slot } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,85 +26,18 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return null; // Prevents rendering until fonts are loaded
   }
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Layout></Layout>
-      </ThemeProvider>
-    </AuthProvider>
-=======
-
-  return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)/index"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-        <Stack.Screen
-          name="(tabs)/JammerScreens"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-        <Stack.Screen
-          name="hiddenScreens/[jammerChat]"
-          options={{
-            headerShown: true,
-            navigationBarHidden: true,
-            headerTitle: "Chat",
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="+not-found"
-          options={{ headerShown: false, navigationBarHidden: true }}
-        />
-      </Stack>
-    </ThemeProvider>
-
+    <>
+      <AuthProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Slot />
+        </ThemeProvider>
+      </AuthProvider>
+    </>
   );
 }
-
-export const Layout = () => {
-  const { authState, onLogout } = useAuth();
-
-  console.log("Auth State:", authState); // Debugging line
-
-  return (
-    <Stack>
-      {authState?.authenticated ? (
-        authState.role === "User" ? (
-          <Stack.Screen
-            name="(tabs)/JammerScreens"
-            options={{
-              headerShown: false,
-              headerRight: () => <Button onPress={onLogout} title="Sign out" />,
-            }}
-          />
-        ) : authState.role === "Support" ? (
-          <Stack.Screen
-            name="(tabs)/SupportScreens"
-            options={{
-              headerShown: false,
-              headerRight: () => <Button onPress={onLogout} title="Sign out" />,
-            }}
-          />
-        ) : authState.role === "Global Organizer" ? (
-          <Stack.Screen
-            name="(tabs)/GlobalScreens"
-            options={{
-              headerShown: false,
-              headerRight: () => <Button onPress={onLogout} title="Sign out" />,
-            }}
-          />
-        ) : (
-          <Stack.Screen name="+not-found" />
-        )
-      ) : (
-        <Stack.Screen name="(tabs)/index" options={{ headerShown: false }} />
-      )}
-    </Stack>
-  );
-};
