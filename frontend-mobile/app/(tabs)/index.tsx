@@ -31,6 +31,10 @@ export default function LoginScreen() {
     }
   };
 
+  const temp = () => {
+    router.replace("./JammerScreens");
+  }
+
   return (
     <ThemedView style={styles.container}>
       <Image
@@ -54,7 +58,7 @@ export default function LoginScreen() {
         onChangeText={setEmail}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={temp}>
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
           Log In
         </ThemedText>

@@ -13,12 +13,19 @@ const messageRoutes = require("./routes/messageRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
+const corsOptions = {
+  origin: '*', // O el dominio de tu frontend en producción
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // Si necesitas compartir cookies o sesiones entre frontend y backend
+};
+
 // Serve static files from the Angular app
 app.use(express.static(path.join(__dirname, "public/browser")));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors()); // Esto permite todas las solicitudes de todos los orígenes
+app.use(cors(corsOptions)); // Esto permite todas las solicitudes de todos los orígenes
 
 app.use("/api/auth/", authRoutes);
 app.use("/api/category/", categoryRoutes);

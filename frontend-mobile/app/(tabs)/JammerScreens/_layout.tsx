@@ -10,6 +10,11 @@ export default function TabLayout() {
 
   return (
     <Tabs screenOptions={{tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,headerShown: true, headerTitleAlign: 'center',}}>
+      <Tabs.Screen  name="screens/tickets"
+        options={{ title: 'Tickets', tabBarIcon: ({ color, focused }) => (<TabBarIcon name={focused ? 'ticket' : 'code-slash-outline'} color={color} />
+          ),
+        }}
+      />
       <Tabs.Screen  name="screens/explore"
         options={{ title: 'Explore', tabBarIcon: ({ color, focused }) => (<TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
           ),

@@ -69,7 +69,7 @@ const getUserTickets = async (req, res) => {
   }
 };
 
-const getUserCategories = (req, res) => {
+const getUserCategories = async (req, res) => {
   const userPayLoad = req.userPayLoad;
   const supportPayLoad = userPayLoad.supportInfo;
   const supportCategories = supportPayLoad.supportCategories;
@@ -80,4 +80,41 @@ const getUserCategories = (req, res) => {
   return res.status(201).json(r_categories);
 };
 
-module.exports = { getUserTickets, getUserCategories, comprobateTicketSupport };
+/// Movil
+// Se revisar despues
+const getUserTicketsMovil = async (req, res) => {
+  const userId = req.params.userId;
+  console.log("userId: ", userId);
+  try {
+    const tickets = await Ticket.find({
+      idUserIssued: userId,
+    })
+      .populate("idUserIssued")
+      .populate("category")
+      .sort({ creationDate: -1 })
+      .exec();
+
+    const formattedTickets = tickets.map((ticket) => {
+      const formattedDate = format(new Date(ticket.creationDate), "dd/MM/yyyy");
+      return {
+        _id: ticket._id.toString(),
+        idUserIssued: ticket.idUserIssued._id.toString(),
+        idSupport: ticket.idSupport ? ticket.idSupport.toString() : null,
+        resolutionState: ticket.resolutionState,
+        closureState: ticket.closureState,
+        category: ticket.category.name,
+        topic: ticket.topic,
+        creationDate: ticket.creationDate.toISOString(),
+        email: ticket.idUserIssued.email,
+        date: formattedDate,
+      };
+    });
+    return res.status(200).json(formattedTickets);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, msg: "There has been an error" });
+  }
+}
+
+module.exports = { getUserTickets, getUserCategories, comprobateTicketSupport, getUserTicketsMovil };
