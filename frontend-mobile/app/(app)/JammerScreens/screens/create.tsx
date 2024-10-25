@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
-import { createTicket } from "@/app/services/createTicketService";
+import { addTicket } from "@/app/services/createTicketService";
 
 export default function CreateTicketScreen() {
   const [category, setCategory] = useState("");
@@ -70,7 +70,7 @@ export default function CreateTicketScreen() {
       return;
     }
     try {
-      const data = await createTicket(category, topic, message);
+      const data = await addTicket(category, topic, message);
       if (!data.success) {
         Alert.alert("Error", data.msg);
       } else {
@@ -99,7 +99,7 @@ export default function CreateTicketScreen() {
               onValueChange={(itemValue: any) => setCategory(itemValue)}
             >
               <Picker.Item label="Select" value="" />
-              <Picker.Item label="Category 1" value="category1" />
+              <Picker.Item label="Fellows" value="66d2050548bdccea37a0ca5f" />
               <Picker.Item label="Category 2" value="category2" />
             </Picker>
           </View>

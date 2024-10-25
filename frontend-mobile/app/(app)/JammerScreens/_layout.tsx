@@ -44,22 +44,7 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          headerLeft: () => (
-            <Button onPress={onLogout} title="Sign out"></Button>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="screens/chat"
-        options={{
-          title: "Prueba chat",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "create" : "create-outline"}
-              color={color}
-            />
-          ),
-          headerLeft: () => (
+          headerRight: () => (
             <Button onPress={onLogout} title="Sign out"></Button>
           ),
         }}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
 const ticket_URL = BASE_URL + "/ticket/";
 const chat_URL = BASE_URL + "/chat/";
