@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await SecureStore.setItemAsync(ROLE_KEY, result.data.role || "");
 
       setLoading(false);
+      console.log(authState);
       return result.data;
     } catch (e) {
       console.error("Login error:", e); // Debug log

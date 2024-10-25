@@ -104,7 +104,7 @@ const verifyToken = async (req, res) => {
 };
 
 const validateSession = (req, res, next) => {
-  const token = req.cookies.sessionToken;
+  const token = validateToken(req);
   if (!token) {
     return res.status(401).json({ success: false, error: "Session not found" });
   }
@@ -140,7 +140,7 @@ const validateSupport = async (req, res, next) => {
 };
 
 const validateAdmin = (req, res, next) => {
-  const token = req.cookies.sessionToken;
+  const token = validateToken(req);
   if (!token) {
     return res.status(401).json({ success: false, error: "Session not found" });
   }
@@ -170,11 +170,10 @@ const validateAdmin = (req, res, next) => {
 };
 
 const validateUser = (req, res, next) => {
-  const token = req.cookies.sessionToken;
+  const token = validateToken(req);
   if (!token) {
     return res.status(401).json({ success: false, error: "Session not found" });
   }
-
   try {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
     const rolesToCheck = [
@@ -203,6 +202,14 @@ const validateUser = (req, res, next) => {
   } catch (error) {
     return res.status(401).json({ success: false, error: "Invalid token" });
   }
+};
+
+const validateToken = (req) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    return authHeader.split(" ")[1];
+  }
+  return req.cookies.sessionToken;
 };
 
 const logOut = async (req, res) => {

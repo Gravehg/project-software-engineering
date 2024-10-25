@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateModule } from '@ngx-translate/core';
 
-
 @Component({
   selector: 'app-chat-ticket',
   standalone: true,
@@ -25,9 +24,9 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
   ],
   templateUrl: './chat-ticket.component.html',
-  styleUrl: './chat-ticket.component.css'
+  styleUrl: './chat-ticket.component.css',
 })
-export class ChatTicketComponent  implements OnInit {
+export class ChatTicketComponent implements OnInit {
   constructor(
     private router: Router,
     public chatService: ChatService,
@@ -392,12 +391,12 @@ export class ChatTicketComponent  implements OnInit {
       confirmButtonText: 'OK',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/supp-tickets']);
+        this.router.navigate(['/admin-tickets']);
       } else if (
         result.dismiss === Swal.DismissReason.backdrop ||
         result.dismiss === Swal.DismissReason.esc
       ) {
-        this.router.navigate(['/supp-tickets']);
+        this.router.navigate(['/admin-tickets']);
       }
     });
   }

@@ -14,20 +14,14 @@ import { useAuth } from "@/hooks/context/AuthContext";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
-  const { onLogin, authState } = useAuth();
+  const { onLogin } = useAuth();
 
   const handleLogin = async () => {
     const result = await onLogin(email);
     if (result && result.error) {
       alert(result.msg);
     } else {
-      if (result.role === "User") {
-        router.replace("/JammerScreens");
-      } else if (result.role === "Support") {
-        router.replace("/SupportScreens");
-      } else if (result.role === "Global Organizer") {
-        router.replace("/GlobalScreens");
-      }
+      router.replace("/");
     }
   };
 
