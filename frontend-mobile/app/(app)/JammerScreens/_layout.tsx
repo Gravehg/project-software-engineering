@@ -20,12 +20,12 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="screens/explore"
+        name="screens/tickets"
         options={{
-          title: "Explore",
+          title: "Tickets",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? 'ticket' : 'ticket-outline'}
               color={color}
             />
           ),
@@ -49,6 +49,22 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="screens/temporalB"
+        options={{
+          title: "Filter",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "create" : "create-outline"}
+              color={color}
+            />
+          ),
+          headerLeft: () => (
+            <Button onPress={onLogout} title="Sign out"></Button>
+          ),
+        }}
+      />
     </Tabs>
+    
   );
 }

@@ -3,6 +3,7 @@ const {
   getUserTickets,
   getUserCategories,
   comprobateTicketSupport,
+  getUserTicketsMovil,
 } = require("../controllers/userController");
 const {
   validateSession,
@@ -29,6 +30,11 @@ router.get(
   validateSession,
   validateUser,
   comprobateTicketSupport
-)
+);
+
+router.get(
+  "/get-jammer-tickets-movil/:userId", 
+  getUserTicketsMovil 
+);
 
 module.exports = router;
