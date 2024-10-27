@@ -31,8 +31,8 @@ const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
                     //onValueChange={(itemValue: any) => setCategory(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
-                    <Picker.Item label="Category 1" value="category1" />
-                    <Picker.Item label="Category 2" value="category2" />
+                    <Picker.Item label="Open" value="Open" />
+                    <Picker.Item label="Close" value="Close" />
                     </Picker>
                 </View>
                 <Text style={styles.label}>Category</Text>
@@ -43,8 +43,10 @@ const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
                     // onValueChange={(itemValue: any) => setCategory(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
-                    <Picker.Item label="Category 1" value="category1" />
-                    <Picker.Item label="Category 2" value="category2" />
+                    <Picker.Item label="Fellows" value="66ce87b57e1ac04b8f733ef3" />
+                    <Picker.Item label="Technology" value="66ce87b57e1ac04b8f733ef4" />
+                    <Picker.Item label="Events" value="66ce87b57e1ac04b8f733ef5" />
+                    <Picker.Item label="Acceleration" value="66ce87b57e1ac04b8f733ef6" />
                     </Picker>
                 </View>
                 <Text style={styles.label}>Resolution</Text>
@@ -55,8 +57,8 @@ const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
                     //onValueChange={(itemValue: any) => setCategory(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
-                    <Picker.Item label="Category 1" value="category1" />
-                    <Picker.Item label="Category 2" value="category2" />
+                    <Picker.Item label="Resolve" value="Resolve" />
+                    <Picker.Item label="Not resolved" value="Not resolved" />
                     </Picker>
                 </View>
               <Pressable
