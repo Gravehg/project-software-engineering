@@ -6,10 +6,45 @@ const { width, height } = Dimensions.get('window');
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
+  tickets: Array<interTicket>;
+  setTicketsFilter: (filteredTickets: Array<interTicket>) =>void; 
 }
-const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
-  const category = "XD"
 
+interface interTicket{
+  _id:string,
+  category:string,
+  closureState:string,
+  creationDate:string,
+  date:string,
+  email: string,
+  idSupport:string,
+  idUserIssued:string
+  resolutionState:string,
+  topic:string
+}
+const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose, tickets, setTicketsFilter}) =>{
+
+
+  const [closure,setclosureState]= useState("");
+  const [category,setCategory]= useState("");
+  const [resolution,setResolutionState]= useState("");
+  
+  const applyAllFilters = () => {
+    let result = tickets;
+
+    if (closure !== "") {
+      result = result.filter(ticket => ticket.closureState === closure);
+    }
+    if (category !== "") {
+      result = result.filter(ticket => ticket.category === category);
+    }
+    if (resolution !== "") {
+      result = result.filter(ticket => ticket.resolutionState === resolution);
+    }
+
+    setTicketsFilter(result); // Actualiza el estado filtrado
+    console.log(result); // Para depuración, muestra el resultado filtrado en consola
+  };
   return (
 
         <Modal
@@ -22,13 +57,13 @@ const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
+              <Text style={styles.modalText}>Filter</Text>
                 <Text style={styles.label}>closure</Text>
                 <View style={styles.pickerContainer}>
                     <Picker
-                    selectedValue={category}
+                    selectedValue={closure}
                     style={styles.picker}
-                    //onValueChange={(itemValue: any) => setCategory(itemValue)}
+                    onValueChange={(itemValue: any) => setclosureState(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
                     <Picker.Item label="Open" value="Open" />
@@ -40,32 +75,40 @@ const ModalComponent: React.FC<CustomModalProps> = ({visible, onClose}) =>{
                     <Picker
                     selectedValue={category}
                     style={styles.picker}
-                    // onValueChange={(itemValue: any) => setCategory(itemValue)}
+                    onValueChange={(itemValue: any) => setCategory(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
-                    <Picker.Item label="Fellows" value="66ce87b57e1ac04b8f733ef3" />
-                    <Picker.Item label="Technology" value="66ce87b57e1ac04b8f733ef4" />
-                    <Picker.Item label="Events" value="66ce87b57e1ac04b8f733ef5" />
-                    <Picker.Item label="Acceleration" value="66ce87b57e1ac04b8f733ef6" />
+                    <Picker.Item label="Fellows" value="Fellows" />
+                    <Picker.Item label="Technology" value="Technology" />
+                    <Picker.Item label="Events" value="Events" />
+                    <Picker.Item label="Acceleration" value="Acceleration" />
                     </Picker>
                 </View>
                 <Text style={styles.label}>Resolution</Text>
                 <View style={styles.pickerContainer}>
                     <Picker
-                    selectedValue={category}
+                    selectedValue={resolution}
                     style={styles.picker}
-                    //onValueChange={(itemValue: any) => setCategory(itemValue)}
+                    onValueChange={(itemValue: any) => setResolutionState(itemValue)}
                     >
                     <Picker.Item label="Select" value="" />
                     <Picker.Item label="Resolve" value="Resolve" />
                     <Picker.Item label="Not resolved" value="Not resolved" />
                     </Picker>
                 </View>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
+              <View style={styles.containerB}>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={applyAllFilters}>
+                  <Text style={styles.textStyle}>Aplay Filter</Text>
+                </Pressable>
+
+                <Pressable
+                style={[styles.buttonAplay]}
                 onPress={onClose}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Close Filter</Text>
               </Pressable>
+              </View>
             </View>
           </View>
         </Modal>
@@ -105,6 +148,13 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
+  buttonAplay: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    borderColor: "#a4a5a9",
+    backgroundColor: "#f59e4c", 
+  },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
@@ -138,7 +188,12 @@ const styles = StyleSheet.create({
     width:270,
     color: "#FFFFFF",
   },
-  
+  containerB:{
+    display:"flex",
+    flexDirection:"row",
+    width: "100%",
+    justifyContent: "space-between"
+  }
 });
 
 export default ModalComponent;
