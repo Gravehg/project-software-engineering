@@ -27,9 +27,9 @@ export default function TicketsScreen() {
 
 
   useEffect(() => {
-    console.log("Chat 2");
-    const userId = "66ce887c7e1ac04b8f733ef8";
-    getTickets(userId).then((data) => {
+    // console.log("Chat 2");
+    // const userId = "66ce887c7e1ac04b8f733ef8";
+    getTickets().then((data) => {
       console.log(data);
       setTickets(data);
       setTicketsFilter(data);
@@ -66,7 +66,9 @@ export default function TicketsScreen() {
                       supportEmail={ticket.supportEmail}
                       id={ticket._id}
                       topic={ticket.topic}
-                      lookChat={temporal}/>
+                      lookChat={temporal}
+                      closed={ticket.closureState}
+                      />
                   );
                 })
               }

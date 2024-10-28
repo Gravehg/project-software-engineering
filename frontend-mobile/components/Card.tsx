@@ -3,12 +3,14 @@ import React, { useState, PropsWithChildren } from 'react';
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedIcon } from "@/components/ThemedIcon";
+import { Link, Redirect, router } from "expo-router";
 
 type Prop = PropsWithChildren<{
         supportEmail: string,
         id: string,
         topic: string,
-        lookChat?: any
+        lookChat?: any,
+        closed: string,
     }>;
 
 export default function Card({
@@ -16,10 +18,11 @@ export default function Card({
     id,
     topic,
     lookChat,
+    closed,
 }: Prop) { 
     return (
         <ThemedView style={styles.container}>
-            <ThemedView style={styles.leftContainer}>
+            <ThemedView style={[styles.leftContainer, closed == 'Open'? styles.openColor : styles.closeColor]}>
 
                 <ThemedText type="default" style={styles.title} numberOfLines={1}>
                     ID: {id}
@@ -31,9 +34,14 @@ export default function Card({
                     {supportEmail? supportEmail : "Support not asign"}
                 </ThemedText>
             </ThemedView>
-            <ThemedView style={styles.rightContainer}>
+            <ThemedView style={[styles.rightContainer, closed == 'Open'? styles.openColor : styles.closeColor]}>
                 <Pressable
-                    onPress={lookChat}
+                onPress={() =>
+                    router.push({
+                    pathname: "/hiddenScreens/[jammerChat]",
+                    params: { jammerChat: id },
+                    })
+                }
                 >
                     {/* <ion-icon name="arrow-dropright" /> */}
                     <ThemedIcon name="arrow-forward" color={"white"}/>
@@ -48,9 +56,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginBottom: 10,
-        // alignItems: 'center',
-        // justifyContent: 'space-around',
-        backgroundColor: '#257DC0',
         width: '100%',
         height: 80,
         borderRadius: 10,
@@ -58,9 +63,7 @@ const styles = StyleSheet.create({
     leftContainer: {
         flex: 1,
         flexDirection: 'column',
-        // alignItems: 'center',
-        // justifyContent: 'flex-end',
-        backgroundColor: '#257DC0',
+        
         borderRadius: 10,
         width: '80%',
     },
@@ -84,5 +87,12 @@ const styles = StyleSheet.create({
         marginBottom: 'auto',
         marginTop: 'auto',
         marginLeft: 2,
+        flexShrink: 1
+    },
+    openColor: {
+        backgroundColor: '#257DC0',
+    },
+    closeColor: {
+        backgroundColor: '#D9534F',
     },
 });

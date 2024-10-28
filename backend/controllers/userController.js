@@ -81,8 +81,8 @@ const getUserCategories = (req, res) => {
 };
 
 const getUserTicketsMovil = async (req, res) => {
-  const userId = req.params.userId;
-  console.log("userId: ", userId);
+  const userId = req.userPayLoad.userId;
+  // console.log("userId: ", userId);
   try {
     const tickets = await Ticket.find({
       idUserIssued: userId,

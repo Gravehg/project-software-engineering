@@ -33,7 +33,7 @@ router.get(
 );
 
 router.get(
-  "/get-jammer-tickets-movil/:userId", 
+  "/get-jammer-tickets-movil/", 
   getUserTicketsMovil 
 );
 
