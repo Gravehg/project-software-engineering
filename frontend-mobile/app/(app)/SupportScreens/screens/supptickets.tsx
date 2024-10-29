@@ -1,57 +1,55 @@
-import { StyleSheet, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { getSupportTickets } from "@/app/services/ticketesService";
+import { SuppTicket } from "@/models/SuppTicket";
 import ParallaxScrollViewJammer from "@/components/ParallaxScrollViewJammer";
 import { ThemedView } from "@/components/ThemedView";
-import { getTickets } from "@/app/services/ticketesService";
-import { Link, Redirect, router } from "expo-router";
-import ModalComponent from "@/components/ModalComp";
-import Card from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
+import CardSupp from "@/components/CardSupp";
 
-export default function TicketsScreen() {
-  const [tickets, setTickets] = useState([]);
-  const [ticketsFilter, setTicketsFilter] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const temporal = () => {};
+const SupportTickets = () => {
+  const [tickets, setTickets] = useState<SuppTicket[]>([]);
+  const [ticketsFilter, setTicketsFilter] = useState<SuppTicket[]>([]);
 
   useEffect(() => {
-    getTickets()
+    getSupportTickets()
       .then((data) => {
         setTickets(data);
         setTicketsFilter(data);
       })
-      .catch((error) => {});
+      .catch((err) => {
+        console.log("There has been an error" + err);
+      });
   }, []);
 
   return (
     <ParallaxScrollViewJammer
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
     >
-      <ThemedView style={styles.centeredView}>
-        <ModalComponent
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          tickets={tickets}
-          setTicketsFilter={setTicketsFilter}
-        />
-
+      <ThemedView style={styles.filterView}>
         <Pressable
           style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
+          //onPress={() => setModalVisible(true)}
         >
           <ThemedText style={styles.textStyle}>Show Modal</ThemedText>
         </Pressable>
+        <Pressable style={[styles.button, styles.buttonOpen]}>
+          <ThemedText style={styles.textStyle}>Reset filters</ThemedText>
+        </Pressable>
       </ThemedView>
       <ThemedView style={styles.container}>
-        {tickets.length === 0 && <ThemedText>Loading...</ThemedText>}
-        {tickets.map((ticket: any) => {
+        {tickets.length == 0 && <ThemedText>Loading</ThemedText>}
+        {tickets.map((ticket: SuppTicket) => {
           return (
-            <Card
-              supportEmail={ticket.supportEmail}
-              id={ticket._id}
+            <CardSupp
+              _id={ticket._id}
+              category={ticket.category}
+              closureState={ticket.closureState}
+              creationDate={ticket.creationDate}
               topic={ticket.topic}
-              lookChat={temporal}
-              closed={ticket.closureState}
+              userName={ticket.userName}
+              resolutionState={ticket.resolutionState}
               key={ticket._id}
             />
           );
@@ -59,7 +57,9 @@ export default function TicketsScreen() {
       </ThemedView>
     </ParallaxScrollViewJammer>
   );
-}
+};
+
+export default SupportTickets;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,10 +84,12 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
-  centeredView: {
+  filterView: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
+    flexWrap: "wrap",
   },
   modalView: {
     margin: 20,
@@ -105,12 +107,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#757575",
   },
   buttonClose: {
     backgroundColor: "#2196F3",

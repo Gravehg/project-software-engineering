@@ -20,12 +20,12 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="screens/explore"
+        name="screens/supptickets"
         options={{
-          title: "Explore",
+          title: "Assigned tickets",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "ticket" : "ticket-outline"}
               color={color}
             />
           ),
@@ -35,7 +35,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="screens/create"
+        name="screens/explore"
         options={{
           title: "Create ticket",
           tabBarIcon: ({ color, focused }) => (

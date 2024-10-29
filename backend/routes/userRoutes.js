@@ -32,9 +32,4 @@ router.get(
   comprobateTicketSupport
 );
 
-router.get(
-  "/get-jammer-tickets-movil/", 
-  getUserTicketsMovil 
-);
-
 module.exports = router;
