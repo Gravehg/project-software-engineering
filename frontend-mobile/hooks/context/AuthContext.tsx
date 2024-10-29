@@ -43,13 +43,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
       const role = await SecureStore.getItemAsync(ROLE_KEY);
-
       if (token) {
-        setAuthState({
-          token,
-          authenticated: true,
-          role: role || "",
-        });
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        const result = await axios.get(`${API_URL}/auth/is-logged`);
+        if (result.data.success) {
+          setAuthState({
+            token,
+            authenticated: true,
+            role: role || "",
+          });
+        } else {
+          axios.defaults.headers.common["Authorization"] = "";
+        }
       }
       setLoading(false); // Only set loading to false after checking the token
     };

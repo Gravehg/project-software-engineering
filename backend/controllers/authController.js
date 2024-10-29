@@ -84,7 +84,7 @@ const magicLink = async (req, res) => {
 // Esto lo estoy probando, es para verificar que exite una session abierta y
 // salta el login
 const verifyToken = async (req, res) => {
-  const token = req.cookies.sessionToken;
+  const token = validateToken(req);
   if (!token) {
     return res.status(401).json({ success: false, error: "No token provided" });
   }

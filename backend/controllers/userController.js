@@ -11,7 +11,9 @@ const comprobateTicketSupport = async (req, res) => {
     console.log("Ticket: ", ticket);
     if (!ticket) {
       // Si el ticket no existe, devuelve un 404 (no encontrado)
-      return res.status(404).json({ success: false, message: 'Ticket not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: "Ticket not found" });
     }
 
     // Comprobar si el campo idSupport es null
@@ -21,11 +23,12 @@ const comprobateTicketSupport = async (req, res) => {
     return res.status(200).json({ success: true, isSupportNull });
   } catch (error) {
     // Manejar cualquier error que ocurra durante la ejecución
-    console.error('Error in comprobateTicketSupport:', error);
-    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+    console.error("Error in comprobateTicketSupport:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };
-
 
 const getUserTickets = async (req, res) => {
   try {
@@ -80,38 +83,8 @@ const getUserCategories = (req, res) => {
   return res.status(201).json(r_categories);
 };
 
-const getUserTicketsMovil = async (req, res) => {
-  const userId = req.userPayLoad.userId;
-  // console.log("userId: ", userId);
-  try {
-    const tickets = await Ticket.find({
-      idUserIssued: userId,
-    })
-      .populate("idUserIssued")
-      .populate("category")
-      .sort({ creationDate: -1 })
-      .exec();
-
-    const formattedTickets = tickets.map((ticket) => {
-      const formattedDate = format(new Date(ticket.creationDate), "dd/MM/yyyy");
-      return {
-        _id: ticket._id.toString(),
-        idUserIssued: ticket.idUserIssued._id.toString(),
-        idSupport: ticket.idSupport ? ticket.idSupport.toString() : null,
-        resolutionState: ticket.resolutionState,
-        closureState: ticket.closureState,
-        category: ticket.category.name,
-        topic: ticket.topic,
-        creationDate: ticket.creationDate.toISOString(),
-        email: ticket.idUserIssued.email,
-        date: formattedDate,
-      };
-    });
-    return res.status(200).json(formattedTickets);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ success: false, msg: "There has been an error" });
-  }
-}
-module.exports = { getUserTickets, getUserCategories, comprobateTicketSupport, getUserTicketsMovil };
+module.exports = {
+  getUserTickets,
+  getUserCategories,
+  comprobateTicketSupport,
+};
