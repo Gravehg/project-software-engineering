@@ -9,6 +9,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import CardSupp from "@/components/CardSupp";
 import { Category } from "@/models/Category";
+import ModalComponent from "@/components/ModalComp";
 
 const SupportTickets = () => {
   const [tickets, setTickets] = useState<SuppTicket[]>([]);
@@ -16,7 +17,7 @@ const SupportTickets = () => {
   const [categoryMap, setCategoryMap] = useState<{
     [key: string]: { name: string };
   }>({});
-
+  const [modalVisible, setModalVisible] = useState(false);
   let categories: Category[] = [];
 
   useEffect(() => {
@@ -42,9 +43,16 @@ const SupportTickets = () => {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
     >
       <ThemedView style={styles.filterView}>
+        <ModalComponent
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          tickets={tickets}
+          setTicketsFilter={setTicketsFilter}
+          isSupp={true}
+        />
         <Pressable
           style={[styles.button, styles.buttonOpen]}
-          //onPress={() => setModalVisible(true)}
+          onPress={() => setModalVisible(true)}
         >
           <ThemedText style={styles.textStyle}>Apply filters</ThemedText>
         </Pressable>

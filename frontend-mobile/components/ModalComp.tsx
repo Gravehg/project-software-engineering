@@ -10,12 +10,14 @@ import {
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Picker } from "@react-native-picker/picker";
+import { SuppTicket } from "@/models/SuppTicket";
 const { width, height } = Dimensions.get("window");
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
-  tickets: Array<interTicket>;
+  tickets: Array<interTicket | SuppTicket>;
   setTicketsFilter: any;
+  isSupp: boolean;
 }
 
 interface interTicket {
@@ -35,6 +37,7 @@ const ModalComponent: React.FC<CustomModalProps> = ({
   onClose,
   tickets,
   setTicketsFilter,
+  isSupp,
 }) => {
   const [closure, setclosureState] = useState("");
   const [category, setCategory] = useState("");
@@ -91,18 +94,24 @@ const ModalComponent: React.FC<CustomModalProps> = ({
               <Picker.Item label="Acceleration" value="Acceleration" />
             </Picker>
           </View>
-          <Text style={styles.label}>Resolution</Text>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={resolution}
-              style={styles.picker}
-              onValueChange={(itemValue: any) => setResolutionState(itemValue)}
-            >
-              <Picker.Item label="Select" value="" />
-              <Picker.Item label="Resolve" value="Resolve" />
-              <Picker.Item label="Not resolved" value="Not resolved" />
-            </Picker>
-          </View>
+          {isSupp && (
+            <>
+              <Text style={styles.label}>Resolution</Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={resolution}
+                  style={styles.picker}
+                  onValueChange={(itemValue: any) =>
+                    setResolutionState(itemValue)
+                  }
+                >
+                  <Picker.Item label="Select" value="" />
+                  <Picker.Item label="Resolve" value="Resolve" />
+                  <Picker.Item label="Not resolved" value="Not resolved" />
+                </Picker>
+              </View>
+            </>
+          )}
           <View style={styles.containerB}>
             <Pressable
               style={[styles.button, styles.buttonClose]}

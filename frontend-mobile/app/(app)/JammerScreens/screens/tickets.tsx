@@ -33,6 +33,7 @@ export default function TicketsScreen() {
           onClose={() => setModalVisible(false)}
           tickets={tickets}
           setTicketsFilter={setTicketsFilter}
+          isSupp={false}
         />
 
         <Pressable
