@@ -60,15 +60,12 @@ const ModalComponent: React.FC<CustomModalProps> = ({
       animationType="slide"
       transparent={true}
       visible={visible}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        //setModalVisible(!modalVisible);
-      }}
+      onRequestClose={onClose}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Filter</Text>
-          <Text style={styles.label}>closure</Text>
+          <Text style={styles.label}>Closure</Text>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={closure}
@@ -121,11 +118,6 @@ const ModalComponent: React.FC<CustomModalProps> = ({
         </View>
       </View>
     </Modal>
-    // <Pressable
-    //   style={[styles.button, styles.buttonOpen]}
-    //   onPress={() => setModalVisible(true)}>
-    //   <Text style={styles.textStyle}>Show Modal</Text>
-    // </Pressable>
   );
 };
 const styles = StyleSheet.create({

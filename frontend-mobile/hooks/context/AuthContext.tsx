@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
@@ -41,23 +41,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const loadToken = async () => {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      const role = await SecureStore.getItemAsync(ROLE_KEY);
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        const result = await axios.get(`${API_URL}/auth/is-logged`);
-        if (result.data.success) {
-          setAuthState({
-            token,
-            authenticated: true,
-            role: role || "",
-          });
-        } else {
-          axios.defaults.headers.common["Authorization"] = "";
+      try {
+        const token = await SecureStore.getItemAsync(TOKEN_KEY);
+        const role = await SecureStore.getItemAsync(ROLE_KEY);
+
+        if (token) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+          const result = await axios.get(`${API_URL}/auth/is-logged`);
+          console.log(result);
+
+          if (result.data.success) {
+            setAuthState({
+              token,
+              authenticated: true,
+              role: role || "",
+            });
+          } else {
+            await SecureStore.deleteItemAsync(TOKEN_KEY);
+            await SecureStore.deleteItemAsync(ROLE_KEY);
+            axios.defaults.headers.common["Authorization"] = "";
+          }
         }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response && error.response.status === 401) {
+            await SecureStore.deleteItemAsync(TOKEN_KEY);
+            await SecureStore.deleteItemAsync(ROLE_KEY);
+            axios.defaults.headers.common["Authorization"] = "";
+          }
+        } else {
+          console.error("An unexpected error occurred:", error);
+        }
+      } finally {
+        setLoading(false);
       }
-      setLoading(false); // Only set loading to false after checking the token
     };
+
     loadToken();
   }, []);
 
