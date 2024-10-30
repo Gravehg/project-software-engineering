@@ -43,8 +43,8 @@ export default function TicketsScreen() {
         </Pressable>
       </ThemedView>
       <ThemedView style={styles.container}>
-        {tickets.length === 0 && <ThemedText>Loading...</ThemedText>}
-        {tickets.map((ticket: any) => {
+        {ticketsFilter.length === 0 && <ThemedText>No tickets</ThemedText>}
+        {ticketsFilter.map((ticket: any) => {
           return (
             <Card
               supportEmail={ticket.supportEmail}
