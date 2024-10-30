@@ -2,15 +2,22 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { getSupportTickets } from "@/app/services/ticketesService";
+import { getSupportCategories } from "@/app/services/suppService";
 import { SuppTicket } from "@/models/SuppTicket";
 import ParallaxScrollViewJammer from "@/components/ParallaxScrollViewJammer";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import CardSupp from "@/components/CardSupp";
+import { Category } from "@/models/Category";
 
 const SupportTickets = () => {
   const [tickets, setTickets] = useState<SuppTicket[]>([]);
   const [ticketsFilter, setTicketsFilter] = useState<SuppTicket[]>([]);
+  const [categoryMap, setCategoryMap] = useState<{
+    [key: string]: { name: string };
+  }>({});
+
+  let categories: Category[] = [];
 
   useEffect(() => {
     getSupportTickets()
@@ -21,6 +28,13 @@ const SupportTickets = () => {
       .catch((err) => {
         console.log("There has been an error" + err);
       });
+    getSupportCategories().then((data) => {
+      const map = data.reduce((map, category) => {
+        map[category._id] = { name: category.name };
+        return map;
+      }, {} as { [key: string]: { name: string } });
+      setCategoryMap(map);
+    });
   }, []);
 
   return (
@@ -32,7 +46,7 @@ const SupportTickets = () => {
           style={[styles.button, styles.buttonOpen]}
           //onPress={() => setModalVisible(true)}
         >
-          <ThemedText style={styles.textStyle}>Show Modal</ThemedText>
+          <ThemedText style={styles.textStyle}>Apply filters</ThemedText>
         </Pressable>
         <Pressable style={[styles.button, styles.buttonOpen]}>
           <ThemedText style={styles.textStyle}>Reset filters</ThemedText>
@@ -44,7 +58,7 @@ const SupportTickets = () => {
           return (
             <CardSupp
               _id={ticket._id}
-              category={ticket.category}
+              category={categoryMap[ticket.category]?.name}
               closureState={ticket.closureState}
               creationDate={ticket.creationDate}
               topic={ticket.topic}
