@@ -100,7 +100,10 @@ export default function CreateTicketScreen() {
             >
               <Picker.Item label="Select" value="" />
               <Picker.Item label="Fellows" value="66d2050548bdccea37a0ca5f" />
-              <Picker.Item label="Category 2" value="category2" />
+              <Picker.Item label="Acceleration" value="66d2050548bdccea37a0ca60" />
+              <Picker.Item label="Events" value="66d2050548bdccea37a0ca61" />
+              <Picker.Item label="Technology" value="66d2056a48bdccea37a0ca62" />
+              <Picker.Item label="66d2056a48bdccea37a0ca62" value="66d2057948bdccea37a0ca63" />
             </Picker>
           </View>
 
