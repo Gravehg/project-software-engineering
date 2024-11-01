@@ -20,6 +20,21 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="screens/ticketsPool"
+        options={{
+          title: "Tickets pool",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "ticket" : "ticket-outline"}
+              color={color}
+            />
+          ),
+          headerLeft: () => (
+            <Button onPress={onLogout} title="Sign out"></Button>
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="screens/supptickets"
         options={{
           title: "Assigned tickets",
