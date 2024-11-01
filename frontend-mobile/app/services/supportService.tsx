@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { environment } from '../environments';
 import { Category } from '../(app)/models/category.model';
 import { SupportTicket } from '../(app)/models/supportTicket.model';
 
-const baseApiUrl = environment.apiUrl;
+const baseApiUrl = process.env.EXPO_PUBLIC_BASE_URL;
 
 async function getCategories(): Promise<Category[]> {
   const response = await axios.get<Category[]>(`${baseApiUrl}/category/get-categories`);
