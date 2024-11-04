@@ -5,9 +5,11 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
 import { SupportService } from "../../../services/supportService";
 import { SupportTicket } from "../../models/supportTicket.model";
+import { ThemedText } from "@/components/ThemedText";
 
 const TicketsPool: React.FC = () => {
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
@@ -28,6 +30,10 @@ const TicketsPool: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const refresh = async () => {
+    loadSupportPoolTickets();
   };
 
   useEffect(() => {
@@ -70,6 +76,9 @@ const TicketsPool: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Pressable style={[styles.button, styles.buttonOpen]} onPress={refresh}>
+        <ThemedText style={styles.textStyle}>Refresh tickets</ThemedText>
+      </Pressable>
       {tickets.length === 0 ? (
         <View style={styles.centerContainer}>
           <Text style={styles.noTicketsText}>No hay tickets disponibles</Text>
@@ -156,6 +165,21 @@ const styles = StyleSheet.create({
   noTicketsText: {
     fontSize: 16,
     color: "#666",
+    textAlign: "center",
+  },
+  button: {
+    borderRadius: 5,
+    padding: 10,
+    elevation: 2,
+    margin: 20,
+    marginBottom: 10,
+  },
+  buttonOpen: {
+    backgroundColor: "#757575",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
     textAlign: "center",
   },
 });
