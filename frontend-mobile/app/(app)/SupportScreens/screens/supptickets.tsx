@@ -13,6 +13,7 @@ import { Category } from "@/models/Category";
 const SupportTickets = () => {
   const [tickets, setTickets] = useState<SuppTicket[]>([]);
   const [ticketsFilter, setTicketsFilter] = useState<SuppTicket[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [categoryMap, setCategoryMap] = useState<{
     [key: string]: { name: string };
   }>({});

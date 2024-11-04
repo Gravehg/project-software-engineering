@@ -20,9 +20,9 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="screens/supptickets"
+        name="screens/ticketsPool"
         options={{
-          title: "Assigned tickets",
+          title: "Ticket Pool",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "ticket" : "ticket-outline"}
@@ -35,27 +35,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="screens/explore"
+        name="screens/supptickets"
         options={{
-          title: "Create ticket",
+          title: "Assigned tickets",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "create" : "create-outline"}
-              color={color}
-            />
-          ),
-          headerLeft: () => (
-            <Button onPress={onLogout} title="Sign out"></Button>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="screens/chat"
-        options={{
-          title: "Prueba chat",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "create" : "create-outline"}
+              name={focused ? "ticket" : "ticket-outline"}
               color={color}
             />
           ),
