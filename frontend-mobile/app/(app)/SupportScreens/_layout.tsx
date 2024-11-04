@@ -49,36 +49,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="screens/explore"
-        options={{
-          title: "Create ticket",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "create" : "create-outline"}
-              color={color}
-            />
-          ),
-          headerLeft: () => (
-            <Button onPress={onLogout} title="Sign out"></Button>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="screens/chat"
-        options={{
-          title: "Prueba chat",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "create" : "create-outline"}
-              color={color}
-            />
-          ),
-          headerLeft: () => (
-            <Button onPress={onLogout} title="Sign out"></Button>
-          ),
-        }}
-      />
     </Tabs>
   );
 }

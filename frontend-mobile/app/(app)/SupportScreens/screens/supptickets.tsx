@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { getSupportTickets } from "@/app/services/ticketesService";
@@ -14,10 +20,11 @@ import ModalComponent from "@/components/ModalComp";
 const SupportTickets = () => {
   const [tickets, setTickets] = useState<SuppTicket[]>([]);
   const [ticketsFilter, setTicketsFilter] = useState<SuppTicket[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [categoryMap, setCategoryMap] = useState<{
     [key: string]: { name: string };
   }>({});
-  const [modalVisible, setModalVisible] = useState(false);
   let categories: Category[] = [];
 
   useEffect(() => {
@@ -36,7 +43,17 @@ const SupportTickets = () => {
       }, {} as { [key: string]: { name: string } });
       setCategoryMap(map);
     });
+    setIsLoading(false);
   }, []);
+
+  if (isLoading && ticketsFilter.length == 0) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text style={styles.loadingText}>Cargando tickets...</Text>
+      </View>
+    );
+  }
 
   return (
     <ParallaxScrollViewJammer
@@ -56,13 +73,22 @@ const SupportTickets = () => {
         >
           <ThemedText style={styles.textStyle}>Apply filters</ThemedText>
         </Pressable>
-        <Pressable style={[styles.button, styles.buttonOpen]}>
+        <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => setTicketsFilter(tickets)}
+        >
           <ThemedText style={styles.textStyle}>Reset filters</ThemedText>
         </Pressable>
       </ThemedView>
       <ThemedView style={styles.container}>
-        {tickets.length == 0 && <ThemedText>Loading</ThemedText>}
-        {tickets.map((ticket: SuppTicket) => {
+        {ticketsFilter.length == 0 && (
+          <View style={styles.centerContainer}>
+            <Text style={styles.loadingText}>
+              No tickets with the selected filters.
+            </Text>
+          </View>
+        )}
+        {ticketsFilter.map((ticket: SuppTicket) => {
           return (
             <CardSupp
               _id={ticket._id}
@@ -88,6 +114,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#666",
   },
   title: {
     marginBottom: 16,
