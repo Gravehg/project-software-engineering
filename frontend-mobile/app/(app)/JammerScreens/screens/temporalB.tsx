@@ -11,9 +11,8 @@ export default function ModalViewFunction(){
         <SafeAreaProvider>
         <SafeAreaView style={styles.centeredView}>
           <ModalComponent
-            visible={modalVisible}
-            onClose={() => setModalVisible(false)}
-          />
+              visible={modalVisible}
+              onClose={() => setModalVisible(false)} tickets={[]} setTicketsFilter={undefined} isSupp={false}          />
           
           <Pressable
             style={[styles.button, styles.buttonOpen]}

@@ -9,3 +9,4 @@
 
 # Ignore environment variable files (if any)
 *.env
+/frontend-mobile/%ProgramData%

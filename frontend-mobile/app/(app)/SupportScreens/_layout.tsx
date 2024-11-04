@@ -22,7 +22,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="screens/ticketsPool"
         options={{
-          title: "Ticket Pool",
+          title: "Tickets pool",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "ticket" : "ticket-outline"}
