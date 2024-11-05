@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Pressable,
+  Alert,
 } from "react-native";
 import { SupportService } from "../../../services/supportService";
 import { SupportTicket } from "../../models/supportTicket.model";
@@ -32,6 +33,49 @@ const TicketsPool: React.FC = () => {
     }
   };
 
+
+
+  const confirmAssignTicket = (ticketId: string) => {
+    Alert.alert(
+      "Assign Ticket",
+      "Are you sure you want to assign this ticket?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Yes", onPress: () => handleAssignTicket(ticketId) },
+      ]
+    );
+  };
+
+
+  const handleAssignTicket = async (ticketId: string) => {
+    try {
+      const response = await SupportService.assignTicket(ticketId);
+      if (response.success) {
+        refresh();
+        Alert.alert(
+          "Success!",
+          "The ticket has been assigned successfully.",
+          [{ text: "OK", style: "default" }]
+        );
+      } else {
+        Alert.alert(
+          "Assignment Failed",
+          response.message || "The ticket could not be assigned. Please try again.",
+          [{ text: "OK", style: "default" }]
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        "An error occurred while assigning the ticket. Please try again.",
+        [{ text: "OK", style: "default" }]
+      );
+    }
+  };
+
+  
+  
+
   const refresh = async () => {
     loadSupportPoolTickets();
   };
@@ -41,7 +85,14 @@ const TicketsPool: React.FC = () => {
   }, []);
 
   const renderTicket = ({ item }: { item: SupportTicket }) => (
-    <View style={styles.ticketContainer}>
+    
+    <Pressable
+      style={({ pressed }) => [
+        styles.ticketContainer,
+        pressed && styles.ticketContainerPressed,
+      ]}
+      onPressOut={() => confirmAssignTicket(item._id)}
+    >
       <View style={styles.ticketHeader}>
         <Text style={styles.userName}>{item.userName}</Text>
         <Text style={styles.date}>{item.creationDate}</Text>
@@ -54,7 +105,7 @@ const TicketsPool: React.FC = () => {
         <Text style={styles.label}>Tema:</Text>
         <Text style={styles.value}>{item.topic}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 
   if (isLoading) {
@@ -181,6 +232,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  ticketContainerPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
   },
 });
 
