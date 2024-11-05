@@ -24,9 +24,21 @@ async function getAllTickets(): Promise<SupportTicket[]> {
   return response.data;
 }
 
+async function assignTicket(ticketId : any): Promise<any> {
+  try {
+    const response = await axios.post(`${baseApiUrl}/support/assign-ticket`, {ticketId});
+    return response.data; 
+  } catch (error) {
+    console.error("Error assigning ticket:", error);
+    throw error;
+  }
+}
+
 export const SupportService = {
   getCategories,
   getSupportCategories,
   getSupportPoolTickets,
   getAllTickets,
+  assignTicket,
+
 };
