@@ -11,11 +11,28 @@ import {
 import { SupportService } from "../../../services/supportService";
 import { SupportTicket } from "../../models/supportTicket.model";
 import { ThemedText } from "@/components/ThemedText";
+import { Category } from "@/models/Category";
 
 const TicketsPool: React.FC = () => {
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [categoryMap, setCategoryMap] = useState<{
+    [key: string]: { name: string };
+  }>({});
+
+  const loadCategories = async () => {
+    try {
+      const categories = await SupportService.getSupportCategories();
+      const map = categories.reduce((acc, category) => {
+        acc[category._id] = { name: category.name };
+        return acc;
+      }, {} as { [key: string]: { name: string } });
+      setCategoryMap(map);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
 
   const loadSupportPoolTickets = async () => {
     setIsLoading(true);
@@ -33,8 +50,6 @@ const TicketsPool: React.FC = () => {
     }
   };
 
-
-
   const confirmAssignTicket = (ticketId: string) => {
     Alert.alert(
       "Assign Ticket",
@@ -45,7 +60,6 @@ const TicketsPool: React.FC = () => {
       ]
     );
   };
-
 
   const handleAssignTicket = async (ticketId: string) => {
     try {
@@ -73,19 +87,15 @@ const TicketsPool: React.FC = () => {
     }
   };
 
-  
-  
-
   const refresh = async () => {
-    loadSupportPoolTickets();
+    await Promise.all([loadSupportPoolTickets(), loadCategories()]);
   };
 
   useEffect(() => {
-    loadSupportPoolTickets();
+    refresh();
   }, []);
 
   const renderTicket = ({ item }: { item: SupportTicket }) => (
-    
     <Pressable
       style={({ pressed }) => [
         styles.ticketContainer,
@@ -99,7 +109,9 @@ const TicketsPool: React.FC = () => {
       </View>
       <View style={styles.ticketContent}>
         <Text style={styles.label}>Categoría:</Text>
-        <Text style={styles.value}>{item.category}</Text>
+        <Text style={styles.value}>
+          {categoryMap[item.category]?.name || 'Categoría no encontrada'}
+        </Text>
       </View>
       <View style={styles.ticketContent}>
         <Text style={styles.label}>Tema:</Text>
