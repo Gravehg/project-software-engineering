@@ -66,6 +66,7 @@ const getUserTickets = async (req, res) => {
     });
     return res.status(200).json(formattedTickets);
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ success: false, msg: "There has been an error" });

@@ -14,6 +14,15 @@ export default function TicketsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const temporal = () => {};
 
+  const refresh = async () => {
+    getTickets()
+      .then((data) => {
+        setTickets(data);
+        setTicketsFilter(data);
+      })
+      .catch((error) => {});
+  };
+
   useEffect(() => {
     getTickets()
       .then((data) => {
@@ -35,13 +44,26 @@ export default function TicketsScreen() {
           setTicketsFilter={setTicketsFilter}
           isSupp={false}
         />
-
         <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
+          style={[styles.button, styles.buttonOpen, { marginBottom: 2 }]}
+          onPress={refresh}
         >
-          <ThemedText style={styles.textStyle}>Show Modal</ThemedText>
+          <ThemedText style={styles.textStyle}>Refresh tickets</ThemedText>
         </Pressable>
+        <ThemedView style={styles.filterView}>
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}
+          >
+            <ThemedText style={styles.textStyle}>Apply Filters</ThemedText>
+          </Pressable>
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setTicketsFilter(tickets)}
+          >
+            <ThemedText style={styles.textStyle}>Reset filters</ThemedText>
+          </Pressable>
+        </ThemedView>
       </ThemedView>
       <ThemedView style={styles.container}>
         {ticketsFilter.length === 0 && <ThemedText>No tickets</ThemedText>}
@@ -106,12 +128,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#757575",
+    marginRight: 2,
   },
   buttonClose: {
     backgroundColor: "#2196F3",
@@ -124,5 +147,13 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  filterView: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexWrap: "wrap",
+    flexShrink: 1,
   },
 });

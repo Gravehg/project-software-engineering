@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -13,11 +13,15 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { addTicket } from "@/app/services/createTicketService";
+import { Category } from "@/models/Category";
+import { SupportService } from "../../../services/supportService";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function CreateTicketScreen() {
   const [category, setCategory] = useState("");
   const [topic, setTopic] = useState("");
   const [message, setMessage] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
   const navigation = useNavigation();
 
   const resetForm = () => {
@@ -25,6 +29,19 @@ export default function CreateTicketScreen() {
     setTopic("");
     setMessage("");
   };
+
+  const loadCategories = async () => {
+    try {
+      const categories = await SupportService.getCategories();
+      setCategories(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
 
   const handleBackPress = () => {
     if (!category && !topic && !message) {
@@ -99,11 +116,18 @@ export default function CreateTicketScreen() {
               onValueChange={(itemValue: any) => setCategory(itemValue)}
             >
               <Picker.Item label="Select" value="" />
-              <Picker.Item label="Fellows" value="66d2050548bdccea37a0ca5f" />
-              <Picker.Item label="Acceleration" value="66d2050548bdccea37a0ca60" />
-              <Picker.Item label="Events" value="66d2050548bdccea37a0ca61" />
-              <Picker.Item label="Technology" value="66d2056a48bdccea37a0ca62" />
-              <Picker.Item label="66d2056a48bdccea37a0ca62" value="66d2057948bdccea37a0ca63" />
+              {categories.length == 0 && (
+                <ThemedText>Loading categories ...</ThemedText>
+              )}
+              {categories.map((category: Category) => {
+                return (
+                  <Picker.Item
+                    label={category.name}
+                    value={category._id}
+                    key={category._id}
+                  />
+                );
+              })}
             </Picker>
           </View>
 
