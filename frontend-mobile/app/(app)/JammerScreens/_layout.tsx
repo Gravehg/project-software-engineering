@@ -44,7 +44,7 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          headerRight: () => (
+          headerLeft: () => (
             <Button onPress={onLogout} title="Sign out"></Button>
           ),
         }}

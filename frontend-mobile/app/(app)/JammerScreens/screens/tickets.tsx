@@ -24,6 +24,7 @@ export default function TicketsScreen() {
   };
 
   useEffect(() => {
+    refresh();
     getTickets()
       .then((data) => {
         setTickets(data);

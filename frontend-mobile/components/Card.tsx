@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     leftContainer: {
         flex: 1,
         flexDirection: 'column',
-        
-        borderRadius: 10,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
         width: '80%',
     },
     rightContainer: {
@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         backgroundColor: '#257DC0',
-        borderRadius: 10,
+        borderEndEndRadius: 10,
+        borderTopEndRadius: 10,
         width: '20%',
     },
     title: {

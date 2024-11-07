@@ -73,12 +73,6 @@ export default function CardSupp({
       </ThemedView>
       <ThemedView lightColor={closureStateStyle.backgroundColor}>
         <Pressable
-          onPress={() =>
-            router.push({
-              pathname: "/hiddenScreens/[jammerChat]",
-              params: { jammerChat: _id },
-            })
-          }
           style={styles.arrow}
         >
           {/* <ion-icon name="arrow-dropright" /> */}
