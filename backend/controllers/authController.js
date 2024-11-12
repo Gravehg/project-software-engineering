@@ -303,7 +303,7 @@ async function loginMobile(req, res) {
     const userRole = getUserRole(user);
     return res.status(201).json({ token: token, role: userRole });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return res
       .status(500)
       .json({ success: false, msg: "Internal server error" });
