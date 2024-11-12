@@ -290,6 +290,8 @@ async function mobileLogin(req, res) {
 }
 
 async function loginMobile(req, res) {
+  console.log(req.body);
+  console.error(req.body);
   const { email } = req.body;
   try {
     const user = await User.findOne({ email });
