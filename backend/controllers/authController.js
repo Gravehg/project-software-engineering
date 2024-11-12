@@ -84,21 +84,25 @@ const magicLink = async (req, res) => {
 // Esto lo estoy probando, es para verificar que exite una session abierta y
 // salta el login
 const verifyToken = async (req, res) => {
+  console.error(req);
   const token = validateToken(req);
   if (!token) {
     return res.status(401).json({ success: false, error: "No token provided" });
   }
-
+  console.error("Here");
   try {
     const decoded = JWT.verify(token, process.env.JWT_SIGN);
     const user = await User.findById(decoded.userId);
     if (!user) {
+      console.error("Here two");
       return res.status(404).json({ success: false, error: "User not found" });
     }
+    console.error("Here three");
     return res
       .status(200)
       .json({ success: true, message: "Token is valid", userId: user._id });
   } catch (error) {
+    console.error("Here four");
     return res.status(401).json({ success: false, error: "Invalid token" });
   }
 };
